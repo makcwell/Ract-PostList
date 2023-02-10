@@ -1,0 +1,21 @@
+.logo {
+    display: flex;
+    min-width: 200px;
+    gap: 10px;
+    align-items: center;
+    font-size: large;
+    font-weight: 100;
+    color: #1890ff;
+    text-decoration: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.logo img {
+    max-width: 32px;
+}
+
+.title {
+    font-size: large;
+}

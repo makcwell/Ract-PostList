@@ -1,0 +1,17 @@
+.header {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 12px 0;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    border-style: ridge; /*временная*/
+}
+
+.container {
+    max-width: 992px;
+    width: 95%;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
