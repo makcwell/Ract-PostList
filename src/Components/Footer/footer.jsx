@@ -1,5 +1,5 @@
 import React from 'react';
-// коммент
+// коммент  Еще коммент
 function Footer(props) {
     return (
         <div></div>
