@@ -1,7 +1,8 @@
 import React from 'react';
 import { Typography, Container } from '@mui/material';
 import Follow from './Follow/follow';
-import Logo from '../Header/Logo/logo';
+import Creators from './Creators/creators';
+
 import s from './footer.module.css'
 function Footer(props) {
     return (
@@ -10,7 +11,7 @@ function Footer(props) {
                 display: 'flex',
                 justifyContent: 'space-between'
             }}>
-                <Logo />
+                <Creators />
                 <Follow />
             </Container>
         </>
