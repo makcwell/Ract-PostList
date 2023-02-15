@@ -5,14 +5,11 @@ import React from "react";
 import s from './app.css';
 import Header from './Components/Header/header'
 import MainList from "./Components/MainList/mainList";
-<<<<<<< HEAD
-// Инизиализация приложения 1
-=======
 import Card from "./Components/MainList/PostList/Card/myCard";
 import PostList from "./Components/MainList/PostList/postList";
+import Footer from "./Components/Footer/footer";
 
 // Инизиализация приложения 
->>>>>>> 965f3de7c9b1265390b9cbc9d2215ffafd72a96d
 function App() {
     return (
         <>
@@ -33,7 +30,7 @@ function App() {
 
             </MainList>
 
-
+            <Footer />
 
         </>
     );
