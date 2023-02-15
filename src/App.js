@@ -10,6 +10,9 @@ import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 
 // Инизиализация приложения 
+
+
+
 function App() {
     return (
         <>
@@ -18,14 +21,8 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}
                 >
-                    <MainHead />
-                    <PostList>
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                    </PostList>
+                    <PostList />
+
 
                 </Container>
 
