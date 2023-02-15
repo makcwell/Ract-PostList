@@ -21,6 +21,7 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}
                 >
+                    <MainHead />
                     <PostList />
 
 
