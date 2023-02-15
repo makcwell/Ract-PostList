@@ -9,21 +9,19 @@ import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 
 // Инизиализация приложения 
+
+
+
 function App() {
     return (
         <>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar />
             <MainList>
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}
                 >
-                    <PostList>
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                    </PostList>
+                    <PostList />
+
 
                 </Container>
 

@@ -9,14 +9,13 @@ import { autocompleteClasses, Card, Grid } from '@mui/material';
 function MyCard(props) {
     return (
 
-        <Grid item xs="12" sm="4" md="4">
-            <Card >
-                {/* sx={{ maxWidth: 345 }} */}
-                <MyCardHeader />
-                <MyCardContent />
-                <MyCardFooter />
-            </Card>
-        </Grid>
+        // <Grid item xs="12" sm="4" md="4">
+        <Card >
+            <MyCardHeader />
+            <MyCardContent />
+            <MyCardFooter />
+        </Card>
+        // {/* </Grid> */ }
 
     );
 
