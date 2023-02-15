@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './currentUser.module.css'
-import {Avatar, Button} from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 
 function CurrentUser(props) {
     return (
