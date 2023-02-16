@@ -7,12 +7,12 @@ import MainList from "./Components/MainList/mainList";
 import Card from "./Components/MainList/PostList/Card/myCard";
 import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
-
+import Footer from "./Components/Footer/footer";
 // Инизиализация приложения 
 function App() {
     return (
         <>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar />
             <MainList>
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}
@@ -29,7 +29,7 @@ function App() {
 
             </MainList>
 
-
+            <Footer />
 
         </>
     );

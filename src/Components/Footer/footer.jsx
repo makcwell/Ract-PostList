@@ -1,8 +1,20 @@
 import React from 'react';
-// коммент
+import { Typography, Container } from '@mui/material';
+import Follow from './Follow/follow';
+import Creators from './Creators/creators';
+
+import s from './footer.module.css'
 function Footer(props) {
     return (
-        <div></div>
+        <>
+            <Container sx={{
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <Creators />
+                <Follow />
+            </Container>
+        </>
     );
 }
 
