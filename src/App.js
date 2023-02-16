@@ -8,7 +8,7 @@ import Card from "./Components/MainList/PostList/Card/myCard";
 import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
-
+import Footer from "./Components/Footer/footer";
 // Инизиализация приложения 
 
 
@@ -29,7 +29,7 @@ function App() {
 
             </MainList>
 
-
+            <Footer />
 
         </>
     );
