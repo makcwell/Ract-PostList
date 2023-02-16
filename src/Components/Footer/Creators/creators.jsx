@@ -4,6 +4,7 @@ import '@fontsource/babylonica';
 import { Box } from '@mui/system';
 import p from '../Creators/PussInBots.jpeg'
 
+
 function Creators(props) {
     return (
         <>
@@ -12,8 +13,8 @@ function Creators(props) {
                     direction="row"
                     justifyContent="flex-start"
                     alignItems="center"
-                    container spacing={1} sx={{ pt: 2 }}>
-                    <Grid item xs={12} sx={{
+                    container spacing={{ xs: 1, md: 2 }} sx={{ pt: 2 }}>
+                    <Grid item xs={12} md={12} sx={{
                         display: 'flex',
                         justifyContent: 'center',
                     }}>
@@ -27,7 +28,7 @@ function Creators(props) {
                             Creators team
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6} md={3}>
                         <Chip
                             avatar={<Avatar src={p} />}
                             component="a"
@@ -38,7 +39,7 @@ function Creators(props) {
                             sx={{ width: '100%' }}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6} md={3} >
                         <Chip
                             avatar={<Avatar src={p} />}
                             component="a"
@@ -49,7 +50,7 @@ function Creators(props) {
                             sx={{ width: '100%' }}
                         />
                     </Grid>
-                    <Grid item xs={3} >
+                    <Grid item xs={6} md={3} >
                         <Chip
                             avatar={<Avatar src={p} />}
                             component="a"
@@ -60,7 +61,7 @@ function Creators(props) {
                             sx={{ width: '100%' }}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6} md={3}>
                         <Chip
                             avatar={<Avatar src={p} />}
                             component="a"
@@ -68,7 +69,7 @@ function Creators(props) {
                             variant="outlined"
                             href="https://github.com/KratAN-itOfficial"
                             clickable
-                            sx={{ width: '100%' }} s
+                            sx={{ width: '100%' }}
                         />
                     </Grid>
                 </Grid>
