@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Chip, Avatar, Grid, Typography } from '@mui/material';
+import { Chip, Avatar, Grid, Typography, Box } from '@mui/material';
 import '@fontsource/babylonica';
-import { Box } from '@mui/system';
 import p from '../Creators/PussInBots.jpeg'
 
 
