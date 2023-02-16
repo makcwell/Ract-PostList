@@ -30,7 +30,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={p} sx={{ width: "30px" }} />}
                             component="a"
                             label="Terrein"
                             variant="outlined"

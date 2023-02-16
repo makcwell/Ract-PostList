@@ -8,6 +8,7 @@ import Card from "./Components/MainList/PostList/Card/myCard";
 import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import Footer from "./Components/Footer/footer";
+import ElementPagination from "./Components/MainList/Pagination/pagination";
 // Инизиализация приложения 
 function App() {
     return (
@@ -24,9 +25,8 @@ function App() {
                         <Card />
                         <Card />
                     </PostList>
-
+                    <ElementPagination />
                 </Container>
-
             </MainList>
 
             <Footer />
