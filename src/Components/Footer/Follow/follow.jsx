@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { BottomNavigation, BottomNavigationAction, Typography, Grid } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Typography, Grid, Box } from '@mui/material';
 import { Telegram, Instagram, WhatsApp } from '@mui/icons-material';
-import '@fontsource/babylonica';
-import { Box } from '@mui/system';
+import '@fontsource/babylonica';;
 
 function Follow(props) {
     const [value, setValue] = useState(0)

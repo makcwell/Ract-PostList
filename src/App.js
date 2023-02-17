@@ -9,6 +9,7 @@ import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 import Footer from "./Components/Footer/footer";
+import ElementPagination from "./Components/MainList/Pagination/pagination";
 // Инизиализация приложения 
 
 
@@ -23,10 +24,8 @@ function App() {
                 >
                     <MainHead />
                     <PostList />
-
-
+                    <ElementPagination />
                 </Container>
-
             </MainList>
 
             <Footer />

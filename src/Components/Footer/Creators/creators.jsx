@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Chip, Avatar, Grid, Typography } from '@mui/material';
+import { Chip, Avatar, Grid, Typography, Box } from '@mui/material';
 import '@fontsource/babylonica';
-import { Box } from '@mui/system';
 import p from '../Creators/PussInBots.jpeg'
 
 
@@ -30,7 +29,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={p} sx={{ width: "30px" }} />}
                             component="a"
                             label="Terrein"
                             variant="outlined"
