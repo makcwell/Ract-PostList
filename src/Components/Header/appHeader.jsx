@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Logo from './Logo/logo.svg'
+import '@fontsource/babylonica';
 
 const pages = [];
 const settings = ['Профиль', 'Добавить пост', 'Выйти'];
@@ -37,16 +38,16 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static" sx={{backgroundColor: '#fff'}}>
-            <Container >
+        <AppBar position="static" sx={{ backgroundColor: '#fff' }}>
+            <Container>
                 <Toolbar disableGutters>
 
                     {/*Логотип*/}
-                    <img src={Logo} style={{width: '32px'}}/>
+                    <img src={Logo} style={{ width: '32px' }} />
 
                     {/*Название*/}
                     <Typography
-                        variant="h6"
+                        variant="h3"
                         noWrap
                         component="a"
                         href="/"
@@ -54,14 +55,14 @@ function ResponsiveAppBar() {
                             mr: 2,
                             ml: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
+                            fontFamily: 'babylonica',
                             fontWeight: 700,
-                            letterSpacing: '.1rem',
+                            letterSpacing: '.4rem',
                             color: '#1890ff',
                             textDecoration: 'none',
                         }}
                     >
-                        Реактивные посты
+                        React posts
                     </Typography>
                     {/*Секция панель навигации по страницам*/}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
