@@ -6,32 +6,29 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useState} from "react";
+import {setAuthData} from '../../../../API/AuthApi'
 
 
-
-export default function FormDialog() {
+const FormDialog = () => {
     const [open, setOpen] = React.useState(false);
+    const [inputPassword, setInputPassword] = useState('');
+    const [inputMail, setInputMail] = useState('')
+
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
+
         setOpen(false);
     };
 
     const handleEntry = () => {
+        setAuthData(inputMail, inputPassword)
         setOpen(false);
-        localStorage.setItem('Email',inputMail)
-        localStorage.setItem('Password',inputPassword)
-        console.log(inputPassword, inputMail, logInData) // Данные инпутов для апи. Удалить временные запросы!!!
-        logInData.email = inputMail
-        logInData.password = inputPassword
     };
-    let logInData = {}; // Данные инпутов для апи. Удалить временные запросы!!!
 
-    const [inputPassword, setInputPassword] = useState('');
-    const [inputMail, setInputMail] = useState('')
 
     return (
         <div>
@@ -63,10 +60,11 @@ export default function FormDialog() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleEntry} >Подтвердить</Button>
+                    <Button onClick={handleEntry}>Подтвердить</Button>
                     <Button onClick={handleClose}>Отмена</Button>
                 </DialogActions>
             </Dialog>
         </div>
     );
 }
+export default FormDialog;
