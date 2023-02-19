@@ -9,12 +9,10 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Logo from './Logo/logo.svg'
+import Logo from '../Img/logo.svg'
 import '@fontsource/babylonica';
-import FormDialog from "./AuthCompotents/AuthModal/authModal"
+import FormDialog from "./AuthCompotents/AuthModal/authModal";
 
-
-const settings = ['Профиль', 'Добавить пост', 'Выйти'];
 
 function ResponsiveAppBar() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -25,6 +23,9 @@ function ResponsiveAppBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const handleLogOut = () => {
+        localStorage.clear()
+    }
 
 
     return (
@@ -33,7 +34,7 @@ function ResponsiveAppBar() {
                 <Toolbar disableGutters sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Box sx={{display: 'flex'}}>
                         {/*Логотип*/}
-                        <img src={Logo} style={{width: '32px'}}/>
+                        <img src={Logo} style={{width: '32px'}} alt={'Ooops'}/>
 
                         {/*Название*/}
                         <Typography
@@ -56,41 +57,53 @@ function ResponsiveAppBar() {
                         </Typography>
                     </Box>
 
-                    // Аватар + меню пользователя + Форма авторизации
+                    {/*// Аватар + меню пользователя + Форма авторизации*/}
                     <Box sx={{display: 'flex'}}>
-                        <Box>
-                            <FormDialog/>
-                        </Box>
-                        <Box>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp"
-                                            src="https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg"/>
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{mt: '45px'}}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
+
+                        {localStorage.token || localStorage.email || localStorage.password
+                            ?
+                            <Box>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                        <Avatar alt="Remy Sharp"
+                                                src="https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg"/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{mt: '45px'}}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    {/*// MenuItem потом вынести в отдельную компоненту!*/}
+
+                                    <MenuItem key={'Профиль'} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{'Профиль'}</Typography>
                                     </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
+                                    <MenuItem key={'Добавить пост'} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{'Добавить пост'}</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={'Выйти'} onClick={handleLogOut}>
+                                        <Typography textAlign="center">{'Выйти'}</Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
+                            :
+                            <Box>
+                                <FormDialog/>
+                            </Box>
+                        }
+
                     </Box>
                 </Toolbar>
             </Container>
