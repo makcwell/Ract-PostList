@@ -3,7 +3,11 @@ import React from 'react';
 import MyCard from './Card/myCard';
 
 
+<<<<<<< HEAD
 const cards = [1, 2, 3, 4, 5]
+=======
+const cards = [1, 2, 3, 4, 5, 6, 7]
+>>>>>>> maddev
 
 function PostList(props) {
     return (
