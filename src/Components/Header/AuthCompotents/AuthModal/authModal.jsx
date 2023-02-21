@@ -5,8 +5,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {setAuthData} from '../../../../API/AuthApi'
+import {LocalStorageContext} from "../../../../App";
 
 
 
@@ -15,7 +16,7 @@ const FormDialog = () => {
     const [inputPassword, setInputPassword] = useState('');
     const [inputMail, setInputMail] = useState('')
 
-
+    const { setToken } = useContext(LocalStorageContext)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -25,11 +26,12 @@ const FormDialog = () => {
         setOpen(false);
     };
 
-    const handleEntry = () => {
-        setAuthData(inputMail, inputPassword)
+    const handleEntry = async () => {
+        const token = await setAuthData(inputMail, inputPassword)
         setOpen(false);
-    };
+        setToken(token)
 
+    };
 
     return (
         <div>
