@@ -16,4 +16,5 @@ export async function setAuthData(inputMail, inputPassword) {
     localStorage.setItem("email", `${inputMail}`)
     localStorage.setItem("password", `${inputPassword}`)
     localStorage.setItem("token", commits.token)
+    return commits.token
 }
