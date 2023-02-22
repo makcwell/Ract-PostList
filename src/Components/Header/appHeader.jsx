@@ -29,12 +29,12 @@ function ResponsiveAppBar() {
 
 
     return (
-        <AppBar position="static" sx={{backgroundColor: '#fff'}}>
+        <AppBar position="static" sx={{ backgroundColor: '#fff' }}>
             <Container>
-                <Toolbar disableGutters sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Box sx={{display: 'flex'}}>
+                <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex' }}>
                         {/*Логотип*/}
-                        <img src={Logo} style={{width: '32px'}} alt={'Ooops'}/>
+                        <img src={Logo} style={{ width: '32px' }} alt={'Ooops'} />
 
                         {/*Название*/}
                         <Typography
@@ -45,7 +45,7 @@ function ResponsiveAppBar() {
                             sx={{
                                 mr: 2,
                                 ml: 2,
-                                display: {xs: 'none', md: 'flex'},
+                                display: { xs: 'none', md: 'flex' },
                                 fontFamily: 'babylonica',
                                 fontWeight: 700,
                                 letterSpacing: '.4rem',
@@ -58,19 +58,19 @@ function ResponsiveAppBar() {
                     </Box>
 
                     {/*// Аватар + меню пользователя + Форма авторизации*/}
-                    <Box sx={{display: 'flex'}}>
+                    <Box sx={{ display: 'flex' }}>
 
                         {localStorage.token || localStorage.email || localStorage.password
                             ?
                             <Box>
                                 <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                         <Avatar alt="Remy Sharp"
-                                                src="https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg"/>
+                                            src="https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg" />
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
-                                    sx={{mt: '45px'}}
+                                    sx={{ mt: '45px' }}
                                     id="menu-appbar"
                                     anchorEl={anchorElUser}
                                     anchorOrigin={{
@@ -100,7 +100,7 @@ function ResponsiveAppBar() {
                             </Box>
                             :
                             <Box>
-                                <FormDialog/>
+                                <FormDialog />
                             </Box>
                         }
 

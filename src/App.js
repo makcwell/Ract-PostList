@@ -21,16 +21,13 @@ function App() {
             <ResponsiveAppBar />
             <MainList>
                 <Container
-                    sx={{ mt: '1rem', mb: '1rem' }}
-                >
+                    sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
                     <PostList />
                     <ElementPagination />
                 </Container>
             </MainList>
-
             <Footer />
-
         </>
     );
 }
