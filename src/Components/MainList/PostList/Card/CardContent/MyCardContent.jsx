@@ -2,12 +2,18 @@ import React from 'react';
 import { CardMedia, Typography, CardContent } from '@mui/material';
 import { Stack } from '@mui/system';
 import Chip from '@mui/material/Chip';
+import s from './MyCardContent.module.css';
 
 
 function MyCardContent(props) {
+
+    const handleClick = () => {
+        alert('You clicked the Chip.')
+    }
+
     return (
         <>
-            <CardMedia
+            <CardMedia className={s.pointer}
                 // component="img"
                 // height="194"
                 sx={{ height: 400, width: '100%' }}
@@ -15,7 +21,7 @@ function MyCardContent(props) {
                 title="The Lone Warrior"
                 alt="Star wars"
             />
-            <CardContent>
+            <CardContent className={s.pointer}>
                 <Typography mt={2}
                     variant="h5"
                     component="h5"
@@ -30,8 +36,8 @@ function MyCardContent(props) {
                     <span> воин </span>
                 </Typography> */}
                 <Stack mt={2} direction="row" spacing={1}>
-                    <Chip label="воин" size="small" />
-                    <Chip label="war stars" size="small" />
+                    <Chip label="воин" size="small" onClick={handleClick} />
+                    <Chip label="war stars" size="small" onClick={handleClick} />
                 </Stack>
 
 

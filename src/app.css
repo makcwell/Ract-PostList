@@ -3,4 +3,5 @@ body {
     padding: 0;
     box-sizing: inherit;
     font-family: "Nunito", "Arial", "Helvetica", sans-serif;
+    min-width: 320px
 }
