@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Chip, Avatar, Grid, Typography, Box } from '@mui/material';
 import '@fontsource/babylonica';
-import p from '../Creators/PussInBots.jpeg'
+
 
 
 function Creators(props) {
@@ -51,7 +51,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3} >
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/80468263?v=4'} />}
                             component="a"
                             label="madDeveloper"
                             variant="outlined"
@@ -62,7 +62,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/115191188?v=4'} />}
                             component="a"
                             label="KratAN-itOfficial"
                             variant="outlined"

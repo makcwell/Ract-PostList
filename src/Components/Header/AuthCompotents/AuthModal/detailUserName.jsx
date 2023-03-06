@@ -15,7 +15,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
     const [userInfData, setCurrentUser] = useState('')
 
     useEffect(() => {
-        getUserInfo('group-10')
+        getUserInfo()
             .then((userData) => {
                 setCurrentUser(userData)
             })
