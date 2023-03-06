@@ -1,0 +1,74 @@
+import { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CircularProgress from '@mui/material/CircularProgress';
+import { getUserInfo } from '../../../../API/AuthApi';
+import CardMedia from '@mui/material/CardMedia';
+
+const DetailUserInfo = ({ open, onClose, onClick }) => {
+
+    const [userInfData, setCurrentUser] = useState('')
+
+    useEffect(() => {
+        getUserInfo('group-10')
+            .then((userData) => {
+                setCurrentUser(userData)
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    return (
+        <Dialog open={open} onClose={onClose}>
+            <DialogTitle>Информация о пользователе</DialogTitle>
+            <DialogContent>
+                {userInfData !== '' ?
+                    (<>
+                        <DialogContentText>
+
+                        </DialogContentText>
+                        <CardMedia
+                            component="img"
+                            height="160"
+                            image={userInfData.avatar}
+                            alt="user avatar"
+                        />
+                        <TextField
+                            margin="dense"
+                            id="name"
+                            label="ФИО"
+                            type="emteail"
+                            fullWidth
+                            variant="standard"
+                            defaultValue={userInfData.name}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="email"
+                            label="Электронная почта"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            defaultValue={userInfData.email}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </>) : (
+                        <CircularProgress />)}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClick}>Закрыть</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
+export default DetailUserInfo
