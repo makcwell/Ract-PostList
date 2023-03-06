@@ -12,12 +12,12 @@ import CardMedia from '@mui/material/CardMedia';
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
 
-    const [userInfData, setCurrentUser] = useState('')
+    const [userInfData, setUserInfData] = useState('')
 
     useEffect(() => {
         getUserInfo()
             .then((userData) => {
-                setCurrentUser(userData)
+                setUserInfData(userData)
             })
             .catch(err => console.log(err))
     }, [])

@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
+import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
 
 
 
@@ -17,15 +18,20 @@ function UserMenu(props) {
     const { setToken } = useContext(LocalStorageContext)
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [isOpen, setOpen] = React.useState(false);
+    const [isOpenAdd, setOpenAdd] = React.useState(false);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
+
     const handleCloseDialog = () => {
         setOpen(!isOpen);
     };
 
+    const handleClickAdd = () => {
+        setOpenAdd(!isOpenAdd);
+    };
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -65,7 +71,7 @@ function UserMenu(props) {
                     <MenuItem key={'Профиль'} onClick={handleCloseDialog} >
                         <Typography textAlign="center">{'Профиль'}</Typography>
                     </MenuItem>
-                    <MenuItem key={'Добавить пост'} onClick={handleCloseUserMenu}>
+                    <MenuItem key={'Добавить пост'} onClick={handleClickAdd}>
                         <Typography textAlign="center">{'Добавить пост'}</Typography>
                     </MenuItem>
                     <MenuItem key={'Выйти'} onClick={handleLogOut}>
@@ -73,6 +79,7 @@ function UserMenu(props) {
                     </MenuItem>
                 </Menu>
                 <DetailUserInfo open={isOpen} onClose={handleCloseDialog} onClick={handleCloseDialog} />
+                <PostAddForm openDialog={isOpenAdd} onClose={handleClickAdd} onClick={handleClickAdd} />
             </Box>
         </>
     );

@@ -1,8 +1,15 @@
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import { PostAddForm } from '../PostAddForm/postAddForm';
+
 
 function MyButton(props) {
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleClick = () => {
+        setOpenDialog(!openDialog);
+    };
     return (
         <div>
             <Grid container spacing={2} alignItems='center' justifyContent='space-between'>
@@ -11,15 +18,12 @@ function MyButton(props) {
                 </Grid>
                 <Grid item>
                     <Button variant="contained"
-                        onClick={() => {
-                            alert('Кликнул добавить пост');
-                        }}
+                        onClick={handleClick}
                     >Добавить пост</Button>
+                    <PostAddForm openDialog={openDialog} onClose={handleClick} onClick={handleClick} />
                 </Grid>
-
             </Grid>
-
-        </div>
+        </div >
     );
 }
 
