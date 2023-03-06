@@ -18,3 +18,17 @@ export async function setAuthData(inputMail, inputPassword) {
     localStorage.setItem("token", commits.token)
     return commits.token
 }
+
+export const getUserInfo = async () => {
+    const response = await fetch(`${BASE_URL}/v2/group-10/users/me`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ` + localStorage.getItem('token')
+        },
+    })
+    const result = await response.json()
+    return result
+}
+
+
