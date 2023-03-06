@@ -1,11 +1,14 @@
 import React from 'react';
 import s from './MyCardFooter.module.css'
-import { CardContent, Typography } from '@mui/material';
+import { CardContent } from '@mui/material';
 
 
 function MyCardFooter(props) {
+
+    let data = props.card.card
+
     return (
-        // <></>
+
         <CardContent>
 
             <div className={s.cardFooter__wrapper}>
@@ -25,7 +28,7 @@ function MyCardFooter(props) {
                         </svg>2
                     </div>
                 </div>
-                <div className={s.cardFooter__date}>13 февраля 2023</div>
+                <div className={s.cardFooter__date}>{data.created_at}</div>
             </div>
 
         </CardContent>

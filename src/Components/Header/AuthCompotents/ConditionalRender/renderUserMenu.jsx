@@ -7,7 +7,7 @@ function RenderUserMenu(props) {
     const { token = '' } = useContext(LocalStorageContext)
 
 
-    console.log('token>>>',token)
+    // console.log('token>>>',token)
     if (token) {
 
         return (

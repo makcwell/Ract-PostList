@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
 import { Chip, Avatar, Grid, Typography, Box } from '@mui/material';
 import '@fontsource/babylonica';
-import p from '../Creators/PussInBots.jpeg'
 
 
-function Creators(props) {
+function Creators() {
     return (
         <>
             <Box>
@@ -29,9 +27,9 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={p} sx={{ width: "30px" }} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/71286606?v=4'} sx={{ width: "30px" }} />}
                             component="a"
-                            label="Terrein"
+                            label="Эрнест Алиев"
                             variant="outlined"
                             href="https://github.com/Terrein"
                             clickable
@@ -40,9 +38,9 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3} >
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/106441725?v=4'} />}
                             component="a"
-                            label="makcwell"
+                            label="Макс Алексеев"
                             variant="outlined"
                             href="https://github.com/makcwell"
                             clickable
@@ -51,9 +49,9 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3} >
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/80468263?v=4'} />}
                             component="a"
-                            label="madDeveloper"
+                            label="Алексей Жуйков"
                             variant="outlined"
                             href="https://github.com/aleksei-zhuikov"
                             clickable
@@ -62,9 +60,9 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={p} />}
+                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/115191188?v=4'} />}
                             component="a"
-                            label="KratAN-itOfficial"
+                            label="Анатолий Крат"
                             variant="outlined"
                             href="https://github.com/KratAN-itOfficial"
                             clickable

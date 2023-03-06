@@ -3,17 +3,19 @@ import { CardHeader, Avatar } from '@mui/material';
 
 
 function MyCardHeader(props) {
+    let data = props.card.card
+
     return (
         <>
             <CardHeader
                 avatar={
                     <Avatar
-                        src="https://avatarko.ru/img/kartinka/33/Star_Wars_Darth_Vader_32632.jpg"
+                        src={data.author.avatar}
                         sx={{ width: 56, height: 56 }}
                     />
                 }
-                title="Little Warrior"
-                subheader="Crazy monkey"
+                title={data.title}
+                subheader={data.author.name}
 
             />
         </>
