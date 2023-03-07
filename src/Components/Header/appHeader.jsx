@@ -14,12 +14,12 @@ function ResponsiveAppBar() {
 
 
     return (
-        <AppBar position="static" sx={{backgroundColor: '#fff'}}>
+        <AppBar position="static" sx={{ backgroundColor: '#fff' }}>
             <Container>
-                <Toolbar disableGutters sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Box sx={{display: 'flex'}}>
+                <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex' }}>
                         {/*Логотип*/}
-                        <img src={Logo} style={{width: '32px'}} alt={'Ooops'}/>
+                        <img src={Logo} style={{ width: '32px' }} alt={'Ooops'} />
 
                         {/*Название*/}
                         <Typography
@@ -30,7 +30,7 @@ function ResponsiveAppBar() {
                             sx={{
                                 mr: 2,
                                 ml: 2,
-                                display: {xs: 'none', md: 'flex'},
+                                display: { xs: 'none', md: 'flex' },
                                 fontFamily: 'babylonica',
                                 fontWeight: 700,
                                 letterSpacing: '.4rem',
@@ -43,8 +43,8 @@ function ResponsiveAppBar() {
                     </Box>
 
                     {/*// Аватар + меню пользователя + Форма авторизации*/}
-                    <Box sx={{display: 'flex'}}>
-                        <RenderUserMenu/>
+                    <Box sx={{ display: 'flex' }}>
+                        <RenderUserMenu />
                     </Box>
                 </Toolbar>
             </Container>
