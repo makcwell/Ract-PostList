@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
 import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
+import { YODA } from '../../../../constants/constants';
 
 
 
@@ -16,9 +17,9 @@ import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm'
 function UserMenu(props) {
 
     const { setToken } = useContext(LocalStorageContext)
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [isOpen, setOpen] = React.useState(false);
-    const [isOpenAdd, setOpenAdd] = React.useState(false);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [isOpen, setOpen] = useState(false);
+    const [isOpenAdd, setOpenAdd] = useState(false);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -48,7 +49,7 @@ function UserMenu(props) {
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Remy Sharp"
-                            src="https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg" />
+                            src={YODA} />
                     </IconButton>
                 </Tooltip>
                 <Menu
@@ -64,7 +65,7 @@ function UserMenu(props) {
                         vertical: 'top',
                         horizontal: 'right',
                     }}
-                    open={Boolean(anchorElUser)}
+                    open={Boolean(!!anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
 

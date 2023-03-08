@@ -1,10 +1,7 @@
 // import { Card, CardContent, CardHeader } from "@mui/material";
-import { useSlotProps } from "@mui/base";
 import { Container } from "@mui/system";
-import React, { createContext, useEffect, useState } from "react";
-import s from './app.css';
+import { createContext, useState } from "react";
 import MainList from "./Components/MainList/mainList";
-import Card from "./Components/MainList/PostList/Card/myCard";
 import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";

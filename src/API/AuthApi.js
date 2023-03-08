@@ -1,4 +1,5 @@
-let BASE_URL = 'https://api.react-learning.ru';
+import { BASE_URL } from "../constants/constants";
+
 
 export async function setAuthData(inputMail, inputPassword) {
     let data = {
@@ -24,8 +25,8 @@ export const getUserInfo = async () => {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ` + localStorage.getItem('token')
-        },
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
     })
     const result = await response.json()
     return result

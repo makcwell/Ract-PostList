@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@mui/material';
 import { PostAddForm } from '../PostAddForm/postAddForm';
 

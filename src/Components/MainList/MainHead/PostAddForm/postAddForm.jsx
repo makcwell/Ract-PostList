@@ -94,8 +94,8 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClick}>Закрыть</Button>
                     <Button type="submit">Добавить</Button>
+                    <Button onClick={onClick}>Закрыть</Button>
                 </DialogActions>
             </form>
         </Dialog>
