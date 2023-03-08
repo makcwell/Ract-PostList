@@ -3,9 +3,9 @@ const onResponce = (res) => {
 }
 
 class UserApi {
-    constructor({baseUrl, headers}){
+    constructor({ baseUrl, headers }) {
         this._headers = headers;
-        this._baseUrl= baseUrl;
+        this._baseUrl = baseUrl;
     }
     // получение информации о пользователе по токену в заголовках
     getUserInfo() {
@@ -40,7 +40,7 @@ const config = {
     baseUrl: 'https://api.react-learning.ru',
     headers: {
         'content-type': 'application/json',
-        Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U0MTM0NDU5Yjk4YjAzOGY3N2IzYmIiLCJncm91cCI6Imdyb3VwLTEwIiwiaWF0IjoxNjc1ODkyMTUwLCJleHAiOjE3MDc0MjgxNTB9.qsLaIEGQoFj_sV3DZXhvx0mJf23d-mTB0WkFxfhbqrU'
+        // Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U0MTM0NDU5Yjk4YjAzOGY3N2IzYmIiLCJncm91cCI6Imdyb3VwLTEwIiwiaWF0IjoxNjc1ODkyMTUwLCJleHAiOjE3MDc0MjgxNTB9.qsLaIEGQoFj_sV3DZXhvx0mJf23d-mTB0WkFxfhbqrU'
     }
 }
 

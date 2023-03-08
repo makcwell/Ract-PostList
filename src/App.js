@@ -2,11 +2,11 @@
 import { Container } from "@mui/system";
 import { createContext, useState } from "react";
 import MainList from "./Components/MainList/mainList";
-import PostList from "./Components/MainList/PostList/postList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 import Footer from "./Components/Footer/footer";
 import ElementPagination from "./Components/MainList/Pagination/pagination";
+import { RenderConditionCard } from "./Components/MainList/PostList/RenderConditionCard/RenderConditionCard";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -24,7 +24,8 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
-                    <PostList />
+                    {/* <PostList /> */}
+                    <RenderConditionCard />
                     <ElementPagination />
                 </Container>
             </MainList>

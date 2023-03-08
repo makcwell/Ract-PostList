@@ -16,6 +16,7 @@ function MyButton(props) {
                 <Grid item>
                     <Typography variant="body1">Реактивно добавляй и удаляй посты это React - и точка!</Typography>
                 </Grid>
+
                 <Grid item>
                     <Button variant="contained"
                         onClick={handleClick}
@@ -26,5 +27,6 @@ function MyButton(props) {
         </div >
     );
 }
+
 
 export default MyButton;
