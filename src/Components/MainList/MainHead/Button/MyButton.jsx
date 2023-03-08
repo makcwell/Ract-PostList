@@ -1,12 +1,12 @@
 import { Grid, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button } from '@mui/material';
 import { PostAddForm } from '../PostAddForm/postAddForm';
-
+import { LocalStorageContext } from "../../../../App";
 
 function MyButton(props) {
     const [openDialog, setOpenDialog] = useState(false);
-
+    const { token } = useContext(LocalStorageContext)
     const handleClick = () => {
         setOpenDialog(!openDialog);
     };
@@ -18,10 +18,13 @@ function MyButton(props) {
                 </Grid>
 
                 <Grid item>
-                    <Button variant="contained"
-                        onClick={handleClick}
-                    >Добавить пост</Button>
-                    <PostAddForm openDialog={openDialog} onClose={handleClick} onClick={handleClick} />
+                    {token &&
+                        <>
+                            <Button variant="contained"
+                                onClick={handleClick}
+                            >Добавить пост</Button>
+                            <PostAddForm openDialog={openDialog} onClose={handleClick} onClick={handleClick} />
+                        </>}
                 </Grid>
             </Grid>
         </div >
