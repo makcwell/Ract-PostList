@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { LocalStorageContext } from "../../../../App";
 import { CardNotAuth } from "../CardNotAuth/CardNotAuth";
-import { PostList } from "../PostList";
+import { PostList } from "../postList";
 
 
 

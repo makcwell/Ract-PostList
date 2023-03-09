@@ -1,18 +1,18 @@
-import * as React from 'react';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useContext, useState} from "react";
-import {setAuthData} from '../../../../API/AuthApi'
-import {LocalStorageContext} from "../../../../App";
+import { useContext, useState } from "react";
+import { setAuthData } from '../../../../API/AuthApi'
+import { LocalStorageContext } from "../../../../App";
 
 
 
 const FormDialog = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [inputPassword, setInputPassword] = useState('');
     const [inputMail, setInputMail] = useState('')
 
@@ -39,7 +39,7 @@ const FormDialog = () => {
                 Авторизация
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle sx={{textAlign: 'center'}}>Авторизация</DialogTitle>
+                <DialogTitle sx={{ textAlign: 'center' }}>Авторизация</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus

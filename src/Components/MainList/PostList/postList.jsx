@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material';
-import React from 'react';
 import MyCard from './Card/myCard';
 import { useEffect, useState } from 'react';
 import apiPosts from '../../../API/PostsApi';

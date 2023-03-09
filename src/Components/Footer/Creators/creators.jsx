@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 import { Chip, Avatar, Grid, Typography, Box } from '@mui/material';
 import '@fontsource/babylonica';
-
+import { AVATAR_TERREIN, AVATAR_MAKCWELL, AVATAR_MADDEVELOPER, AVATAR_KRAT } from '../../../constants/constants';
 
 
 function Creators(props) {
@@ -29,7 +28,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/71286606?s=400&u=e43bf01745d3e4e715effbe97c0b6a5d104e4408&v=4'} sx={{ width: "30px" }} />}
+                            avatar={<Avatar src={AVATAR_TERREIN} sx={{ width: "30px" }} />}
                             component="a"
                             label="Terrein"
                             variant="outlined"
@@ -40,7 +39,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3} >
                         <Chip
-                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/106441725?v=4'} />}
+                            avatar={<Avatar src={AVATAR_MAKCWELL} />}
                             component="a"
                             label="makcwell"
                             variant="outlined"
@@ -51,7 +50,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3} >
                         <Chip
-                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/80468263?v=4'} />}
+                            avatar={<Avatar src={AVATAR_MADDEVELOPER} />}
                             component="a"
                             label="madDeveloper"
                             variant="outlined"
@@ -62,7 +61,7 @@ function Creators(props) {
                     </Grid>
                     <Grid item xs={6} md={3}>
                         <Chip
-                            avatar={<Avatar src={'https://avatars.githubusercontent.com/u/115191188?v=4'} />}
+                            avatar={<Avatar src={AVATAR_KRAT} />}
                             component="a"
                             label="KratAN-itOfficial"
                             variant="outlined"
