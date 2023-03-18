@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { PostAddForm } from '../PostAddForm/postAddForm';
 import { LocalStorageContext } from "../../../../App";
 
-function MyButton(props) {
+function MyButton({ handleRepeatReq }) {
     const [openDialog, setOpenDialog] = useState(false);
     const { token } = useContext(LocalStorageContext)
     const handleClick = () => {
@@ -20,10 +20,13 @@ function MyButton(props) {
                 <Grid item>
                     {token &&
                         <>
-                            <Button variant="contained"
+                            <Button
+                                variant="contained"
                                 onClick={handleClick}
-                            >Добавить пост</Button>
-                            <PostAddForm openDialog={openDialog} onClose={handleClick} onClick={handleClick} />
+                            >
+                                Добавить пост
+                            </Button>
+                            <PostAddForm openDialog={openDialog} handleRepeatReq={handleRepeatReq} onClose={handleClick} onClick={handleClick} />
                         </>}
                 </Grid>
             </Grid>

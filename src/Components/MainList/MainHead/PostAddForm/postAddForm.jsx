@@ -10,7 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import image from './add-image.png'
 import { addPost } from '../../../../API/PostsApi';
 
-export const PostAddForm = ({ openDialog, onClose, onClick }) => {
+export const PostAddForm = ({ openDialog, onClose, onClick, handleRepeatReq }) => {
 
     const [form, setForm] = useState({
         title: '',
@@ -32,7 +32,9 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
             tags: '',
             text: ''
         })
-    }, [form])
+        handleRepeatReq()
+        onClose()
+    }, [form, onClose, handleRepeatReq])
 
     return (
         <Dialog open={openDialog} onClose={onClose}>
@@ -94,7 +96,7 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button type="submit">Добавить</Button>
+                    <Button type="submit" onClose={onClose}>Добавить</Button>
                     <Button onClick={onClick}>Закрыть</Button>
                 </DialogActions>
             </form>

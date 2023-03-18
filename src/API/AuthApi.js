@@ -32,4 +32,14 @@ export const getUserInfo = async () => {
     return result
 }
 
-
+export const getRegistrationUser = async (data) => {
+    const response = await fetch(`${BASE_URL}/signup `, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    const result = await response.json()
+    return result
+}

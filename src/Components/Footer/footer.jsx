@@ -1,9 +1,8 @@
 import React from 'react';
-import { Typography, Container, Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import Follow from './Follow/follow';
 import Creators from './Creators/creators';
 
-import s from './footer.module.css'
 function Footer(props) {
     return (
         <>
