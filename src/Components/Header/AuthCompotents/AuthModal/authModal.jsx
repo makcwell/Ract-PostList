@@ -8,21 +8,25 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useContext, useState } from "react";
 import { setAuthData } from '../../../../API/AuthApi'
 import { LocalStorageContext } from "../../../../App";
-
+import RegistrationForm from './regModal';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { InputAdornment, IconButton } from '@mui/material';
 
 
 const FormDialog = () => {
     const [open, setOpen] = useState(false);
     const [inputPassword, setInputPassword] = useState('');
     const [inputMail, setInputMail] = useState('')
-
+    const [render, setRender] = useState(true)
+    const [type, setType] = useState(false);
     const { setToken } = useContext(LocalStorageContext)
+
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
-
         setOpen(false);
     };
 
@@ -30,7 +34,15 @@ const FormDialog = () => {
         const token = await setAuthData(inputMail, inputPassword)
         setOpen(false);
         setToken(token)
+    };
 
+    const handleClickShowPassword = () => {
+        setType(!type)
+    }
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+        setType(!type)
     };
 
     return (
@@ -56,13 +68,27 @@ const FormDialog = () => {
                         margin="dense"
                         id="pass"
                         label="Пароль"
-                        type="password"
+                        type={type ? "text" : "password"}
                         fullWidth
                         variant="outlined"
                         onChange={(event) => setInputPassword(event.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {type ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
+                    {render && <RegistrationForm setRender={setRender} />}
                     <Button onClick={handleEntry}>Подтвердить</Button>
                     <Button onClick={handleClose}>Отмена</Button>
                 </DialogActions>

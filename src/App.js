@@ -15,9 +15,8 @@ export const LocalStorageContext = createContext({ token: '', setToken: () => vo
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'))
-
     const [cards, setCards] = useState([]);
-
+    const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
 
     useEffect(() => {
@@ -30,7 +29,7 @@ function App() {
     const handleRepeatReq = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
 
     return (
-        <LocalStorageContext.Provider value={{ token, setToken }}>
+        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage }}>
             <ResponsiveAppBar />
             <MainList>
                 <Container

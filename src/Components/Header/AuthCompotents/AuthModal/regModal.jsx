@@ -5,29 +5,40 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { getRegistrationUser } from '../../../../API/AuthApi';
 import { Typography } from '@mui/material';
+import ServerAnswerForm from './serverAnswer';
+import { LocalStorageContext } from "../../../../App";
 
 
-
-const RegistrationForm = () => {
+const RegistrationForm = ({ setRender }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [open, setOpen] = useState(false);
+    const [openAnswer, setOpenAnswer] = useState(false)
+    const { setMessage, message } = useContext(LocalStorageContext)
 
-    const onSubmit = useCallback((data) => {
-        getRegistrationUser({ ...data, group: "group-10" })
-    }, []);
+    const onSubmit = useCallback(async (data) => {
+        const answer = await getRegistrationUser({ ...data, group: "group-10" })
+        console.log(answer)
+        setMessage(answer)
+        setOpenAnswer(!openAnswer);
+    }, [openAnswer, setMessage]);
 
     const handleClick = () => {
         setOpen(!open);
     };
 
+    const handleOpenAnswerForm = () => {
+        setOpenAnswer(!openAnswer);
+        setRender(message.message ? true : false)
+
+    };
 
     return (
         <>
-            <Button sx={{ mr: "20px" }} variant="outlined" onClick={handleClick}>
+            <Button onClick={handleClick}>
                 Регистрация
             </Button>
             <Dialog open={open} onClose={handleClick}>
@@ -82,7 +93,7 @@ const RegistrationForm = () => {
                     </DialogActions>
                 </form>
             </Dialog>
-
+            <ServerAnswerForm openAnswer={openAnswer} onClick={handleOpenAnswerForm} onClose={handleOpenAnswerForm} />
         </>
     );
 }
