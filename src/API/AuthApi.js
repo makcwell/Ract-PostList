@@ -1,11 +1,7 @@
 import { BASE_URL } from "../constants/constants";
 
 
-export async function setAuthData(inputMail, inputPassword) {
-    let data = {
-        email: inputMail,
-        password: inputPassword
-    }
+export async function setAuthData(data) {
     let response = await fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -14,10 +10,10 @@ export async function setAuthData(inputMail, inputPassword) {
         body: JSON.stringify(data)
     });
     let commits = await response.json();
-    localStorage.setItem("email", `${inputMail}`)
-    localStorage.setItem("password", `${inputPassword}`)
+    localStorage.setItem("email", `${data.email}`)
+    localStorage.setItem("password", `${data.password}`)
     localStorage.setItem("token", commits.token)
-    return commits.token
+    return commits
 }
 
 export const getUserInfo = async () => {

@@ -11,11 +11,14 @@ import { getRegistrationUser } from '../../../../API/AuthApi';
 import { Typography } from '@mui/material';
 import ServerAnswerForm from './serverAnswer';
 import { LocalStorageContext } from "../../../../App";
-
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const RegistrationForm = ({ setRender }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [open, setOpen] = useState(false);
+    const [type, setType] = useState(false);
     const [openAnswer, setOpenAnswer] = useState(false)
     const { setMessage, message } = useContext(LocalStorageContext)
 
@@ -33,9 +36,15 @@ const RegistrationForm = ({ setRender }) => {
     const handleOpenAnswerForm = () => {
         setOpenAnswer(!openAnswer);
         setRender(message.message ? true : false)
-
     };
+    const handleClickShowPassword = () => {
+        setType(!type)
+    }
 
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+        setType(!type)
+    };
     return (
         <>
             <Button onClick={handleClick}>
@@ -70,7 +79,7 @@ const RegistrationForm = ({ setRender }) => {
                             margin="dense"
                             id="pass"
                             label="Пароль"
-                            type="password"
+                            type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
                             {...register('password', {
@@ -83,6 +92,19 @@ const RegistrationForm = ({ setRender }) => {
                                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                                 }
                             })}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {type ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                         {errors?.password && <span style={{ color: "red" }}>{errors.password?.message}</span>}
                         <Typography>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</Typography>

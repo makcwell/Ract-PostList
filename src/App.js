@@ -24,7 +24,7 @@ function App() {
             .then((dataPosts) => {
                 setCards(dataPosts)
             })
-    }, [isUpdateCards, token])
+    }, [isUpdateCards, setToken])
 
     const handleRepeatReq = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
 
@@ -35,7 +35,6 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead handleRepeatReq={handleRepeatReq} />
-                    {/* <PostList /> */}
                     {(token && <PostList cards={cards} />) || <CardNotAuth />}
                     <ElementPagination />
                 </Container>
