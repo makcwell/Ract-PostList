@@ -20,7 +20,7 @@ const FormDialog = () => {
     const [render, setRender] = useState(true)
     const [type, setType] = useState(false);
     const [serverAnswer, setServerAnswer] = useState('')
-    const { setToken } = useContext(LocalStorageContext)
+    const { setToken, handleFirstRender } = useContext(LocalStorageContext)
     const { register, handleSubmit, resetField, formState: { errors } } = useForm();
 
     const handleClickOpen = () => {
@@ -39,7 +39,8 @@ const FormDialog = () => {
         setServerAnswer(answer)
         const token = answer.token
         setToken(token)
-    }, [setToken, setServerAnswer]);
+        handleFirstRender()
+    }, [setToken, setServerAnswer, handleFirstRender]);
 
     const handleClickShowPassword = () => {
         setType(!type)

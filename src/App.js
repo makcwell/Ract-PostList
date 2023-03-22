@@ -24,12 +24,12 @@ function App() {
             .then((dataPosts) => {
                 setCards(dataPosts)
             })
-    }, [isUpdateCards, setToken])
+    }, [isUpdateCards, token])
 
     const handleRepeatReq = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
-
+    const handleFirstRender = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
     return (
-        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage }}>
+        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage, handleFirstRender }}>
             <ResponsiveAppBar />
             <MainList>
                 <Container
