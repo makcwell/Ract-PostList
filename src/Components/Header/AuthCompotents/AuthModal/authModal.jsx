@@ -37,7 +37,7 @@ const FormDialog = () => {
     const handleEntry = useCallback(async (data) => {
         const answer = await setAuthData(data)
         setServerAnswer(answer)
-        const token = answer.token
+        const token = answer?.token
         setToken(token)
         handleFirstRender()
     }, [setToken, setServerAnswer, handleFirstRender]);
@@ -113,12 +113,12 @@ const FormDialog = () => {
                             }}
                         />
                         {errors?.password && <span style={{ color: "red" }}>{errors.password?.message}</span>}
-                        {serverAnswer.message && <Typography sx={{
+                        {serverAnswer?.message && <Typography sx={{
                             color: 'red',
                             fontFamily: 'Times',
                             fontSize: '20px',
                             mt: "10px"
-                        }} > {serverAnswer.message}</Typography>}
+                        }} > {serverAnswer?.message}</Typography>}
                     </DialogContent>
                     <DialogActions>
                         {render && <RegistrationForm setRender={setRender} />}
