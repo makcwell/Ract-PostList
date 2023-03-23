@@ -14,6 +14,8 @@ import { LocalStorageContext } from "../../../../App";
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import s from './auth.module.css'
+import { emailPattern, passwordPattern, userAgreement } from '../../../../constants/constants';
 
 const RegistrationForm = ({ setRender }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -35,7 +37,7 @@ const RegistrationForm = ({ setRender }) => {
 
     const handleOpenAnswerForm = () => {
         setOpenAnswer(!openAnswer);
-        setRender(message.message ? true : false)
+        setRender(message.message && true)
     };
     const handleClickShowPassword = () => {
         setType(!type)
@@ -62,18 +64,9 @@ const RegistrationForm = ({ setRender }) => {
                             type="email"
                             fullWidth
                             variant="outlined"
-                            {...register('email', {
-                                required: {
-                                    value: true,
-                                    message: 'Обязатель поле для ввода'
-                                },
-                                pattern: {
-                                    message: 'Email в формате expamle@example.com',
-                                    value: /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                                }
-                            })}
+                            {...register('email', emailPattern)}
                         />
-                        {errors?.email && <span style={{ color: "red" }}>{errors.email?.message}</span>}
+                        {errors?.email && <span className={s.warningLable}>{errors.email?.message}</span>}
                         <TextField
                             autoFocus
                             margin="dense"
@@ -82,16 +75,7 @@ const RegistrationForm = ({ setRender }) => {
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
-                            {...register('password', {
-                                required: {
-                                    value: true,
-                                    message: 'Обязатель поле для ввода'
-                                },
-                                pattern: {
-                                    message: 'Пароль должен содержать минимум 8 символов, одну букву латинского алфавита и одну цифру',
-                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                }
-                            })}
+                            {...register('password', passwordPattern)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -106,8 +90,8 @@ const RegistrationForm = ({ setRender }) => {
                                 )
                             }}
                         />
-                        {errors?.password && <span style={{ color: "red" }}>{errors.password?.message}</span>}
-                        <Typography>Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.</Typography>
+                        {errors?.password && <span className={s.warningLable}>{errors.password?.message}</span>}
+                        <Typography>{userAgreement}</Typography>
                     </DialogContent>
                     <DialogActions>
                         <Button type="submit">Подтвердить</Button>

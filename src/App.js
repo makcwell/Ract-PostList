@@ -18,6 +18,7 @@ function App() {
     const [cards, setCards] = useState([]);
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
+    const [userInfData, setUserInfData] = useState('')
 
     useEffect(() => {
         apiPosts.getAllPosts()
@@ -26,15 +27,15 @@ function App() {
             })
     }, [isUpdateCards, token])
 
-    const handleRepeatReq = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
     const handleFirstRender = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
+
     return (
-        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage, handleFirstRender }}>
+        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage, handleFirstRender, userInfData, setUserInfData }}>
             <ResponsiveAppBar />
             <MainList>
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}>
-                    <MainHead handleRepeatReq={handleRepeatReq} />
+                    <MainHead />
                     {(token && <PostList cards={cards} />) || <CardNotAuth />}
                     <ElementPagination />
                 </Container>

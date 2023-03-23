@@ -13,7 +13,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputAdornment, IconButton, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
-
+import s from './auth.module.css'
+import { emailPattern, passwordPattern } from '../../../../constants/constants';
 
 const FormDialog = () => {
     const [open, setOpen] = useState(false);
@@ -68,36 +69,17 @@ const FormDialog = () => {
                             type="email"
                             fullWidth
                             variant="outlined"
-                            {...register('email', {
-                                required: {
-                                    value: true,
-                                    message: 'Обязатель поле для ввода'
-                                },
-                                pattern: {
-                                    message: 'Email в формате expamle@example.com',
-                                    value: /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                                }
-                            })}
+                            {...register('email', emailPattern)}
                         />
-                        {errors?.email && <span style={{ color: "red" }}>{errors.email?.message}</span>}
+                        {errors?.email && <span className={s.warningLable} >{errors.email?.message}</span>}
                         <TextField
-                            autoFocus
                             margin="dense"
                             id="pass"
                             label="Пароль"
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
-                            {...register('password', {
-                                required: {
-                                    value: true,
-                                    message: 'Обязатель поле для ввода'
-                                },
-                                pattern: {
-                                    message: 'Пароль должен содержать минимум 8 символов, одну букву латинского алфавита и одну цифру',
-                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                }
-                            })}
+                            {...register('password', passwordPattern)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -112,7 +94,7 @@ const FormDialog = () => {
                                 )
                             }}
                         />
-                        {errors?.password && <span style={{ color: "red" }}>{errors.password?.message}</span>}
+                        {errors?.password && <span className={s.warningLable} >{errors.password?.message}</span>}
                         {serverAnswer?.message && <Typography sx={{
                             color: 'red',
                             fontFamily: 'Times',

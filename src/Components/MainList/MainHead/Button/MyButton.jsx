@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { PostAddForm } from '../PostAddForm/postAddForm';
 import { LocalStorageContext } from "../../../../App";
 
-function MyButton({ handleRepeatReq }) {
+function MyButton() {
     const [openDialog, setOpenDialog] = useState(false);
     const { token } = useContext(LocalStorageContext)
     const handleClick = () => {
@@ -26,7 +26,7 @@ function MyButton({ handleRepeatReq }) {
                             >
                                 Добавить пост
                             </Button>
-                            <PostAddForm openDialog={openDialog} handleRepeatReq={handleRepeatReq} onClose={handleClick} onClick={handleClick} />
+                            <PostAddForm openDialog={openDialog} onClose={handleClick} onClick={handleClick} />
                         </>}
                 </Grid>
             </Grid>
