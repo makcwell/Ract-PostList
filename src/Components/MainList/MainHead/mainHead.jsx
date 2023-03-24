@@ -4,7 +4,7 @@ import s from './mainHead.module.css';
 import MyButton from './Button/MyButton';
 
 
-function MainHead(props) {
+function MainHead({ handleRepeatReq }) {
 
     return (
         <div className={s.mainHeadWrapper} >

@@ -4,3 +4,26 @@ export const AVATAR_MADDEVELOPER = 'https://avatars.githubusercontent.com/u/8046
 export const AVATAR_KRAT = 'https://avatars.githubusercontent.com/u/115191188?v=4'
 export const YODA = 'https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg'
 export const BASE_URL = 'https://api.react-learning.ru';
+
+export const emailPattern = {
+    required: {
+        value: true,
+        message: 'Обязатель поле для ввода'
+    },
+    pattern: {
+        message: 'Email в формате expamle@example.com',
+        value: /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+    }
+}
+export const passwordPattern = {
+    required: {
+        value: true,
+        message: 'Обязатель поле для ввода'
+    },
+    pattern: {
+        message: 'Пароль должен содержать минимум 8 символов, одну букву латинского алфавита и одну цифру',
+        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+    }
+}
+
+export const userAgreement = 'Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.'

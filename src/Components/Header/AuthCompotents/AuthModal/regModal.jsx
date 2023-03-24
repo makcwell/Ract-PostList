@@ -5,44 +5,40 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useContext, useState, useCallback } from "react";
-import { setAuthData } from '../../../../API/AuthApi'
+import { useState, useCallback, useContext } from "react";
+import { useForm } from "react-hook-form";
+import { getRegistrationUser } from '../../../../API/AuthApi';
+import { Typography } from '@mui/material';
+import ServerAnswerForm from './serverAnswer';
 import { LocalStorageContext } from "../../../../App";
-import RegistrationForm from './regModal';
+import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { InputAdornment, IconButton, Typography } from '@mui/material';
-import { useForm } from "react-hook-form";
 import s from './auth.module.css'
-import { emailPattern, passwordPattern } from '../../../../constants/constants';
+import { emailPattern, passwordPattern, userAgreement } from '../../../../constants/constants';
 
-const FormDialog = () => {
+const RegistrationForm = ({ setRender }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [open, setOpen] = useState(false);
-    const [render, setRender] = useState(true)
     const [type, setType] = useState(false);
-    const [serverAnswer, setServerAnswer] = useState('')
-    const { setToken, handleFirstRender } = useContext(LocalStorageContext)
-    const { register, handleSubmit, resetField, formState: { errors } } = useForm();
+    const [openAnswer, setOpenAnswer] = useState(false)
+    const { setMessage, message } = useContext(LocalStorageContext)
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const onSubmit = useCallback(async (data) => {
+        const answer = await getRegistrationUser({ ...data, group: "group-10" })
+        console.log(answer)
+        setMessage(answer)
+        setOpenAnswer(!openAnswer);
+    }, [openAnswer, setMessage]);
+
+    const handleClick = () => {
+        setOpen(!open);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-        resetField('email')
-        resetField('password')
-        setServerAnswer('')
+    const handleOpenAnswerForm = () => {
+        setOpenAnswer(!openAnswer);
+        setRender(message.message && true)
     };
-
-    const handleEntry = useCallback(async (data) => {
-        const answer = await setAuthData(data)
-        setServerAnswer(answer)
-        const token = answer?.token
-        setToken(token)
-        handleFirstRender()
-    }, [setToken, setServerAnswer, handleFirstRender]);
-
     const handleClickShowPassword = () => {
         setType(!type)
     }
@@ -51,15 +47,14 @@ const FormDialog = () => {
         event.preventDefault();
         setType(!type)
     };
-
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Авторизация
+            <Button onClick={handleClick}>
+                Регистрация
             </Button>
-            <Dialog open={open} onClose={handleClose}>
-                <form onSubmit={handleSubmit(handleEntry)}>
-                    <DialogTitle sx={{ textAlign: 'center' }}>Авторизация</DialogTitle>
+            <Dialog open={open} onClose={handleClick}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <DialogTitle sx={{ textAlign: 'center' }}>Регистрация</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -71,8 +66,9 @@ const FormDialog = () => {
                             variant="outlined"
                             {...register('email', emailPattern)}
                         />
-                        {errors?.email && <span className={s.warningLable} >{errors.email?.message}</span>}
+                        {errors?.email && <span className={s.warningLable}>{errors.email?.message}</span>}
                         <TextField
+                            autoFocus
                             margin="dense"
                             id="pass"
                             label="Пароль"
@@ -94,22 +90,17 @@ const FormDialog = () => {
                                 )
                             }}
                         />
-                        {errors?.password && <span className={s.warningLable} >{errors.password?.message}</span>}
-                        {serverAnswer?.message && <Typography sx={{
-                            color: 'red',
-                            fontFamily: 'Times',
-                            fontSize: '20px',
-                            mt: "10px"
-                        }} > {serverAnswer?.message}</Typography>}
+                        {errors?.password && <span className={s.warningLable}>{errors.password?.message}</span>}
+                        <Typography>{userAgreement}</Typography>
                     </DialogContent>
                     <DialogActions>
-                        {render && <RegistrationForm setRender={setRender} />}
                         <Button type="submit">Подтвердить</Button>
-                        <Button onClick={handleClose}>Отмена</Button>
+                        <Button onClick={handleClick}>Отмена</Button>
                     </DialogActions>
                 </form>
             </Dialog>
+            <ServerAnswerForm openAnswer={openAnswer} onClick={handleOpenAnswerForm} onClose={handleOpenAnswerForm} />
         </>
     );
 }
-export default FormDialog;
+export default RegistrationForm;

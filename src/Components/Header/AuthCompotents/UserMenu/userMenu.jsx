@@ -9,14 +9,13 @@ import Typography from "@mui/material/Typography";
 import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
 import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
-import { YODA } from '../../../../constants/constants';
 
 
 
 
 function UserMenu(props) {
 
-    const { setToken } = useContext(LocalStorageContext)
+    const { setToken, userInfData } = useContext(LocalStorageContext)
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isOpen, setOpen] = useState(false);
     const [isOpenAdd, setOpenAdd] = useState(false);
@@ -49,7 +48,7 @@ function UserMenu(props) {
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Remy Sharp"
-                            src={YODA} />
+                            src={userInfData?.avatar} />
                     </IconButton>
                 </Tooltip>
                 <Menu
