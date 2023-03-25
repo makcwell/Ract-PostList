@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
 import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
+import SearchInput from './search';
 
 
 
@@ -45,6 +46,7 @@ function UserMenu(props) {
     return (
         <>
             <Box>
+                <SearchInput />
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Remy Sharp"

@@ -14,6 +14,22 @@ export const addPost = async (data) => {
     return response
 }
 
+export const getPostPagination = async (page, limit) => {
+    let response = await fetch(`${BASE_URL}/v2/group-10/posts/paginate?page=${page}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+    })
+    const result = await response.json()
+    return result
+}
+
+
+
+
+
 const onResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
@@ -42,3 +58,6 @@ class PostsApi {
 const apiPosts = new PostsApi(config)
 
 export default apiPosts;
+
+
+
