@@ -41,9 +41,9 @@ function App() {
             <MainList>
                 <Container sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
-                    {/* {(token && <PostList cards={cards} />) || <CardNotAuth />} */}
-                    <CardInfo />
-                    {/* <ElementPagination /> */}
+                    {(token && <PostList cards={cards} />) || <CardNotAuth />}
+                    {/* <CardInfo /> */}
+                    <ElementPagination />
 
                 </Container>
             </MainList>
