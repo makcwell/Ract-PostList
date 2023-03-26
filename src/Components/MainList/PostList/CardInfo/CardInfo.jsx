@@ -19,13 +19,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     // backgroundColor: 'yellow',
     boxShadow: 'none',
-    border: '2px solid #000',
+    // border: '2px solid #000',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'justify',
 }));
 
-
+// Случайные ID постов !! После добавления динамики удалить !!
 // const post_id = '6418eeb3aa3971218395591e';
 const post_id = '640b1eff4ee419975fbd2fdb';
 // const post_id = '641efdadaa397121839d2b20';
@@ -66,7 +66,7 @@ export function CardInfo() {
         year: 'numeric',
     }
 
-    let whenCreatedPost = new Date(postInfo.created_at).toLocaleString('ru', options)
+    let whenCreatedPost = new Date(postInfo.created_at).toLocaleString('ru', options).slice(0, -3);
 
     return (
         <Box sx={{ flexGrow: 1 }}
@@ -216,45 +216,46 @@ export function CardInfo() {
 
                 {/* Комментарии */}
                 <Grid item xs={12}>
-                    <Item sx={{ maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll' }}>
+                    <Item sx={{ maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc' }}>
 
-                        {postInfo.comments?.map((comment, i) =>
+                        {postInfo.comments?.length != 0 &&
 
-                            <div className={s.commentWrapper} key={i}>
-                                <div className={s.userInfoComment}>
-                                    <CardHeader
-                                        sx={{
-                                            // fontSize: '9px'
-                                            // backgroundColor: 'tomato'
-                                        }}
+                            (postInfo.comments?.map((comment, i) =>
 
-                                        avatar={
-                                            <Avatar sx={{
-                                                // display: 'flex',
-                                                backgroundColor: 'teal',
-                                                width: 32, height: 32,
-
+                                <div className={s.commentWrapper} key={i}>
+                                    <div className={s.userInfoComment}>
+                                        <CardHeader
+                                            sx={{
+                                                // fontSize: '9px'
+                                                // backgroundColor: 'tomato'
                                             }}
-                                                src={postInfo.author.avatar}
-                                            />
-                                            // {postInfo.author.avatar}
-                                        }
 
-                                        title={postInfo.author.name}
-                                        subheader={whenCreatedPost}
-                                    />
+                                            avatar={
+                                                <Avatar sx={{
+                                                    // display: 'flex',
+                                                    backgroundColor: 'teal',
+                                                    width: 32, height: 32,
+
+                                                }}
+                                                    src={postInfo.author.avatar}
+                                                />
+                                                // {postInfo.author.avatar}
+                                            }
+
+                                            title={postInfo.author.name}
+                                            subheader={whenCreatedPost}
+                                        />
+                                    </div>
+
+                                    <div className={s.commentText} >
+                                        {comment.text}
+                                    </div>
                                 </div>
 
-                                <div className={s.commentText} >
-                                    {comment.text}
-                                </div>
-                            </div>
-
-                        )}
+                            )) || <div>Комментариев еще нет, добавь их первым !</div>}
 
                     </Item>
                 </Grid>
-
 
             </Grid>
         </Box >

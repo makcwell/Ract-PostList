@@ -10,6 +10,9 @@ import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotA
 import { PostList } from "./Components/MainList/PostList/postList";
 import apiPosts from "./API/PostsApi";
 import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import MyCard from "./Components/MainList/PostList/Card/myCard";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -20,6 +23,8 @@ function App() {
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
     const [userInfData, setUserInfData] = useState('')
+
+
 
     useEffect(() => {
         apiPosts.getAllPosts()
@@ -34,12 +39,12 @@ function App() {
         <LocalStorageContext.Provider value={{ token, setToken, message, setMessage, handleFirstRender, userInfData, setUserInfData }}>
             <ResponsiveAppBar />
             <MainList>
-                <Container
-                    sx={{ mt: '1rem', mb: '1rem' }}>
+                <Container sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
                     {/* {(token && <PostList cards={cards} />) || <CardNotAuth />} */}
                     <CardInfo />
-                    <ElementPagination />
+                    {/* <ElementPagination /> */}
+
                 </Container>
             </MainList>
             <Footer />
