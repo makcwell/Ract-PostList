@@ -9,6 +9,7 @@ import ElementPagination from "./Components/MainList/Pagination/pagination";
 import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
 import { PostList } from "./Components/MainList/PostList/postList";
 import apiPosts from "./API/PostsApi";
+import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -36,7 +37,8 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
-                    {(token && <PostList cards={cards} />) || <CardNotAuth />}
+                    {/* {(token && <PostList cards={cards} />) || <CardNotAuth />} */}
+                    <CardInfo />
                     <ElementPagination />
                 </Container>
             </MainList>
