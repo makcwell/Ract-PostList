@@ -54,31 +54,9 @@
 
 .cardFooter__date {
     display: flex;
-    /* align-items: center; */
-    /* align-items: flex-end; */
-
-    /* background-color: rgb(112, 134, 212) */
 }
 
-/* .cardInfo_wrap_userInfo {
-    background-color: #e8a0a0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-} */
-
-/* .cardInfo_userInfo {
-    background: aqua;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-} */
-
 .cardInfo_wrap_like_tags {
-    /* display: flex;
-    flex-direction: row;
-    align-items: flex-start; */
-    /* padding-top: 0px; */
     background-color: #ccc;
 
 }
@@ -89,12 +67,10 @@
 
 .userInfoWrapper {
     display: flex;
-    /* align-items: flex-start; */
 
 }
 
 .userInfoWrapper>* span {
-    /* display: flex; */
     text-align: left;
     color: #333;
 }
@@ -129,4 +105,30 @@
 
 .btnBackWrapper {
     margin-bottom: 20px;
+}
+
+/* Форма Добавления отзыва */
+
+.formComment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 20px;
+    /* max-width: 600px; */
+}
+
+.formComment h2 {
+    margin: 0;
+    color: #161616;
+}
+
+.formComment textarea {
+    min-height: 200px;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #2d2d2d;
+
 }

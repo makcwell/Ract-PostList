@@ -36,37 +36,38 @@ export function CardInfo() {
 
     const [postInfo, setPostInfo] = useState({})
     const [showFormComment, setShowFormComment] = useState(false)
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onBlur" })
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
-
+    // запрос на получение данных поста
     useEffect(() => {
         apiPosts.getPostById(post_id)
             .then((data) => setPostInfo(data))
     }, [])
 
-
-
     const sendCommentPost = (e) => {
         e.preventDefault()
+
         setShowFormComment(false)
-        console.log('clicked on FORM BUTTON ADD Comment >>')
+        // console.log('clicked on FORM BUTTON ADD Comment >>')
     }
 
+    // открываем и закрываем форму комментариев
     const openFormComment = () => {
         setShowFormComment((state) => !showFormComment)
     }
 
-    const hendleBtnBack = () => {
-        console.log('Clicked on Btb Back')
+    const handleBtnBack = () => {
+        console.log('Clicked on Btn Back')
     }
 
+    // Для формата даты
     const options = {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
     }
-
     let whenCreatedPost = new Date(postInfo.created_at).toLocaleString('ru', options).slice(0, -3);
+
 
     return (
         <Box sx={{ flexGrow: 1 }}
@@ -75,7 +76,7 @@ export function CardInfo() {
 
             {/* Кнопка назад */}
             <div className={s.btnBackWrapper}>
-                <Button onClick={hendleBtnBack} variant='outlined' size='small'>
+                <Button onClick={handleBtnBack} variant='outlined' size='small'>
                     {'<'} Назад
                 </Button>
             </div>
@@ -83,6 +84,7 @@ export function CardInfo() {
 
             <Grid container spacing={2}>
 
+                {/* фото поста */}
                 <Grid item xs={12} md={6} lg={6}>
                     <Item>
                         <CardMedia
@@ -103,14 +105,12 @@ export function CardInfo() {
                     </Item>
                 </Grid>
 
+                {/* Инфо пользователя / Лайки / Теги */}
                 <Grid item xs={12} md={6} lg={6} >
                     <Item>
                         <div className={s.userInfoWrapper}>
                             <CardHeader
-                                sx={{
-
-                                    // backgroundColor: 'tomato'
-                                }}
+                                // sx={{ backgroundColor: 'tomato' }}
 
                                 avatar={
                                     <Avatar sx={{
@@ -124,7 +124,6 @@ export function CardInfo() {
                                 }
 
                                 title={postInfo?.author?.name}
-                                // subheader={postInfo.created_at}
                                 subheader={whenCreatedPost}
                             />
                         </div>
@@ -199,16 +198,17 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     {showFormComment &&
                         <Item>
-                            <form submitForm={handleSubmit(sendCommentPost)}>
-                                <div>Оставьте ваш комментарий</div>
+                            <form className={s.formComment} submitForm={handleSubmit(sendCommentPost)}>
+                                <h2>Оставьте ваш комментарий</h2>
                                 <textarea
                                     {...register('comment', { required: true })}
+                                    type='text'
+                                    placeholder='...напишите ваш комментарий'
                                 />
-                                <Button type='submit' variant="contained" color="success">
+
+                                <Button sx={{ maxWidth: '200px', marginBottom: '2rem' }} size="large" type='submit' variant="contained" color="success">
                                     Добавить
                                 </Button>
-
-
                             </form>
                         </Item>
                     }
@@ -218,7 +218,7 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     <Item sx={{ maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc' }}>
 
-                        {postInfo.comments?.length != 0 &&
+                        {postInfo.comments?.length !== 0 ?
 
                             (postInfo.comments?.map((comment, i) =>
 
@@ -252,7 +252,7 @@ export function CardInfo() {
                                     </div>
                                 </div>
 
-                            )) || <div>Комментариев еще нет, добавь их первым !</div>}
+                            )) : <div>Комментариев еще нет, добавь их первым !</div>}
 
                     </Item>
                 </Grid>

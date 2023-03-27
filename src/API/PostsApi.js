@@ -32,6 +32,7 @@ class PostsApi {
         this._header = headers;
     }
 
+    // Получение всех постов
     getAllPosts() {
         return fetch(`${this._baseUrl}/posts`, {
             headers: this._header
