@@ -8,7 +8,7 @@ import Chip from '@mui/material/Chip';
 
 
 function MyCard({ card }) {
-    // console.log('props приходит в MyCard >>', card)
+    console.log('props приходит в MyCard >>', card)
 
     const handleClick = () => {
         alert('You clicked the Chip.')

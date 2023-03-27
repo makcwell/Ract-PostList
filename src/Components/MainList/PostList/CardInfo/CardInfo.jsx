@@ -33,6 +33,7 @@ const post_id = '640b1eff4ee419975fbd2fdb';
 
 
 export function CardInfo() {
+    // console.log('from cardInfo >>', cards)
 
     const [postInfo, setPostInfo] = useState({})
     const [showFormComment, setShowFormComment] = useState(false)
@@ -45,10 +46,11 @@ export function CardInfo() {
     }, [])
 
     const sendCommentPost = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
+        console.log(e)
 
         setShowFormComment(false)
-        // console.log('clicked on FORM BUTTON ADD Comment >>')
+        console.log('clicked on FORM BUTTON ADD Comment >>')
     }
 
     // открываем и закрываем форму комментариев
@@ -67,7 +69,6 @@ export function CardInfo() {
         year: 'numeric',
     }
     let whenCreatedPost = new Date(postInfo.created_at).toLocaleString('ru', options).slice(0, -3);
-
 
     return (
         <Box sx={{ flexGrow: 1 }}
@@ -198,13 +199,19 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     {showFormComment &&
                         <Item>
-                            <form className={s.formComment} submitForm={handleSubmit(sendCommentPost)}>
+                            <form className={s.formComment} onSubmit={handleSubmit(sendCommentPost)}>
                                 <h2>Оставьте ваш комментарий</h2>
                                 <textarea
-                                    {...register('comment', { required: true })}
+                                    {...register('comment', {
+                                        required: {
+                                            value: true,
+                                            message: 'Комментарий не может быть пустым',
+                                        }
+                                    })}
                                     type='text'
                                     placeholder='...напишите ваш комментарий'
                                 />
+                                {errors?.comment && <span className={s.errorComment}>{errors.comment?.message}</span>}
 
                                 <Button sx={{ maxWidth: '200px', marginBottom: '2rem' }} size="large" type='submit' variant="contained" color="success">
                                     Добавить
