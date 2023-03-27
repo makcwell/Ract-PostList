@@ -10,6 +10,7 @@ import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotA
 import { PostList } from "./Components/MainList/PostList/postList";
 import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
+import { limit } from "./constants/constants";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -20,11 +21,11 @@ function App() {
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
     const [userInfData, setUserInfData] = useState('')
-    const [limit] = useState(9)
     const [page, setPage] = useState(1)
     const [pageQty, setPageQty] = useState(0)
     const [searchQuery, setSearchQuery] = useState('');
     const debounceSearchQuery = useDebounce(searchQuery, 700)
+
 
     useEffect(() => {
         if (token) {
@@ -37,13 +38,11 @@ function App() {
                 }
             })()
         }
-    }, [token, isUpdateCards, debounceSearchQuery, page, limit])
+    }, [token, isUpdateCards, debounceSearchQuery, page])
 
 
     const handleFirstRender = useCallback(() => {
         setUpdateCards(!isUpdateCards)
-        setPage(1)
-        setSearchQuery('')
     }, [isUpdateCards])
 
     return (
@@ -67,7 +66,7 @@ function App() {
                     sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
                     {(token && <PostList cards={cards} />) || <CardNotAuth />}
-                    <ElementPagination />
+                    {(token && <ElementPagination />)}
                 </Container>
             </MainList>
             <Footer />

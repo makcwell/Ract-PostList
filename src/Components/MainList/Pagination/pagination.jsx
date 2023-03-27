@@ -3,10 +3,10 @@ import { Stack, Pagination } from '@mui/material';
 import { LocalStorageContext } from '../../../App';
 
 function ElementPagination() {
-    const { page, setPage, pageQty, token } = useContext(LocalStorageContext)
+    const { page, setPage, pageQty } = useContext(LocalStorageContext)
 
     return (
-        <>{token &&
+        <>
             <Stack spacing={2} sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -17,16 +17,16 @@ function ElementPagination() {
                 <Pagination
                     count={pageQty}
                     page={page}
-                    onChange={(_, num) => {
+                    onChange={(event, num) => {
                         setPage(num)
                     }}
                     variant="string"
                     size='large'
                     fontSize='20px'
                     showFirstButton
-                    showLastButton />
+                    showLastButton
+                />
             </Stack>
-        }
         </>
     );
 }

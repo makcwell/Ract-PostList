@@ -16,7 +16,7 @@ import SearchInput from './search';
 
 function UserMenu(props) {
 
-    const { setToken, userInfData, setSearchQuery } = useContext(LocalStorageContext)
+    const { setToken, userInfData, setPage, setSearchQuery } = useContext(LocalStorageContext)
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isOpen, setOpen] = useState(false);
     const [isOpenAdd, setOpenAdd] = useState(false);
@@ -40,6 +40,7 @@ function UserMenu(props) {
         localStorage.clear()
         setToken('')
         setSearchQuery('')
+        setPage(1)
     }
 
 
