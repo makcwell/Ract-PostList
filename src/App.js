@@ -9,7 +9,7 @@ import ElementPagination from "./Components/MainList/Pagination/pagination";
 import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
 import { PostList } from "./Components/MainList/PostList/postList";
 import { getPostPagination } from "./API/PostsApi";
-import apiPosts from "./API/PostsApi";
+import useDebounce from "./hooks/useDebounce";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -23,25 +23,27 @@ function App() {
     const [limit] = useState(9)
     const [page, setPage] = useState(1)
     const [pageQty, setPageQty] = useState(0)
+    const [searchQuery, setSearchQuery] = useState('');
+    const debounceSearchQuery = useDebounce(searchQuery, 700)
 
     useEffect(() => {
-        (async () => {
-            const answer = await getPostPagination(page, limit)
-            setPageQty(Math.ceil(answer?.total / 10))
-            setCards(answer?.posts)
-        })()
+        if (token) {
+            (async () => {
+                const answer = await getPostPagination(page, limit, debounceSearchQuery)
+                setPageQty(parseInt(Math.ceil(answer?.total / limit)))
+                setCards(answer?.posts)
+                if (answer?.postLength === 0) {
+                    setPage(1)
+                }
+            })()
+        }
+    }, [token, isUpdateCards, debounceSearchQuery, page, limit])
 
-    }, [limit, page, setCards, isUpdateCards, token])
-    // useEffect(() => {
-    //     apiPosts.getAllPosts()
-    //         .then((dataPosts) => {
-    //             setCards(dataPosts)
-    //         })
-    // }, [isUpdateCards, token])
 
     const handleFirstRender = useCallback(() => {
         setUpdateCards(!isUpdateCards)
         setPage(1)
+        setSearchQuery('')
     }, [isUpdateCards])
 
     return (
@@ -55,7 +57,9 @@ function App() {
             setUserInfData,
             page,
             setPage,
-            pageQty
+            pageQty,
+            searchQuery,
+            setSearchQuery,
         }}>
             <ResponsiveAppBar />
             <MainList>

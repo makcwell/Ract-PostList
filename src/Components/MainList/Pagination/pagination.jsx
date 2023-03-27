@@ -3,10 +3,10 @@ import { Stack, Pagination } from '@mui/material';
 import { LocalStorageContext } from '../../../App';
 
 function ElementPagination() {
-    const { page, setPage, pageQty } = useContext(LocalStorageContext)
+    const { page, setPage, pageQty, token } = useContext(LocalStorageContext)
 
     return (
-        <>
+        <>{token &&
             <Stack spacing={2} sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -26,6 +26,7 @@ function ElementPagination() {
                     showFirstButton
                     showLastButton />
             </Stack>
+        }
         </>
     );
 }

@@ -1,12 +1,28 @@
-import InputBase from "@mui/material/InputBase";
+
 import SearchIcon from "@mui/icons-material/Search";
+import { Search, SearchIconWrapper, StyledInputBase } from "../../../../constants/constants";
+import { LocalStorageContext } from "../../../../App";
+import { useContext, useCallback } from 'react';
+
 const SearchInput = () => {
+    const { setSearchQuery, setPage } = useContext(LocalStorageContext)
+
+    const handleChange = useCallback((event) => {
+        setSearchQuery(event.target.value)
+        setPage(1)
+    }, [setSearchQuery, setPage])
 
     return (<>
-        <SearchIcon />
-        <InputBase
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }} />
+        <Search>
+            <SearchIconWrapper>
+                <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+                placeholder="Найти пост"
+                inputProps={{ 'aria-label': 'Найти' }}
+                onChange={handleChange}
+            />
+        </Search>
     </>
     );
 
