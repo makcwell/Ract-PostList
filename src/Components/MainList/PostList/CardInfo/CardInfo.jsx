@@ -88,6 +88,7 @@ export function CardInfo({ cards }) {
                             sx={{
                                 maxHeight: '400px',
                                 width: '100%',
+                                boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)',
 
                             }}
                             image={post.image}
