@@ -5,14 +5,22 @@ import { CardHeader, Avatar } from '@mui/material';
 import { CardMedia, Typography, CardContent } from '@mui/material';
 import { Stack } from '@mui/system';
 import Chip from '@mui/material/Chip';
+import { useNavigate } from "react-router-dom";
 
 
+// Maddev
 function MyCard({ card }) {
     console.log('props приходит в MyCard >>', card)
 
     const handleClick = () => {
         alert('You clicked the Chip.')
     }
+
+    const handleIntoCardClick = () => {
+        navigate(`/post/${card._id}`)
+    }
+
+    const navigate = useNavigate()
 
     const options = {
         day: 'numeric',
@@ -62,6 +70,7 @@ function MyCard({ card }) {
                 image={card.image}
                 title={card.title}
                 alt={`фото ${card.title}`}
+                onClick={handleIntoCardClick}
             />
 
             {/* Заголовок карточки */}

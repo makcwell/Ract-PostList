@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import apiPosts from '../../../../API/PostsApi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
     // backgroundColor: theme.palette.mode === 'white' ? '#1A2027' : '#fff',
@@ -25,29 +27,21 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'justify',
 }));
 
-// Случайные ID постов !! После добавления динамики удалить !!
-// const post_id = '6418eeb3aa3971218395591e';
-const post_id = '640b1eff4ee419975fbd2fdb';
-// const post_id = '641efdadaa397121839d2b20';
-
-
-
-export function CardInfo() {
+export function CardInfo({ cards }) {
     // console.log('from cardInfo >>', cards)
 
-    const [postInfo, setPostInfo] = useState({})
     const [showFormComment, setShowFormComment] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const params = useParams()
+    const cardId = params.id
+    const post = cards.find((item) => item._id === cardId)
 
-    // запрос на получение данных поста
-    useEffect(() => {
-        apiPosts.getPostById(post_id)
-            .then((data) => setPostInfo(data))
-    }, [])
+    const navigate = useNavigate()
 
-    const sendCommentPost = (e) => {
+
+    const sendCommentPost = (data) => {
         // e.preventDefault()
-        console.log(e)
+        console.log('data from textarea >>', data)
 
         setShowFormComment(false)
         console.log('clicked on FORM BUTTON ADD Comment >>')
@@ -59,8 +53,9 @@ export function CardInfo() {
     }
 
     const handleBtnBack = () => {
-        console.log('Clicked on Btn Back')
+        navigate(-1)
     }
+
 
     // Для формата даты
     const options = {
@@ -68,7 +63,7 @@ export function CardInfo() {
         month: 'long',
         year: 'numeric',
     }
-    let whenCreatedPost = new Date(postInfo.created_at).toLocaleString('ru', options).slice(0, -3);
+    let whenCreatedPost = new Date(post.created_at).toLocaleString('ru', options).slice(0, -3);
 
     return (
         <Box sx={{ flexGrow: 1 }}
@@ -90,15 +85,12 @@ export function CardInfo() {
                     <Item>
                         <CardMedia
                             component="img"
-                            // height="194"
                             sx={{
-                                // display: 'flex',
-                                // height: 350,
+                                maxHeight: '400px',
                                 width: '100%',
-                                // float: 'left',
 
                             }}
-                            image={postInfo.image}
+                            image={post.image}
                             title="фото"
                             alt="фото"
 
@@ -119,12 +111,12 @@ export function CardInfo() {
                                         backgroundColor: 'teal',
                                         width: 56, height: 56,
                                     }}
-                                        src={postInfo?.author?.avatar}
+                                        src={post.author.avatar}
                                     />
 
                                 }
 
-                                title={postInfo?.author?.name}
+                                title={post.author.name}
                                 subheader={whenCreatedPost}
                             />
                         </div>
@@ -145,7 +137,7 @@ export function CardInfo() {
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21c.211 0 .514-.137.735-.265C18.405 17.205 22 13.098 22 8.922 22 5.45 19.553 3 16.29 3c-1.863 0-3.374.863-4.29 2.186C11.104 3.873 9.573 3 7.71 3 4.447 3 2 5.451 2 8.922c0 4.176 3.595 8.284 9.275 11.813.211.128.514.265.725.265Zm0-1.657c-.04 0-.11-.049-.201-.117C7.579 16.5 3.62 12.569 3.62 8.921c0-2.608 1.732-4.344 4.069-4.344 1.893 0 2.98 1.147 3.625 2.128.272.392.443.5.685.5.242 0 .393-.118.685-.5.695-.96 1.742-2.128 3.625-2.128 2.337 0 4.069 1.736 4.069 4.344 0 3.647-3.958 7.578-8.168 10.303-.1.07-.17.118-.211.118Z" fill="#7B8E98"></path>
                                             <path clip-rule="evenodd" d="M12 19.343c-.04 0-.11-.049-.201-.117C7.579 16.5 3.62 12.569 3.62 8.921c0-2.608 1.732-4.344 4.069-4.344 1.893 0 2.98 1.148 3.625 2.128.272.392.443.5.685.5.242 0 .393-.118.685-.5.695-.96 1.742-2.128 3.625-2.128 2.337 0 4.069 1.736 4.069 4.344 0 3.647-3.958 7.578-8.168 10.303-.1.07-.17.118-.211.118Z"></path>
                                         </svg>
-                                        {postInfo?.likes?.length}
+                                        {post.likes.length}
                                     </div>
 
                                     {/* Хештеги карточки */}
@@ -155,7 +147,7 @@ export function CardInfo() {
                                         // backgroundColor='tomato'
                                         spacing={1}>
 
-                                        {postInfo?.tags?.map((tag) =>
+                                        {post.tags.map((tag) =>
                                             <Chip sx={{ marginBottom: '5px' }} label={tag} key={tag} size="small" color="success" />
                                         )}
 
@@ -173,7 +165,7 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Название поста:</b></span>
-                        <span className={s.postDescription}>{postInfo.title}</span>
+                        <span className={s.postDescription}>{post.title}</span>
                     </Item>
                 </Grid>
 
@@ -181,7 +173,7 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Описание поста:</b> </span>
-                        <span className={s.postDescription}>{postInfo.text}</span>
+                        <span className={s.postDescription}>{post.text}</span>
                     </Item>
                 </Grid>
 
@@ -225,9 +217,9 @@ export function CardInfo() {
                 <Grid item xs={12}>
                     <Item sx={{ maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc' }}>
 
-                        {postInfo.comments?.length !== 0 ?
+                        {post.comments.length !== 0 ?
 
-                            (postInfo.comments?.map((comment, i) =>
+                            (post.comments.map((comment, i) =>
 
                                 <div className={s.commentWrapper} key={i}>
                                     <div className={s.userInfoComment}>
@@ -244,12 +236,12 @@ export function CardInfo() {
                                                     width: 32, height: 32,
 
                                                 }}
-                                                    src={postInfo.author.avatar}
+                                                    src={post.author.avatar}
                                                 />
-                                                // {postInfo.author.avatar}
+
                                             }
 
-                                            title={postInfo.author.name}
+                                            title={post.author.name}
                                             subheader={whenCreatedPost}
                                         />
                                     </div>

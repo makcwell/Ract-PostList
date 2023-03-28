@@ -39,12 +39,6 @@ class PostsApi {
         }).then(onResponse)
     }
 
-    // Получение поста по id
-    getPostById(id) {
-        return fetch(`${this._baseUrl}/posts/${id}`, {
-            headers: this._header
-        }).then(onResponse)
-    }
 }
 
 const apiPosts = new PostsApi(config)
