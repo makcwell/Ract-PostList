@@ -1,6 +1,6 @@
 // import { Card, CardContent, CardHeader } from "@mui/material";
 import { Container } from "@mui/system";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
@@ -10,7 +10,7 @@ import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotA
 import { PostList } from "./Components/MainList/PostList/postList";
 import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
-import { limit } from "./constants/constants";
+import { LIMIT } from "./constants/constants";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -29,21 +29,23 @@ function App() {
 
     useEffect(() => {
         if (token) {
-            (async () => {
-                const answer = await getPostPagination(page, limit, debounceSearchQuery)
-                setPageQty(parseInt(Math.ceil(answer?.total / limit)))
+            const getPaginationData = async () => {
+                const answer = await getPostPagination(page, LIMIT, debounceSearchQuery)
+                setPageQty(parseInt(Math.ceil(answer?.total / LIMIT)))
                 setCards(answer?.posts)
                 if (answer?.postLength === 0) {
                     setPage(1)
                 }
-            })()
+            }
+            getPaginationData()
+
         }
     }, [token, isUpdateCards, debounceSearchQuery, page])
 
 
-    const handleFirstRender = useCallback(() => {
+    const handleFirstRender = () => {
         setUpdateCards(!isUpdateCards)
-    }, [isUpdateCards])
+    }
 
     return (
         <LocalStorageContext.Provider value={{
@@ -65,8 +67,11 @@ function App() {
                 <Container
                     sx={{ mt: '1rem', mb: '1rem' }}>
                     <MainHead />
-                    {(token && <PostList cards={cards} />) || <CardNotAuth />}
-                    {(token && <ElementPagination />)}
+                    {(token &&
+                        <>
+                            <PostList cards={cards} />
+                            <ElementPagination />
+                        </>) || <CardNotAuth />}
                 </Container>
             </MainList>
             <Footer />
