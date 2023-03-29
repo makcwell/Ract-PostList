@@ -34,7 +34,7 @@
 
 .boxSvg:hover {
     cursor: pointer;
-    stroke: rgb(231, 61, 31);
+    /* stroke: rgb(231, 61, 31); */
 }
 
 .boxComm {
