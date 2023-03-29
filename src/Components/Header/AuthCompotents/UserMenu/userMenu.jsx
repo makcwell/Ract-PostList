@@ -9,13 +9,14 @@ import Typography from "@mui/material/Typography";
 import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
 import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
+import SearchInput from './search';
 
 
 
 
 function UserMenu(props) {
 
-    const { setToken, userInfData } = useContext(LocalStorageContext)
+    const { setToken, userInfData, setPage, setSearchQuery } = useContext(LocalStorageContext)
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isOpen, setOpen] = useState(false);
     const [isOpenAdd, setOpenAdd] = useState(false);
@@ -38,19 +39,26 @@ function UserMenu(props) {
     const handleLogOut = () => {
         localStorage.clear()
         setToken('')
-
+        setSearchQuery('')
+        setPage(1)
     }
 
 
     return (
         <>
             <Box>
-                <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="Remy Sharp"
-                            src={userInfData?.avatar} />
-                    </IconButton>
-                </Tooltip>
+                <Box sx={{
+                    display: 'flex',
+                    gap: '15px'
+                }}>
+                    <SearchInput />
+                    <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <Avatar alt="Remy Sharp"
+                                src={userInfData?.avatar} />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
                 <Menu
                     sx={{ mt: '45px' }}
                     id="menu-appbar"

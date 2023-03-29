@@ -1,6 +1,6 @@
 // import { Card, CardContent, CardHeader } from "@mui/material";
 import { Container } from "@mui/system";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
@@ -12,6 +12,9 @@ import apiPosts from "./API/PostsApi";
 import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
 import { Routes, Route } from "react-router-dom";
 import MyCard from "./Components/MainList/PostList/Card/myCard";
+import { getPostPagination } from "./API/PostsApi";
+import useDebounce from "./hooks/useDebounce";
+import { LIMIT } from "./constants/constants";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -22,20 +25,49 @@ function App() {
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
     const [userInfData, setUserInfData] = useState('')
+    const [page, setPage] = useState(1)
+    const [pageQty, setPageQty] = useState(0)
+    const [searchQuery, setSearchQuery] = useState('');
+    const debounceSearchQuery = useDebounce(searchQuery, 700)
+
 
 
 
     useEffect(() => {
-        apiPosts.getAllPosts()
-            .then((dataPosts) => {
-                setCards(dataPosts)
-            })
-    }, [isUpdateCards, token])
+        if (token) {
+            const getPaginationData = async () => {
+                const answer = await getPostPagination(page, LIMIT, debounceSearchQuery)
+                setPageQty(parseInt(Math.ceil(answer?.total / LIMIT)))
+                setCards(answer?.posts)
+                if (answer?.postLength === 0) {
+                    setPage(1)
+                }
+            }
+            getPaginationData()
 
-    const handleFirstRender = useCallback(() => setUpdateCards(!isUpdateCards), [isUpdateCards])
+        }
+    }, [token, isUpdateCards, debounceSearchQuery, page])
+
+
+    const handleFirstRender = () => {
+        setUpdateCards(!isUpdateCards)
+    }
 
     return (
-        <LocalStorageContext.Provider value={{ token, setToken, message, setMessage, handleFirstRender, userInfData, setUserInfData }}>
+        <LocalStorageContext.Provider value={{
+            token,
+            setToken,
+            message,
+            setMessage,
+            handleFirstRender,
+            userInfData,
+            setUserInfData,
+            page,
+            setPage,
+            pageQty,
+            searchQuery,
+            setSearchQuery,
+        }}>
             <ResponsiveAppBar />
             <MainList>
 
