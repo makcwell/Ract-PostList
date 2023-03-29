@@ -8,6 +8,10 @@ import Footer from "./Components/Footer/footer";
 import ElementPagination from "./Components/MainList/Pagination/pagination";
 import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
 import { PostList } from "./Components/MainList/PostList/postList";
+import apiPosts from "./API/PostsApi";
+import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
+import { Routes, Route } from "react-router-dom";
+import MyCard from "./Components/MainList/PostList/Card/myCard";
 import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import { LIMIT } from "./constants/constants";
@@ -25,6 +29,8 @@ function App() {
     const [pageQty, setPageQty] = useState(0)
     const [searchQuery, setSearchQuery] = useState('');
     const debounceSearchQuery = useDebounce(searchQuery, 700)
+
+
 
 
     useEffect(() => {
@@ -64,15 +70,23 @@ function App() {
         }}>
             <ResponsiveAppBar />
             <MainList>
-                <Container
-                    sx={{ mt: '1rem', mb: '1rem' }}>
-                    <MainHead />
-                    {(token &&
-                        <>
-                            <PostList cards={cards} />
-                            <ElementPagination />
-                        </>) || <CardNotAuth />}
+
+                <Container sx={{ mt: '1rem', mb: '1rem' }}>
+
+                    <Routes>
+                        <Route path={'/'} element={
+                            <>
+                                <MainHead />
+                                {(token && <PostList cards={cards} />) || <CardNotAuth />}
+
+                                <ElementPagination />
+                            </>
+                        } />
+                        <Route path={'/post/:id'} element={<CardInfo cards={cards} />} />
+                    </Routes>
+
                 </Container>
+
             </MainList>
             <Footer />
         </LocalStorageContext.Provider >
