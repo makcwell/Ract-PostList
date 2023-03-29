@@ -15,7 +15,7 @@ import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import s from './auth.module.css'
-import { emailPattern, passwordPattern, userAgreement } from '../../../../constants/constants';
+import { EMAIL_PATTERN, PASSWORD_PATTERN, USER_AGREEMENT } from '../../../../constants/constants';
 
 const RegistrationForm = ({ setRender }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -64,7 +64,7 @@ const RegistrationForm = ({ setRender }) => {
                             type="email"
                             fullWidth
                             variant="outlined"
-                            {...register('email', emailPattern)}
+                            {...register('email', EMAIL_PATTERN)}
                         />
                         {errors?.email && <span className={s.warningLable}>{errors.email?.message}</span>}
                         <TextField
@@ -75,7 +75,7 @@ const RegistrationForm = ({ setRender }) => {
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
-                            {...register('password', passwordPattern)}
+                            {...register('password', PASSWORD_PATTERN)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -91,7 +91,7 @@ const RegistrationForm = ({ setRender }) => {
                             }}
                         />
                         {errors?.password && <span className={s.warningLable}>{errors.password?.message}</span>}
-                        <Typography>{userAgreement}</Typography>
+                        <Typography>{USER_AGREEMENT}</Typography>
                     </DialogContent>
                     <DialogActions>
                         <Button type="submit">Подтвердить</Button>

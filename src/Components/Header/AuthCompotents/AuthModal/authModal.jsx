@@ -14,7 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputAdornment, IconButton, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
 import s from './auth.module.css'
-import { emailPattern, passwordPattern } from '../../../../constants/constants';
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../constants/constants';
 
 const FormDialog = () => {
     const [open, setOpen] = useState(false);
@@ -69,7 +69,7 @@ const FormDialog = () => {
                             type="email"
                             fullWidth
                             variant="outlined"
-                            {...register('email', emailPattern)}
+                            {...register('email', EMAIL_PATTERN)}
                         />
                         {errors?.email && <span className={s.warningLable} >{errors.email?.message}</span>}
                         <TextField
@@ -79,7 +79,7 @@ const FormDialog = () => {
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
-                            {...register('password', passwordPattern)}
+                            {...register('password', PASSWORD_PATTERN)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
