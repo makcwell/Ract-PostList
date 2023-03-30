@@ -99,6 +99,10 @@
 .commentText {
     color: #2d2d2d;
     font-size: 1rem;
+    white-space: break-spaces;
+    word-break: break-all;
+    line-height: 26px;
+    font-size: 0.9rem;
 }
 
 .postDescription {
