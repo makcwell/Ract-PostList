@@ -91,9 +91,14 @@ function MyCard({ card }) {
 
             {/* Хештеги карточки */}
             <CardContent>
-                <Stack mt={0} direction="row" flexWrap='wrap' spacing={1}>
+                <Stack mt={0}
+                    flexGrow='1'
+                    direction="row"
+                    flexWrap='wrap'
+                    spacing={1}
+                >
                     {card.tags.map((item) =>
-                        <Chip sx={{ marginBottom: '5px' }} label={item} key={item} size="small" color="success" />
+                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={item} title={item} size="small" color="success" />
                     )}
                 </Stack>
             </CardContent>
