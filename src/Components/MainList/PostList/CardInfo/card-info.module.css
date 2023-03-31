@@ -12,15 +12,17 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    flex: 1;
+    /* flex: 1; */
     /* background-color: tomato; */
 }
 
 .cardFooter__favorite {
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     align-items: center;
     gap: 10px;
-    /* background-color: teal; */
+    /* background-color: rgb(132, 171, 244); */
 }
 
 .boxSvg {
@@ -28,7 +30,7 @@
     align-items: center;
     gap: 5px;
     font-size: large;
-    color: #7B8E98;
+    color: #937b98;
     margin-top: 20px;
     margin-right: 20px;
 
@@ -97,6 +99,10 @@
 .commentText {
     color: #2d2d2d;
     font-size: 1rem;
+    white-space: break-spaces;
+    word-break: break-all;
+    line-height: 26px;
+    font-size: 0.9rem;
 }
 
 .postDescription {

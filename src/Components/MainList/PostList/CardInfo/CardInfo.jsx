@@ -138,13 +138,17 @@ export function CardInfo({ cards }) {
 
                                     {/* Хештеги карточки */}
                                     <Stack mt={2}
+                                        flexGrow='1'
                                         direction="row"
                                         flexWrap='wrap'
                                         // backgroundColor='tomato'
-                                        spacing={1}>
+                                        spacing={1}
+                                    >
 
                                         {post?.tags.map((tag) =>
-                                            <Chip sx={{ marginBottom: '5px' }} label={tag} key={tag} size="small" color="success" />
+
+                                            <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={tag} key={tag} size="small" color="success" />
+
                                         )}
 
                                     </Stack>
