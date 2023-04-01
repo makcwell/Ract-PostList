@@ -112,7 +112,7 @@ function MyCard({ card }) {
                             <FavoriteBorderIcon />
                             {card.likes.length}
                         </div>
-                        {card.comments.length != 0 &&
+                        {card.comments.length !== 0 &&
                             <div className={s.boxComm}>
                                 {/* <Comment /> */}
                                 <ChatBubbleOutlineIcon />
