@@ -1,9 +1,17 @@
-import React from 'react';
+import * as React from 'react';
+import {Breadcrumbs} from "@mui/material";
+import {Link} from "react-router-dom";
 
-function Breadcrumb(props) {
+
+
+export default function BasicBreadcrumbs() {
+
     return (
-        <div></div>
+        <div role="presentation">
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link to={'/'}>Все посты</Link>
+                <Link to={'/mypostlist'}>Мои посты</Link>
+            </Breadcrumbs>
+        </div>
     );
 }
-
-export default Breadcrumb;

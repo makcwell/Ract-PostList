@@ -29,8 +29,8 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: large;
-    color: #937b98;
+    font-size: 24px;
+    color: #7B8E98;
     margin-top: 20px;
     margin-right: 20px;
 
@@ -38,7 +38,7 @@
 
 .boxSvg:hover {
     cursor: pointer;
-    stroke: rgb(231, 61, 31);
+    color: #FF4444;
 }
 
 .boxComm {

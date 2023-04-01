@@ -7,7 +7,7 @@ function PostInfo({cards}) {
     const prodId = params.id
     const post = cards.find(item => item._id === prodId)
 
-    console.log('POSTINFO>>>',post)
+
     return (
         <>
             <Container  fixed sx={{

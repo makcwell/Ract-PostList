@@ -132,7 +132,7 @@ export function CardInfo({ cards }) {
                                     {/* Лайки карточки */}
                                     <div className={s.boxSvg}>
                                         {/* <Like /> */}
-                                        <FavoriteBorderIcon />
+                                        <FavoriteBorderIcon fontSize={'large'} />
                                         {post?.likes.length}
                                     </div>
 

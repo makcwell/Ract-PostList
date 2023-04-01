@@ -1,21 +1,22 @@
 // import { Card, CardContent, CardHeader } from "@mui/material";
-import { Container } from "@mui/system";
-import { createContext, useEffect, useState } from "react";
+import {Container} from "@mui/system";
+import {createContext, useEffect, useState} from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 import Footer from "./Components/Footer/footer";
 import ElementPagination from "./Components/MainList/Pagination/pagination";
-import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
-import { PostList } from "./Components/MainList/PostList/postList";
-import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
-import { Routes, Route } from "react-router-dom";
-import { getPostPagination } from "./API/PostsApi";
+import {CardNotAuth} from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
+import {PostList} from "./Components/MainList/PostList/postList";
+import {CardInfo} from "./Components/MainList/PostList/CardInfo/CardInfo";
+import {Routes, Route} from "react-router-dom";
+import {getPostPagination} from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
-import { LIMIT } from "./constants/constants";
+import {LIMIT} from "./constants/constants";
+import {MyPostList} from "./Components/MainList/MyPostList/MyPostList";
 // Инизиализация приложения 
 
-export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
+export const LocalStorageContext = createContext({token: '', setToken: () => void 0})
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'))
@@ -27,8 +28,6 @@ function App() {
     const [pageQty, setPageQty] = useState(0)
     const [searchQuery, setSearchQuery] = useState('');
     const debounceSearchQuery = useDebounce(searchQuery, 700)
-
-
 
 
     useEffect(() => {
@@ -50,7 +49,6 @@ function App() {
     const handleFirstRender = () => {
         setUpdateCards(!isUpdateCards)
     }
-
     return (
         <LocalStorageContext.Provider value={{
             token,
@@ -66,28 +64,34 @@ function App() {
             searchQuery,
             setSearchQuery,
         }}>
-            <ResponsiveAppBar />
+            <ResponsiveAppBar/>
             <MainList>
 
-                <Container sx={{ mt: '1rem', mb: '1rem' }}>
+                <Container sx={{mt: '1rem', mb: '1rem'}}>
 
                     <Routes>
                         <Route path={'/'} element={
                             <>
-                                <MainHead />
-                                {(token && <PostList cards={cards} />) || <CardNotAuth />}
+                                <MainHead/>
+                                {(token && <PostList cards={cards}/>) || <CardNotAuth/>}
 
-                                <ElementPagination />
+                                <ElementPagination/>
                             </>
-                        } />
-                        <Route path={'/post/:id'} element={<CardInfo cards={cards} />} />
+                        }/>
+                        <Route path={'/post/:id'} element={<CardInfo cards={cards}/>}/>
+                        <Route path={'/mypostlist'} element={
+                            <>
+                                <MainHead/>
+                                <MyPostList/>
+                            </>
+                        }/>
                     </Routes>
 
                 </Container>
 
             </MainList>
-            <Footer />
-        </LocalStorageContext.Provider >
+            <Footer/>
+        </LocalStorageContext.Provider>
     );
 }
 

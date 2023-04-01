@@ -1,12 +1,21 @@
 import React from 'react';
 import s from './myCard.module.css';
-import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card } from '@mui/material';
+import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Badge, styled } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useNavigate } from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
 
 function MyCard({ card }) {
+
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            right: 17,
+            top: 17,
+            color: '#7B8E98',
+            fontSize: 14
+        },
+    }));
 
     const handleIntoCardClick = () => {
         navigate(`/post/${card._id}`)
@@ -21,10 +30,8 @@ function MyCard({ card }) {
     }
 
     const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
-
     return (
 
-        // <Grid item xs="12" sm="4" md="4">
         <Card className={s.cardShadow}
               sx={{
                   display: 'flex',
@@ -51,8 +58,6 @@ function MyCard({ card }) {
             <div onClick={handleIntoCardClick}>
                 {/* Фото карточки */}
                 <CardMedia className={s.pointer}
-                    // component="img"
-                    // height="194"
                            sx={{
                                height: '300px',
                                width: '100%',
@@ -78,13 +83,10 @@ function MyCard({ card }) {
 
                     {/* Описание(текст) карточки */}
                     <Typography mt={2}
-                                variant="body1">
+                                variant="body1"
+                                noWrap={true}>
                         {card.text}
                     </Typography>
-                    {/* <Typography mt={2} variant="body2" component="div">
-                    <span> меч </span>
-                    <span> воин </span>
-                </Typography> */}
 
                 </CardContent>
             </div>
@@ -97,8 +99,8 @@ function MyCard({ card }) {
                     flexWrap='wrap'
                     spacing={1}
                 >
-                    {card.tags.map((item) =>
-                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={item} title={item} size="small" color="success" />
+                    {card.tags.map((item, index) =>
+                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item} size="small" color="success" />
                     )}
                 </Stack>
             </CardContent>
@@ -114,14 +116,16 @@ function MyCard({ card }) {
                     <div className={s.cardFooter__favorite}>
                         <div className={s.boxSvg}>
                             {/* <Like /> */}
-                            <FavoriteBorderIcon />
-                            {card.likes.length}
+                            <StyledBadge badgeContent={card.likes.length} color="default"  >
+                                <FavoriteBorderOutlinedIcon fontSize={'large'} />
+                            </StyledBadge>
                         </div>
                         {card.comments.length !== 0 &&
                             <div className={s.boxComm}>
                                 {/* <Comment /> */}
-                                <ChatBubbleOutlineIcon />
-                                {card.comments.length}
+                                <StyledBadge  badgeContent={card.comments.length} color="default"  >
+                                    <ChatBubbleOutlineIcon fontSize={'large'} />
+                                </StyledBadge>
                             </div>
                         }
                     </div>
@@ -130,8 +134,6 @@ function MyCard({ card }) {
 
             </CardContent>
         </Card>
-        // {/* </Grid> */ }
-
     );
 
 }
