@@ -63,6 +63,7 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                         type="text"
                         fullWidth
                         variant="outlined"
+                        required
                     />
                     <TextField
                         margin="dense"
@@ -74,6 +75,7 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                         type="text"
                         fullWidth
                         variant="outlined"
+                        required
                     />
                     <TextField
                         margin="dense"
@@ -85,6 +87,7 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                         fullWidth
                         variant="outlined"
                         placeholder="Введите тэги через запятую"
+                        required
                     />
                     <TextField
                         id="text"
@@ -96,6 +99,7 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                         fullWidth
                         rows={4}
                         placeholder="Текст вашего поста"
+                        required
                     />
                 </DialogContent>
                 <DialogActions>

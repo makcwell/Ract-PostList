@@ -11,13 +11,14 @@ import CardMedia from '@mui/material/CardMedia';
 import { LocalStorageContext } from "../../../../App";
 import { useForm } from "react-hook-form";
 import ResultUpdateInfo from './updateUserInfo';
+import { USER_PATTERN } from '../../../../constants/constants';
 
 
 
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
     const { setUserInfData } = useContext(LocalStorageContext)
-    const { register, handleSubmit, watch, reset, formState: { isLoading, defaultValues }, getValues } = useForm({
+    const { register, handleSubmit, watch, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
         defaultValues: async () => {
             const userDefaultValues = await getUserInfo()
             setUserInfData(userDefaultValues)
@@ -77,7 +78,9 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     label="ФИО"
                                     type="text"
                                     fullWidth
-                                    {...register('name')}
+                                    error={!!errors.name}
+                                    helperText={errors?.name?.message}
+                                    {...register('name', USER_PATTERN)}
                                 />
                                 <TextField
                                     id="about"
@@ -86,7 +89,9 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     multiline
                                     fullWidth
                                     rows={4}
-                                    {...register('about')}
+                                    error={!!errors.about}
+                                    helperText={errors?.about?.message}
+                                    {...register('about', USER_PATTERN)}
                                 />
                                 <TextField
                                     margin="dense"
@@ -96,7 +101,9 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     multiline
                                     fullWidth
                                     rows={3}
-                                    {...register('avatar')}
+                                    error={!!errors.avatar}
+                                    helperText={errors?.avatar?.message}
+                                    {...register('avatar', USER_PATTERN)}
                                 />
                                 <DialogActions>
                                     <Button type='submit'>Изменить</Button>
