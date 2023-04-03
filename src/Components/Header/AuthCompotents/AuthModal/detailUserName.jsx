@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -17,36 +17,31 @@ import ResultUpdateInfo from './updateUserInfo';
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
     const { setUserInfData } = useContext(LocalStorageContext)
-    const { register, handleSubmit, watch, reset, formState: { isLoading, defaultValues } } = useForm({
-        defaultValues: async () =>
-            await getUserInfo()
+    const { register, handleSubmit, watch, reset, formState: { isLoading, defaultValues }, getValues } = useForm({
+        defaultValues: async () => {
+            const userDefaultValues = await getUserInfo()
+            setUserInfData(userDefaultValues)
+            return userDefaultValues
+        }
     });
     const [openForm, setOpenForm] = useState(false)
-    const [needUpdate, setNeedUpdate] = useState(true)
+    const [needUpdate, setNeedUpdate] = useState(false)
     const watchAvatar = watch('avatar')
 
-
     const onSubmit = (data) => {
-
         const { about, name, avatar } = data
         if (defaultValues.avatar !== data.avatar) {
             changeUserAvatar({ avatar })
+            reset(data)
         }
         if (defaultValues.about !== data.about || defaultValues.name !== data.name) {
             changeUserInfo({ about, name })
+            reset(data)
         }
-        if (JSON.stringify(defaultValues) === JSON.stringify(data)) {
-            setNeedUpdate(false)
-        }
-
         setOpenForm(!openForm)
-        reset(data)
+        setNeedUpdate(JSON.stringify(defaultValues) === JSON.stringify(getValues()))
     }
 
-
-    useEffect(() => {
-        setUserInfData(defaultValues)
-    }, [defaultValues, setUserInfData])
 
 
     return (
@@ -116,7 +111,11 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                             <CircularProgress />)}
                 </DialogContent>
             </Dialog >
-            <ResultUpdateInfo openForm={openForm} setOpenForm={setOpenForm} needUpdate={needUpdate} setNeedUpdate={setNeedUpdate} />
+            <ResultUpdateInfo
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+                needUpdate={needUpdate}
+            />
 
         </>
     );
