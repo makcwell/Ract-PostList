@@ -11,7 +11,6 @@ const ResultUpdateInfo = ({ openForm, needUpdate, setOpenForm }) => {
     const handleClose = () => {
         setOpenForm(!openForm)
     }
-    console.log((!needUpdate && openForm))
     return (
         <>
             <Dialog open={openForm} onClose={handleClose}>

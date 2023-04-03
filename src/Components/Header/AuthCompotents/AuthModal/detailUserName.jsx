@@ -66,7 +66,6 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     type="email"
                                     fullWidth
                                     variant="standard"
-                                    // defaultValue={userInfData.email}
                                     InputProps={{
                                         readOnly: true,
                                     }}
@@ -78,7 +77,6 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     label="ФИО"
                                     type="text"
                                     fullWidth
-                                    // defaultValue={userInfData.name}
                                     {...register('name')}
                                 />
                                 <TextField
@@ -88,7 +86,6 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     multiline
                                     fullWidth
                                     rows={4}
-                                    // defaultValue={userInfData.about}
                                     {...register('about')}
                                 />
                                 <TextField
@@ -99,7 +96,6 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     multiline
                                     fullWidth
                                     rows={3}
-                                    // defaultValue={userInfData.avatar}
                                     {...register('avatar')}
                                 />
                                 <DialogActions>
