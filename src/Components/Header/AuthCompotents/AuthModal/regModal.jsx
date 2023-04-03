@@ -26,7 +26,6 @@ const RegistrationForm = ({ setRender }) => {
 
     const onSubmit = useCallback(async (data) => {
         const answer = await getRegistrationUser({ ...data, group: "group-10" })
-        console.log(answer)
         setMessage(answer)
         setOpenAnswer(!openAnswer);
     }, [openAnswer, setMessage]);
