@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -17,13 +17,12 @@ import ResultUpdateInfo from './updateUserInfo';
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
     const { setUserInfData } = useContext(LocalStorageContext)
-    const { register, handleSubmit, watch, formState: { isLoading, defaultValues } } = useForm({
+    const { register, handleSubmit, watch, reset, formState: { isLoading, defaultValues } } = useForm({
         defaultValues: async () =>
             await getUserInfo()
     });
     const [openForm, setOpenForm] = useState(false)
-    const [updateFlag, setUpdateFlag] = useState(false)
-    const [needUpd, setNeedUpd] = useState(true)
+    const [needUpdate, setNeedUpdate] = useState(true)
     const watchAvatar = watch('avatar')
 
 
@@ -37,21 +36,17 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
             changeUserInfo({ about, name })
         }
         if (JSON.stringify(defaultValues) === JSON.stringify(data)) {
-            setNeedUpd(false)
+            setNeedUpdate(false)
         }
 
         setOpenForm(!openForm)
-        setUserInfData(data)
+        reset(data)
     }
 
 
-    // useEffect(() => {
-    //     getUserInfo()
-    //         .then((userData) => {
-    //             setUserInfData(userData)
-    //         })
-    //         .catch(err => console.log(err))
-    // }, [updateFlag, setUserInfData])
+    useEffect(() => {
+        setUserInfData(defaultValues)
+    }, [defaultValues, setUserInfData])
 
 
     return (
@@ -121,7 +116,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                             <CircularProgress />)}
                 </DialogContent>
             </Dialog >
-            <ResultUpdateInfo openForm={openForm} setOpenForm={setOpenForm} updateFlag={updateFlag} needUpd={needUpd} setUpdateFlag={setUpdateFlag} setNeedUpd={setNeedUpd} />
+            <ResultUpdateInfo openForm={openForm} setOpenForm={setOpenForm} needUpdate={needUpdate} setNeedUpdate={setNeedUpdate} />
 
         </>
     );
