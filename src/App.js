@@ -13,7 +13,6 @@ import { Routes, Route } from "react-router-dom";
 import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import { LIMIT } from "./constants/constants";
-import { getUserInfo } from "./API/AuthApi";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
