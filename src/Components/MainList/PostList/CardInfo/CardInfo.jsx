@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid } from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid} from '@mui/material';
 import s from '../CardInfo/card-info.module.css'
-import { Stack } from '@mui/system';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams, useNavigate } from "react-router-dom";
+import {Stack} from '@mui/system';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useParams, useNavigate} from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Paper)(({theme}) => ({
     // backgroundColor: theme.palette.mode === 'white' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -24,11 +24,11 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'justify',
 }));
 
-export function CardInfo({ cards }) {
+export function CardInfo({cards}) {
     // console.log('from cardInfo >>', cards)
 
     const [showFormComment, setShowFormComment] = useState(false)
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const {register, handleSubmit, formState: {errors}} = useForm()
     const params = useParams()
     const cardId = params.id
     const post = cards.find((item) => item._id === cardId)
@@ -63,9 +63,9 @@ export function CardInfo({ cards }) {
     let whenCreatedPost = new Date(post?.created_at).toLocaleString('ru', options).slice(0, -3);
 
     return (
-        <Box sx={{ flexGrow: 1 }}
-            backgroundColor='white'
-            padding={2}>
+        <Box sx={{flexGrow: 1}}
+             backgroundColor='white'
+             padding={2}>
 
             {/* Кнопка назад */}
             <div className={s.btnBackWrapper}>
@@ -97,7 +97,7 @@ export function CardInfo({ cards }) {
                 </Grid>
 
                 {/* Инфо пользователя / Лайки / Теги */}
-                <Grid item xs={12} md={6} lg={6} >
+                <Grid item xs={12} md={6} lg={6}>
                     <Item>
                         <div className={s.userInfoWrapper}>
                             <CardHeader
@@ -109,7 +109,7 @@ export function CardInfo({ cards }) {
                                         backgroundColor: 'teal',
                                         width: 56, height: 56,
                                     }}
-                                        src={post?.author.avatar}
+                                            src={post?.author.avatar}
                                     />
 
                                 }
@@ -117,6 +117,11 @@ export function CardInfo({ cards }) {
                                 title={post?.author.name}
                                 subheader={whenCreatedPost}
                             />
+
+                            <Button variant={'text'}>Редактировать</Button>
+                            <Button variant={'text'} color={'error'}>Удалить</Button>
+
+
                         </div>
 
                         {/* Раздел лайков хештегов */}
@@ -132,23 +137,23 @@ export function CardInfo({ cards }) {
                                     {/* Лайки карточки */}
                                     <div className={s.boxSvg}>
                                         {/* <Like /> */}
-                                        <FavoriteBorderIcon fontSize={'large'} />
+                                        <FavoriteBorderIcon fontSize={'large'}/>
                                         {post?.likes.length}
                                     </div>
 
                                     {/* Хештеги карточки */}
                                     <Stack mt={2}
-                                        flexGrow='1'
-                                        direction="row"
-                                        flexWrap='wrap'
+                                           flexGrow='1'
+                                           direction="row"
+                                           flexWrap='wrap'
                                         // backgroundColor='tomato'
-                                        spacing={1}
+                                           spacing={1}
                                     >
 
                                         {post?.tags.map((tag) =>
 
-                                            <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={tag} key={tag} size="small" color="success" />
-
+                                            <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={tag}
+                                                  size="small" color="success"/>
                                         )}
 
                                     </Stack>
@@ -163,7 +168,7 @@ export function CardInfo({ cards }) {
 
                 {/* название  поста */}
                 <Grid item xs={12}>
-                    <Item sx={{ fontSize: '1rem' }}>
+                    <Item sx={{fontSize: '1rem'}}>
                         <span><b>Название поста:</b></span>
                         <span className={s.postDescription}>{post?.title}</span>
                     </Item>
@@ -171,7 +176,7 @@ export function CardInfo({ cards }) {
 
                 {/* Описание поста */}
                 <Grid item xs={12}>
-                    <Item sx={{ fontSize: '1rem' }}>
+                    <Item sx={{fontSize: '1rem'}}>
                         <span><b>Описание поста:</b> </span>
                         <span className={s.postDescription}>{post?.text}</span>
                     </Item>
@@ -180,7 +185,7 @@ export function CardInfo({ cards }) {
                 {/* Кнопка открытия / закрытия формы добавления комментария */}
                 <Grid item>
                     <Button variant="contained"
-                        onClick={openFormComment}
+                            onClick={openFormComment}
                     >{showFormComment ? 'Скрыть комментарий' : 'Добавить комментарий'}
                     </Button>
 
@@ -204,7 +209,8 @@ export function CardInfo({ cards }) {
                                 />
                                 {errors?.comment && <span className={s.errorComment}>{errors.comment?.message}</span>}
 
-                                <Button sx={{ maxWidth: '200px', marginBottom: '2rem' }} size="large" type='submit' variant="contained" color="success" endIcon={<SendIcon />}>
+                                <Button sx={{maxWidth: '200px', marginBottom: '2rem'}} size="large" type='submit'
+                                        variant="contained" color="success" endIcon={<SendIcon/>}>
                                     Добавить
                                 </Button>
                             </form>
@@ -214,7 +220,7 @@ export function CardInfo({ cards }) {
 
                 {/* Комментарии */}
                 <Grid item xs={12}>
-                    <Item sx={{ maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc' }}>
+                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc'}}>
 
                         {post?.comments.length !== 0 ?
 
@@ -235,7 +241,7 @@ export function CardInfo({ cards }) {
                                                     width: 32, height: 32,
 
                                                 }}
-                                                    src={post?.author.avatar}
+                                                        src={post?.author.avatar}
                                                 />
 
                                             }
@@ -245,17 +251,16 @@ export function CardInfo({ cards }) {
                                         />
                                     </div>
 
-                                    <div className={s.commentText} >
+                                    <div className={s.commentText}>
                                         {comment.text}
                                     </div>
                                 </div>
-
                             )) : <div>Комментариев еще нет, добавь их первым !</div>}
 
                     </Item>
                 </Grid>
 
             </Grid>
-        </Box >
+        </Box>
     );
 }

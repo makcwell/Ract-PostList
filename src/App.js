@@ -64,6 +64,7 @@ function App() {
             searchQuery,
             setSearchQuery,
         }}>
+
             <ResponsiveAppBar/>
             <MainList>
 
