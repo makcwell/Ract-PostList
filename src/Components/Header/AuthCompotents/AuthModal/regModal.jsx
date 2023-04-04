@@ -14,7 +14,6 @@ import { LocalStorageContext } from "../../../../App";
 import { InputAdornment, IconButton } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import s from './auth.module.css'
 import { EMAIL_PATTERN, PASSWORD_PATTERN, USER_AGREEMENT } from '../../../../constants/constants';
 
 const RegistrationForm = ({ setRender }) => {
@@ -26,7 +25,6 @@ const RegistrationForm = ({ setRender }) => {
 
     const onSubmit = useCallback(async (data) => {
         const answer = await getRegistrationUser({ ...data, group: "group-10" })
-        console.log(answer)
         setMessage(answer)
         setOpenAnswer(!openAnswer);
     }, [openAnswer, setMessage]);
@@ -64,9 +62,10 @@ const RegistrationForm = ({ setRender }) => {
                             type="email"
                             fullWidth
                             variant="outlined"
+                            error={!!errors.email}
+                            helperText={errors?.email?.message}
                             {...register('email', EMAIL_PATTERN)}
                         />
-                        {errors?.email && <span className={s.warningLable}>{errors.email?.message}</span>}
                         <TextField
                             autoFocus
                             margin="dense"
@@ -75,6 +74,8 @@ const RegistrationForm = ({ setRender }) => {
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
+                            error={!!errors.password}
+                            helperText={errors?.password?.message}
                             {...register('password', PASSWORD_PATTERN)}
                             InputProps={{
                                 endAdornment: (
@@ -90,7 +91,6 @@ const RegistrationForm = ({ setRender }) => {
                                 )
                             }}
                         />
-                        {errors?.password && <span className={s.warningLable}>{errors.password?.message}</span>}
                         <Typography>{USER_AGREEMENT}</Typography>
                     </DialogContent>
                     <DialogActions>

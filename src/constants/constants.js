@@ -9,7 +9,7 @@ export const BASE_URL = 'https://api.react-learning.ru';
 export const EMAIL_PATTERN = {
     required: {
         value: true,
-        message: 'Обязатель поле для ввода'
+        message: 'Обязательное поле для ввода'
     },
     pattern: {
         message: 'Email в формате expamle@example.com',
@@ -19,16 +19,19 @@ export const EMAIL_PATTERN = {
 export const PASSWORD_PATTERN = {
     required: {
         value: true,
-        message: 'Обязатель поле для ввода'
+        message: 'Обязательное поле для ввода'
     },
     pattern: {
         message: 'Пароль должен содержать минимум 8 символов, одну букву латинского алфавита и одну цифру',
         value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
     }
 }
-
+export const USER_PATTERN = {
+    required: {
+        value: true,
+        message: 'Обязательное поле для ввода'
+    },
+}
 export const USER_AGREEMENT = 'Регистрируясь на сайте, вы соглашаетесь с нашими Правилами и Политикой конфиденциальности и соглашаетесь на информационную рассылку.'
-
-
 
 export const LIMIT = 9

@@ -6,11 +6,11 @@ import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 import Footer from "./Components/Footer/footer";
 import ElementPagination from "./Components/MainList/Pagination/pagination";
-import {CardNotAuth} from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
-import {PostList} from "./Components/MainList/PostList/postList";
-import {CardInfo} from "./Components/MainList/PostList/CardInfo/CardInfo";
-import {Routes, Route} from "react-router-dom";
-import {getPostPagination} from "./API/PostsApi";
+import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
+import { PostList } from "./Components/MainList/PostList/postList";
+import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
+import { Routes, Route } from "react-router-dom";
+import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import {LIMIT} from "./constants/constants";
 import {MyPostList} from "./Components/MainList/MyPostList/MyPostList";
@@ -73,10 +73,14 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={
                             <>
-                                <MainHead/>
-                                {(token && <PostList cards={cards}/>) || <CardNotAuth/>}
 
-                                <ElementPagination/>
+                                <MainHead />
+                                {(token &&
+                                    <>
+                                        <PostList cards={cards} />
+                                        <ElementPagination />
+                                    </>) || <CardNotAuth />}
+
                             </>
                         }/>
                         <Route path={'/post/:id'} element={<CardInfo cards={cards}/>}/>

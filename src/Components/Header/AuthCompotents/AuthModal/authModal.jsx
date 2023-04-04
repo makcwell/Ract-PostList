@@ -69,9 +69,10 @@ const FormDialog = () => {
                             type="email"
                             fullWidth
                             variant="outlined"
+                            error={!!errors.email}
+                            helperText={errors?.email?.message}
                             {...register('email', EMAIL_PATTERN)}
                         />
-                        {errors?.email && <span className={s.warningLable} >{errors.email?.message}</span>}
                         <TextField
                             margin="dense"
                             id="pass"
@@ -79,6 +80,8 @@ const FormDialog = () => {
                             type={type ? "text" : "password"}
                             fullWidth
                             variant="outlined"
+                            error={!!errors.password}
+                            helperText={errors?.password?.message}
                             {...register('password', PASSWORD_PATTERN)}
                             InputProps={{
                                 endAdornment: (
@@ -94,7 +97,6 @@ const FormDialog = () => {
                                 )
                             }}
                         />
-                        {errors?.password && <span className={s.warningLable} >{errors.password?.message}</span>}
                         {serverAnswer?.message && <Typography sx={{
                             color: 'red',
                             fontFamily: 'Times',

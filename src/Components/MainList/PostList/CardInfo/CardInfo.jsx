@@ -24,8 +24,8 @@ const Item = styled(Paper)(({theme}) => ({
     textAlign: 'justify',
 }));
 
-export function CardInfo({cards}) {
-    // console.log('from cardInfo >>', cards)
+
+export function CardInfo({ cards }) {
 
     const [showFormComment, setShowFormComment] = useState(false)
     const {register, handleSubmit, formState: {errors}} = useForm()
