@@ -1,74 +1,126 @@
-import { useEffect, useContext } from 'react';
+import { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getUserInfo } from '../../../../API/AuthApi';
+import { getUserInfo, changeUserInfo, changeUserAvatar } from '../../../../API/AuthApi';
 import CardMedia from '@mui/material/CardMedia';
 import { LocalStorageContext } from "../../../../App";
+import { useForm } from "react-hook-form";
+import ResultUpdateInfo from './updateUserInfo';
+import { USER_PATTERN } from '../../../../constants/constants';
+
+
+
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
-    const { userInfData, setUserInfData } = useContext(LocalStorageContext)
+    const { setUserInfData } = useContext(LocalStorageContext)
+    const { register, handleSubmit, watch, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
+        defaultValues: async () => {
+            const userDefaultValues = await getUserInfo()
+            setUserInfData(userDefaultValues)
+            return userDefaultValues
+        }
+    });
+    const [openForm, setOpenForm] = useState(false)
+    const [needUpdate, setNeedUpdate] = useState(false)
+    const watchAvatar = watch('avatar')
+
+    const onSubmit = (data) => {
+        const { about, name, avatar } = data
+        if (defaultValues.avatar !== data.avatar) {
+            changeUserAvatar({ avatar })
+            reset(data)
+        }
+        if (defaultValues.about !== data.about || defaultValues.name !== data.name) {
+            changeUserInfo({ about, name })
+            reset(data)
+        }
+        setOpenForm(!openForm)
+        setNeedUpdate(JSON.stringify(defaultValues) === JSON.stringify(getValues()))
+    }
 
 
-    useEffect(() => {
-        getUserInfo()
-            .then((userData) => {
-                setUserInfData(userData)
-            })
-            .catch(err => console.log(err))
-    }, [setUserInfData])
 
     return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Информация о пользователе</DialogTitle>
-            <DialogContent>
-                {userInfData !== '' ?
-                    (<>
-                        <DialogContentText>
+        <>
+            <Dialog open={open} onClose={onClose}>
+                <DialogTitle sx={{ textAlign: 'center' }}>Информация о пользователе</DialogTitle>
+                <DialogContent>
+                    {!isLoading ?
+                        (<>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <CardMedia
+                                    id='avatar'
+                                    component="img"
+                                    height="300"
+                                    image={watchAvatar}
+                                    alt="user avatar"
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="email"
+                                    label="Электронная почта"
+                                    type="email"
+                                    fullWidth
+                                    variant="standard"
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    {...register('email')}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="name"
+                                    label="ФИО"
+                                    type="text"
+                                    fullWidth
+                                    error={!!errors.name}
+                                    helperText={errors?.name?.message}
+                                    {...register('name', USER_PATTERN)}
+                                />
+                                <TextField
+                                    id="about"
+                                    margin="dense"
+                                    label="Информация о вас"
+                                    multiline
+                                    fullWidth
+                                    rows={4}
+                                    error={!!errors.about}
+                                    helperText={errors?.about?.message}
+                                    {...register('about', USER_PATTERN)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="avatarLink"
+                                    label="Ссылка на аватар"
+                                    type="text"
+                                    multiline
+                                    fullWidth
+                                    rows={3}
+                                    error={!!errors.avatar}
+                                    helperText={errors?.avatar?.message}
+                                    {...register('avatar', USER_PATTERN)}
+                                />
+                                <DialogActions>
+                                    <Button type='submit'>Изменить</Button>
+                                    <Button onClick={onClick}>Закрыть</Button>
+                                </DialogActions>
+                            </form>
+                        </>) : (
+                            <CircularProgress />)}
+                </DialogContent>
+            </Dialog >
+            <ResultUpdateInfo
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+                needUpdate={needUpdate}
+            />
 
-                        </DialogContentText>
-                        <CardMedia
-                            component="img"
-                            height="160"
-                            image={userInfData.avatar}
-                            alt="user avatar"
-                        />
-                        <TextField
-                            margin="dense"
-                            id="name"
-                            label="ФИО"
-                            type="emteail"
-                            fullWidth
-                            variant="standard"
-                            defaultValue={userInfData.name}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="email"
-                            label="Электронная почта"
-                            type="email"
-                            fullWidth
-                            variant="standard"
-                            defaultValue={userInfData.email}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                    </>) : (
-                        <CircularProgress />)}
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClick}>Закрыть</Button>
-            </DialogActions>
-        </Dialog>
+        </>
     );
 }
 

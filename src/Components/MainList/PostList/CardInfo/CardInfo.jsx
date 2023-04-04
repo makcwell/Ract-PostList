@@ -25,7 +25,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export function CardInfo({ cards }) {
-    // console.log('from cardInfo >>', cards)
 
     const [showFormComment, setShowFormComment] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm()
