@@ -3,11 +3,14 @@ import {styled} from '@mui/material/styles';
 import {Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid} from '@mui/material';
 import s from '../CardInfo/card-info.module.css'
 import {Stack} from '@mui/system';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useParams, useNavigate} from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {addComment, delComment, delPost, getAllComments, getPostById} from "../../../../API/PostsApi";
+import {LocalStorageContext} from "../../../../App";
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -25,34 +28,66 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 
-export function CardInfo({ cards }) {
-
+export function CardInfo() {
+    const {userInfData, handleFirstRender} = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
     const {register, handleSubmit, formState: {errors}} = useForm()
+    const [post, setPost] = useState(null)
+    const [comments, setComment] = useState([])
     const params = useParams()
-    const cardId = params.id
-    const post = cards.find((item) => item._id === cardId)
-
+    const postId = params.id
     const navigate = useNavigate()
 
 
-    const sendCommentPost = (data) => {
-        // e.preventDefault()
-        console.log('data from textarea >>', data)
+    useEffect(() => {
+        async function fetchData() {
+            const res = await getPostById(postId)
+            await setPost(res)
+            const comData = await getAllComments(postId)
+            await setComment(comData)
+        }
 
+        fetchData()
+
+    }, [postId])
+
+    // Добавить комментарий
+    const sendCommentPost = async (data) => {
+        const res = await addComment(data, postId)
+        await setPost(res)
+        const comData = await getAllComments(postId)
+        await setComment(comData)
         setShowFormComment(false)
-        console.log('clicked on FORM BUTTON ADD Comment >>')
     }
 
-    // открываем и закрываем форму комментариев
+    // Открываем и закрываем форму комментариев
     const openFormComment = () => {
         setShowFormComment((state) => !showFormComment)
     }
 
+    // Кнопка назад
     const handleBtnBack = () => {
         navigate(-1)
     }
 
+    // Удалить комментарий
+    const handleDeleteComment = async (commentId) => {
+        const res = await delComment(postId, commentId)
+        await setPost(res)
+        const comData = await getAllComments(postId)
+        await setComment(comData)
+    }
+    const handleEditPost = ()=> {
+        console.log('handleEditPost')
+    }
+
+    // Удалить пост
+    // TODO: Если после удаления вернемся по истории на главную, пост висит на странице. Исправил добавлением handleFirstRender из контекста
+    const handleDeletePost = async ()=> {
+        await delPost(postId)
+        await navigate(-1)
+        await handleFirstRender()
+    }
 
     // Для формата даты
     const options = {
@@ -60,7 +95,7 @@ export function CardInfo({ cards }) {
         month: 'long',
         year: 'numeric',
     }
-    let whenCreatedPost = new Date(post?.created_at).toLocaleString('ru', options).slice(0, -3);
+
 
     return (
         <Box sx={{flexGrow: 1}}
@@ -115,11 +150,15 @@ export function CardInfo({ cards }) {
                                 }
 
                                 title={post?.author.name}
-                                subheader={whenCreatedPost}
+                                subheader={new Date(post?.created_at).toLocaleString('ru', options).slice(0, -3)}
                             />
+                            {userInfData._id === post?.author._id &&
+                                <Item>
+                                    <Button variant={'text'} onClick={handleEditPost}>Редактировать</Button>
+                                    <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
+                                </Item>
 
-                            <Button variant={'text'}>Редактировать</Button>
-                            <Button variant={'text'} color={'error'}>Удалить</Button>
+                            }
 
 
                         </div>
@@ -150,9 +189,9 @@ export function CardInfo({ cards }) {
                                            spacing={1}
                                     >
 
-                                        {post?.tags.map((tag) =>
+                                        {post?.tags.map((tag, index) =>
 
-                                            <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={tag}
+                                            <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={index}
                                                   size="small" color="success"/>
                                         )}
 
@@ -198,7 +237,7 @@ export function CardInfo({ cards }) {
                             <form className={s.formComment} onSubmit={handleSubmit(sendCommentPost)}>
                                 <h2>Оставьте ваш комментарий</h2>
                                 <textarea
-                                    {...register('comment', {
+                                    {...register('text', {
                                         required: {
                                             value: true,
                                             message: 'Комментарий не может быть пустым',
@@ -218,42 +257,48 @@ export function CardInfo({ cards }) {
                     }
                 </Grid>
 
-                {/* Комментарии */}
+                {/*/!* Комментарии *!/*/}
                 <Grid item xs={12}>
-                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'scroll', border: '1px solid #ccc'}}>
+                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'auto', border: '1px solid #ccc'}}>
 
-                        {post?.comments.length !== 0 ?
+                        {comments?.length !== 0 ?
 
-                            (post?.comments.map((comment, i) =>
+                            (comments.map((comment, i) =>
 
                                 <div className={s.commentWrapper} key={i}>
                                     <div className={s.userInfoComment}>
                                         <CardHeader
-                                            sx={{
-                                                // fontSize: '9px'
-                                                // backgroundColor: 'tomato'
-                                            }}
-
                                             avatar={
-                                                <Avatar sx={{
-                                                    // display: 'flex',
-                                                    backgroundColor: 'teal',
-                                                    width: 32, height: 32,
+                                                <Avatar
+                                                    sx={{
+                                                        backgroundColor: 'teal',
+                                                        width: 32,
+                                                        height: 32,
+                                                    }}
+                                                    src={comment.author.avatar}
 
-                                                }}
-                                                        src={post?.author.avatar}
                                                 />
-
                                             }
-
-                                            title={post?.author.name}
-                                            subheader={whenCreatedPost}
+                                            sx={{
+                                                border: '1px solid #ccc',
+                                                borderRadius: '30px',
+                                                backgroundColor:'lightgray'
+                                            }}
+                                            title={comment.author.name}
+                                            subheader={new Date(comment.created_at).toLocaleString('ru', options).slice(0, -3)}
                                         />
+                                        <div className={s.commentText}>
+                                            {comment.text}
+                                        </div>
                                     </div>
 
-                                    <div className={s.commentText}>
-                                        {comment.text}
-                                    </div>
+
+
+                                    {userInfData._id === comment.author._id &&
+                                        <HighlightOffIcon cursor={'pointer'} color={'error'} onClick={() => {
+                                            handleDeleteComment(comment._id)
+                                        }}/>
+                                    }
                                 </div>
                             )) : <div>Комментариев еще нет, добавь их первым !</div>}
 

@@ -117,7 +117,7 @@ function MyCard({ card }) {
                         <div className={s.boxSvg}>
                             {/* <Like /> */}
                             <StyledBadge badgeContent={card.likes.length} color="default"  >
-                                <FavoriteBorderOutlinedIcon fontSize={'large'} />
+                                <FavoriteBorderOutlinedIcon fontSize={'large'}   />
                             </StyledBadge>
                         </div>
                         {card.comments.length !== 0 &&

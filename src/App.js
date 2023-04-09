@@ -45,7 +45,6 @@ function App() {
         }
     }, [token, isUpdateCards, debounceSearchQuery, page])
 
-
     const handleFirstRender = () => {
         setUpdateCards(!isUpdateCards)
     }
@@ -83,13 +82,14 @@ function App() {
 
                             </>
                         }/>
-                        <Route path={'/post/:id'} element={<CardInfo cards={cards}/>}/>
-                        <Route path={'/mypostlist'} element={
+                        <Route path={'post/:id'} element={<CardInfo cards={cards}/>}/>
+                        <Route path={'mypostlist'} element={
                             <>
                                 <MainHead/>
                                 <MyPostList/>
                             </>
                         }/>
+                        <Route path={'*'} element={<h1>404</h1>}/>
                     </Routes>
 
                 </Container>

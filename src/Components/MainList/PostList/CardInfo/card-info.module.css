@@ -73,14 +73,14 @@
 
 }
 
-.userInfoWrapper>* span {
+.userInfoWrapper > * span {
     text-align: left;
     color: #333;
 }
 
 .commentWrapper {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     padding: 5px;
     /* border-top: 1px solid #ccc; */
 
@@ -92,18 +92,23 @@
 
 }
 
-.userInfoComment>* span {
+.userInfoComment > * span {
     font-size: 0.75rem;
 
 }
 
+.userInfoComment {
+    display: flex;
+    align-items: center;
+}
+
 .commentText {
     color: #2d2d2d;
-    font-size: 1rem;
     white-space: break-spaces;
     word-break: break-all;
     line-height: 26px;
-    font-size: 0.9rem;
+    margin: 30px;
+    font-size: 15px;
 }
 
 .postDescription {
