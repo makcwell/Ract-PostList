@@ -6,8 +6,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 import Confetti from 'react-confetti'
 
-const ResultUpdateInfo = ({ openForm, needUpdate, setOpenForm }) => {
+import s from './auth.module.css'
 
+const ResultUpdateInfo = ({ openForm, needUpdate, setOpenForm }) => {
     const handleClose = () => {
         setOpenForm(!openForm)
     }
@@ -21,7 +22,7 @@ const ResultUpdateInfo = ({ openForm, needUpdate, setOpenForm }) => {
                 <DialogActions>
                     <Button onClick={handleClose}>Ок</Button>
                 </DialogActions>
-                {(!needUpdate && openForm) && <Confetti numberOfPieces={150} />}
+                {(!needUpdate && openForm) && <Confetti className={s.confettiWrapperStyled} width={400} height={200} numberOfPieces={150} />}
             </Dialog>
 
         </>

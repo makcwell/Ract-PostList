@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid } from '@mui/material';
 import s from '../CardInfo/card-info.module.css'
 import { Stack } from '@mui/system';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
+import { FavoriteBorder, Favorite } from '@mui/icons-material';
+import { isLiked } from '../../../../utils/utils';
+import { LocalStorageContext } from "../../../../App";
 
 const Item = styled(Paper)(({ theme }) => ({
     // backgroundColor: theme.palette.mode === 'white' ? '#1A2027' : '#fff',
@@ -26,11 +26,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export function CardInfo({ cards }) {
 
+    const { handleSetLike, userInfData } = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm()
     const params = useParams()
     const cardId = params.id
     const post = cards.find((item) => item._id === cardId)
+    const like = isLiked(post, userInfData)
 
     const navigate = useNavigate()
 
@@ -51,7 +53,9 @@ export function CardInfo({ cards }) {
     const handleBtnBack = () => {
         navigate(-1)
     }
-
+    const handleLike = () => {
+        handleSetLike(post);
+    }
 
     // Для формата даты
     const options = {
@@ -131,7 +135,7 @@ export function CardInfo({ cards }) {
                                     {/* Лайки карточки */}
                                     <div className={s.boxSvg}>
                                         {/* <Like /> */}
-                                        <FavoriteBorderIcon />
+                                        {like ? <Favorite onClick={handleLike} /> : <FavoriteBorder onClick={handleLike} />}
                                         {post?.likes.length}
                                     </div>
 

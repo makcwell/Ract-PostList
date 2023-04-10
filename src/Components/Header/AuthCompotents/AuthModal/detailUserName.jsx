@@ -1,19 +1,17 @@
 import { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
+import { useForm } from "react-hook-form";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getUserInfo, changeUserInfo, changeUserAvatar } from '../../../../API/AuthApi';
 import CardMedia from '@mui/material/CardMedia';
 import { LocalStorageContext } from "../../../../App";
-import { useForm } from "react-hook-form";
-import ResultUpdateInfo from './updateUserInfo';
 import { USER_PATTERN } from '../../../../constants/constants';
-
-
+import { getUserInfo, changeUserInfo, changeUserAvatar } from '../../../../API/AuthApi';
+import ResultUpdateInfo from './updateUserInfo';
 
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
@@ -40,10 +38,9 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
             reset(data)
         }
         setOpenForm(!openForm)
+        setUserInfData(data)
         setNeedUpdate(JSON.stringify(defaultValues) === JSON.stringify(getValues()))
     }
-
-
 
     return (
         <>

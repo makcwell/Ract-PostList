@@ -24,6 +24,19 @@ export const getPostPagination = async (page, limit, query) => {
     const result = await response.json()
     return result
 }
+export const setLikeOnCard = async (cardId, isLike) => {
+    let response = await fetch(`${BASE_URL}/v2/group-10/posts/likes/${cardId}`, {
+        method: isLike ? "DELETE" : "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+    })
+    const result = await response.json()
+    return result
+}
+
+
 
 const token = localStorage.getItem("token")
 const onResponse = (res) => {

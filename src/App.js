@@ -1,6 +1,6 @@
 // import { Card, CardContent, CardHeader } from "@mui/material";
 import { Container } from "@mui/system";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
@@ -10,7 +10,7 @@ import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotA
 import { PostList } from "./Components/MainList/PostList/postList";
 import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
 import { Routes, Route } from "react-router-dom";
-import { getPostPagination } from "./API/PostsApi";
+import { getPostPagination, setLikeOnCard } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import { LIMIT } from "./constants/constants";
 // Инизиализация приложения 
@@ -19,13 +19,13 @@ export const LocalStorageContext = createContext({ token: '', setToken: () => vo
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'))
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState([])
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
     const [userInfData, setUserInfData] = useState('')
     const [page, setPage] = useState(1)
     const [pageQty, setPageQty] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('')
     const debounceSearchQuery = useDebounce(searchQuery, 700)
 
     useEffect(() => {
@@ -48,6 +48,15 @@ function App() {
         setUpdateCards(!isUpdateCards)
     }
 
+    const handleSetLike = useCallback(async (card) => {
+        const isLike = card.likes.some((id) => id === userInfData._id)
+        const likedCard = await setLikeOnCard(card._id, isLike)
+        const newCards = cards.map(card => card._id === likedCard._id ? likedCard : card)
+        setCards(newCards)
+    }, [cards, userInfData._id])
+
+
+
     return (
         <LocalStorageContext.Provider value={{
             token,
@@ -62,6 +71,7 @@ function App() {
             pageQty,
             searchQuery,
             setSearchQuery,
+            handleSetLike,
         }}>
             <ResponsiveAppBar />
             <MainList>

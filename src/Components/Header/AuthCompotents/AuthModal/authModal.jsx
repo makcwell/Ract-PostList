@@ -13,7 +13,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InputAdornment, IconButton, Typography } from '@mui/material';
 import { useForm } from "react-hook-form";
-import s from './auth.module.css'
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../../../constants/constants';
 
 const FormDialog = () => {

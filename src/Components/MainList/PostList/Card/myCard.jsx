@@ -1,13 +1,16 @@
-import React from 'react';
+import { useContext } from 'react';
 import s from './myCard.module.css';
 import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card } from '@mui/material';
 import { Stack } from '@mui/system';
+import { LocalStorageContext } from "../../../../App";
 import { useNavigate } from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { FavoriteBorder, Favorite } from '@mui/icons-material';
+import { isLiked } from '../../../../utils/utils';
 
 function MyCard({ card }) {
-
+    const { handleSetLike, userInfData } = useContext(LocalStorageContext)
+    const like = isLiked(card, userInfData)
     const handleIntoCardClick = () => {
         navigate(`/post/${card._id}`)
     }
@@ -18,6 +21,10 @@ function MyCard({ card }) {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+    }
+
+    const handleLike = () => {
+        handleSetLike(card);
     }
 
     const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
@@ -114,7 +121,7 @@ function MyCard({ card }) {
                     <div className={s.cardFooter__favorite}>
                         <div className={s.boxSvg}>
                             {/* <Like /> */}
-                            <FavoriteBorderIcon />
+                            {like ? <Favorite onClick={handleLike} /> : <FavoriteBorder onClick={handleLike} />}
                             {card.likes.length}
                         </div>
                         {card.comments.length !== 0 &&
