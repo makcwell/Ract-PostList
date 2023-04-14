@@ -1,7 +1,4 @@
-/* .card:hover {
-    box-shadow: 0 2px 4px rgb(40 41 61 / 14%), 0 8px 16px rgb(96 97 112 / 16%);
-    
-} */
+
 .cardShadow:hover {
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2), 0 8px 16px rgb(96 97 112 / 16%);
 
@@ -12,8 +9,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    /* flex: 1; */
-    /* background-color: tomato; */
 }
 
 .cardFooter__favorite {
@@ -22,7 +17,6 @@
     width: 100%;
     align-items: center;
     gap: 10px;
-    /* background-color: rgb(132, 171, 244); */
 }
 
 .boxSvg {
@@ -45,7 +39,6 @@
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    /* font-size: medium; */
     color: inherit;
 
 }
@@ -82,9 +75,6 @@
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    /* border-top: 1px solid #ccc; */
-
-
 }
 
 .commentWrapper:not(:first-child) {
@@ -93,7 +83,7 @@
 }
 
 .userInfoComment > * span {
-    font-size: 0.75rem;
+    font-size: 12px;
 
 }
 
@@ -124,9 +114,8 @@
 .formComment {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 15px;
     margin-top: 20px;
-    /* max-width: 600px; */
 }
 
 .formComment h2 {
@@ -135,12 +124,12 @@
 }
 
 .formComment textarea {
-    min-height: 200px;
+    min-height: 50px;
     resize: none;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 16px;
     color: #2d2d2d;
 
 }

@@ -31,7 +31,7 @@ const Item = styled(Paper)(({theme}) => ({
 export function CardInfo() {
     const {userInfData, handleFirstRender} = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {register, handleSubmit, resetField, formState: {errors}} = useForm()
     const [post, setPost] = useState(null)
     const [comments, setComment] = useState([])
     const params = useParams()
@@ -57,6 +57,7 @@ export function CardInfo() {
         await setPost(res)
         const comData = await getAllComments(postId)
         await setComment(comData)
+        resetField('text')
         setShowFormComment(false)
     }
 
@@ -77,13 +78,11 @@ export function CardInfo() {
         const comData = await getAllComments(postId)
         await setComment(comData)
     }
-    const handleEditPost = ()=> {
-        console.log('handleEditPost')
-    }
+
 
     // Удалить пост
     // TODO: Если после удаления вернемся по истории на главную, пост висит на странице. Исправил добавлением handleFirstRender из контекста
-    const handleDeletePost = async ()=> {
+    const handleDeletePost = async () => {
         await delPost(postId)
         await navigate(-1)
         await handleFirstRender()
@@ -98,15 +97,13 @@ export function CardInfo() {
 
 
     return (
-        <Box sx={{flexGrow: 1}}
+        <Box sx={{flexGrow: 1, borderRadius:'10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)'}}
              backgroundColor='white'
              padding={2}>
 
             {/* Кнопка назад */}
             <div className={s.btnBackWrapper}>
-                <Button onClick={handleBtnBack} variant='outlined' size='small'>
-                    {'<'} Назад
-                </Button>
+                <Button onClick={handleBtnBack} variant='outlined' size='small' sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Назад</Button>
             </div>
 
 
@@ -121,7 +118,7 @@ export function CardInfo() {
                                 maxHeight: '400px',
                                 width: '100%',
                                 boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)',
-
+                                borderRadius: '10px'
                             }}
                             image={post?.image}
                             title="фото"
@@ -154,7 +151,7 @@ export function CardInfo() {
                             />
                             {userInfData._id === post?.author._id &&
                                 <Item>
-                                    <Button variant={'text'} onClick={handleEditPost}>Редактировать</Button>
+                                    <Button variant={'text'} onClick={() => navigate('edit')}>Редактировать</Button>
                                     <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
                                 </Item>
 
@@ -243,7 +240,6 @@ export function CardInfo() {
                                             message: 'Комментарий не может быть пустым',
                                         }
                                     })}
-                                    type='text'
                                     placeholder='...напишите ваш комментарий'
                                 />
                                 {errors?.comment && <span className={s.errorComment}>{errors.comment?.message}</span>}
@@ -259,7 +255,7 @@ export function CardInfo() {
 
                 {/*/!* Комментарии *!/*/}
                 <Grid item xs={12}>
-                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'auto', border: '1px solid #ccc'}}>
+                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'auto', border: '1px solid #ccc',  borderRadius: '10px'}}>
 
                         {comments?.length !== 0 ?
 
@@ -282,7 +278,7 @@ export function CardInfo() {
                                             sx={{
                                                 border: '1px solid #ccc',
                                                 borderRadius: '30px',
-                                                backgroundColor:'lightgray'
+                                                backgroundColor: 'lightgray'
                                             }}
                                             title={comment.author.name}
                                             subheader={new Date(comment.created_at).toLocaleString('ru', options).slice(0, -3)}
@@ -291,7 +287,6 @@ export function CardInfo() {
                                             {comment.text}
                                         </div>
                                     </div>
-
 
 
                                     {userInfData._id === comment.author._id &&

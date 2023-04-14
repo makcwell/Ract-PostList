@@ -5,7 +5,10 @@ export const AVATAR_MADDEVELOPER = 'https://avatars.githubusercontent.com/u/8046
 export const AVATAR_KRAT = 'https://avatars.githubusercontent.com/u/115191188?v=4'
 export const YODA = 'https://nationaltoday.com/wp-content/uploads/2020/05/Yoda.jpg'
 export const BASE_URL = 'https://api.react-learning.ru';
-
+export const headersData = {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+};
 export const EMAIL_PATTERN = {
     required: {
         value: true,

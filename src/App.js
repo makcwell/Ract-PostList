@@ -14,6 +14,7 @@ import { getPostPagination } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import {LIMIT} from "./constants/constants";
 import {MyPostList} from "./Components/MainList/MyPostList/MyPostList";
+import {EditPost} from "./Components/MainList/PostList/EditPost/EditPost";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({token: '', setToken: () => void 0})
@@ -89,6 +90,7 @@ function App() {
                                 <MyPostList/>
                             </>
                         }/>
+                        <Route path={'post/:id/edit'} element={<EditPost/>}/>
                         <Route path={'*'} element={<h1>404</h1>}/>
                     </Routes>
 

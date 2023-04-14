@@ -1,21 +1,13 @@
 import React from 'react';
 import s from './myCard.module.css';
-import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Badge, styled } from '@mui/material';
-import { Stack } from '@mui/system';
-import { useNavigate } from "react-router-dom";
+import {CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Box} from '@mui/material';
+import {Stack} from '@mui/system';
+import {useNavigate} from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
 
-function MyCard({ card }) {
+function MyCard({card}) {
 
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-            right: 17,
-            top: 17,
-            color: '#7B8E98',
-            fontSize: 14
-        },
-    }));
 
     const handleIntoCardClick = () => {
         navigate(`/post/${card._id}`)
@@ -48,7 +40,7 @@ function MyCard({ card }) {
                 avatar={
                     <Avatar
                         src={card.author.avatar}
-                        sx={{ width: 56, height: 56 }}
+                        sx={{width: 56, height: 56}}
                     />
                 }
                 title={card.author.name}
@@ -94,40 +86,37 @@ function MyCard({ card }) {
             {/* Хештеги карточки */}
             <CardContent>
                 <Stack mt={0}
-                    flexGrow='1'
-                    direction="row"
-                    flexWrap='wrap'
-                    spacing={1}
+                       flexGrow='1'
+                       direction="row"
+                       flexWrap='wrap'
+                       spacing={1}
                 >
                     {card.tags.map((item, index) =>
-                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item} size="small" color="success" />
+                        <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={item} key={index} title={item}
+                              size="small" color="success"/>
                     )}
                 </Stack>
             </CardContent>
 
             {/* Подвал карточки (лайки, комменты, дата добавления поста) */}
-            <CardContent
-                sx={{
-                    display: 'flex',
-                    flex: '1'
-                }}
-            >
+            <CardContent sx={{display: 'flex', flex: '1'}}>
                 <div className={s.cardFooter__wrapper}>
                     <div className={s.cardFooter__favorite}>
                         <div className={s.boxSvg}>
                             {/* <Like /> */}
-                            <StyledBadge badgeContent={card.likes.length} color="default"  >
-                                <FavoriteBorderOutlinedIcon fontSize={'large'}   />
-                            </StyledBadge>
+                            <Box className={s.boxLike} >
+                                <FavoriteBorderOutlinedIcon className={s.iconLike} fontSize={'medium'}/>
+                                {card.likes.length > 0 && <Typography >{card.likes.length}</Typography>}
+                            </Box>
                         </div>
-                        {card.comments.length !== 0 &&
-                            <div className={s.boxComm}>
-                                {/* <Comment /> */}
-                                <StyledBadge  badgeContent={card.comments.length} color="default"  >
-                                    <ChatBubbleOutlineIcon fontSize={'large'} />
-                                </StyledBadge>
-                            </div>
-                        }
+                        {/* <Comment /> */}
+                        <div className={s.boxComm}>
+                            <Box className={s.boxComment}>
+                                <ChatBubbleOutlineIcon fontSize={'medium'}/>
+                                {card.comments.length > 0 &&
+                                    <Typography >{card.comments.length}</Typography>}
+                            </Box>
+                        </div>
                     </div>
                     <div className={s.cardFooter__date}>{createdPost}</div>
                 </div>
