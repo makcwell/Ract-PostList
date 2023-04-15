@@ -3,11 +3,10 @@ import {Breadcrumbs} from "@mui/material";
 import {Link} from "react-router-dom";
 
 
-
 export default function BasicBreadcrumbs() {
 
     return (
-        <div role="presentation">
+        <div>
             <Breadcrumbs aria-label="breadcrumb">
                 <Link to={'/'}>Все посты</Link>
                 <Link to={'/mypostlist'}>Мои посты</Link>

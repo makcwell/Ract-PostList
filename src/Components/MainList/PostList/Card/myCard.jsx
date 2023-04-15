@@ -8,7 +8,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
 
 function MyCard({card}) {
 
-
     const handleIntoCardClick = () => {
         navigate(`/post/${card._id}`)
     }
@@ -22,6 +21,7 @@ function MyCard({card}) {
     }
 
     const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
+
     return (
 
         <Card className={s.cardShadow}
@@ -45,9 +45,9 @@ function MyCard({card}) {
                 }
                 title={card.author.name}
                 subheader={card.author.about}
-
             />
             <div onClick={handleIntoCardClick}>
+
                 {/* Фото карточки */}
                 <CardMedia className={s.pointer}
                            sx={{
@@ -83,7 +83,7 @@ function MyCard({card}) {
                 </CardContent>
             </div>
 
-            {/* Хештеги карточки */}
+            {/*/!* Хештеги карточки *!/ //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
             <CardContent>
                 <Stack mt={0}
                        flexGrow='1'
@@ -91,7 +91,7 @@ function MyCard({card}) {
                        flexWrap='wrap'
                        spacing={1}
                 >
-                    {card.tags.map((item, index) =>
+                    {card.tags.length > 0 && card.tags.map((item, index) =>
                         <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={item} key={index} title={item}
                               size="small" color="success"/>
                     )}
@@ -102,21 +102,21 @@ function MyCard({card}) {
             <CardContent sx={{display: 'flex', flex: '1'}}>
                 <div className={s.cardFooter__wrapper}>
                     <div className={s.cardFooter__favorite}>
-                        <div className={s.boxSvg}>
+                        <Box className={s.boxSvg}>
                             {/* <Like /> */}
-                            <Box className={s.boxLike} >
+                            <Box className={s.boxLike}>
                                 <FavoriteBorderOutlinedIcon className={s.iconLike} fontSize={'medium'}/>
-                                {card.likes.length > 0 && <Typography >{card.likes.length}</Typography>}
+                                {card.likes.length > 0 && <Typography>{card.likes.length}</Typography>}
                             </Box>
-                        </div>
+                        </Box>
                         {/* <Comment /> */}
-                        <div className={s.boxComm}>
+                        <Box className={s.boxComm}>
                             <Box className={s.boxComment}>
                                 <ChatBubbleOutlineIcon fontSize={'medium'}/>
                                 {card.comments.length > 0 &&
-                                    <Typography >{card.comments.length}</Typography>}
+                                    <Typography>{card.comments.length}</Typography>}
                             </Box>
-                        </div>
+                        </Box>
                     </div>
                     <div className={s.cardFooter__date}>{createdPost}</div>
                 </div>

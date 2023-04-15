@@ -14,14 +14,10 @@ import {LocalStorageContext} from "../../../../App";
 
 
 const Item = styled(Paper)(({theme}) => ({
-    // backgroundColor: theme.palette.mode === 'white' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    // textAlign: 'center',
     color: theme.palette.text.secondary,
-    // backgroundColor: 'yellow',
     boxShadow: 'none',
-    // border: '2px solid #000',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'justify',
@@ -42,9 +38,9 @@ export function CardInfo() {
     useEffect(() => {
         async function fetchData() {
             const res = await getPostById(postId)
-            await setPost(res)
+            setPost(res)
             const comData = await getAllComments(postId)
-            await setComment(comData)
+            setComment(comData)
         }
 
         fetchData()
@@ -54,9 +50,9 @@ export function CardInfo() {
     // Добавить комментарий
     const sendCommentPost = async (data) => {
         const res = await addComment(data, postId)
-        await setPost(res)
+        setPost(res)
         const comData = await getAllComments(postId)
-        await setComment(comData)
+        setComment(comData)
         resetField('text')
         setShowFormComment(false)
     }
@@ -74,9 +70,9 @@ export function CardInfo() {
     // Удалить комментарий
     const handleDeleteComment = async (commentId) => {
         const res = await delComment(postId, commentId)
-        await setPost(res)
+        setPost(res)
         const comData = await getAllComments(postId)
-        await setComment(comData)
+        setComment(comData)
     }
 
 
@@ -84,8 +80,11 @@ export function CardInfo() {
     // TODO: Если после удаления вернемся по истории на главную, пост висит на странице. Исправил добавлением handleFirstRender из контекста
     const handleDeletePost = async () => {
         await delPost(postId)
-        await navigate(-1)
-        await handleFirstRender()
+        navigate(-1)
+        handleFirstRender()
+    }
+    const handleNavigate = () => {
+        navigate('edit')
     }
 
     // Для формата даты
@@ -94,16 +93,19 @@ export function CardInfo() {
         month: 'long',
         year: 'numeric',
     }
-
+    const dateFormat = (data) => {
+        return new Date(data).toLocaleString('ru', options).slice(0, -3)
+    }
 
     return (
-        <Box sx={{flexGrow: 1, borderRadius:'10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)'}}
+        <Box sx={{flexGrow: 1, borderRadius: '10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)'}}
              backgroundColor='white'
              padding={2}>
 
             {/* Кнопка назад */}
             <div className={s.btnBackWrapper}>
-                <Button onClick={handleBtnBack} variant='outlined' size='small' sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Назад</Button>
+                <Button onClick={handleBtnBack} variant='outlined' size='small'
+                        sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Назад</Button>
             </div>
 
 
@@ -133,46 +135,32 @@ export function CardInfo() {
                     <Item>
                         <div className={s.userInfoWrapper}>
                             <CardHeader
-                                // sx={{ backgroundColor: 'tomato' }}
-
                                 avatar={
-                                    <Avatar sx={{
-                                        // display: 'flex',
-                                        backgroundColor: 'teal',
-                                        width: 56, height: 56,
-                                    }}
-                                            src={post?.author.avatar}
-                                    />
-
-                                }
+                                    <Avatar src={post?.author.avatar}
+                                            sx={{
+                                                backgroundColor: 'teal',
+                                                width: 56, height: 56
+                                            }}/>}
 
                                 title={post?.author.name}
-                                subheader={new Date(post?.created_at).toLocaleString('ru', options).slice(0, -3)}
+                                subheader={dateFormat(post?.created_at)}
                             />
                             {userInfData._id === post?.author._id &&
                                 <Item>
-                                    <Button variant={'text'} onClick={() => navigate('edit')}>Редактировать</Button>
+                                    <Button variant={'text'} onClick={handleNavigate}>Редактировать</Button>
                                     <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
                                 </Item>
-
                             }
-
-
                         </div>
 
-                        {/* Раздел лайков хештегов */}
+                        {/* Раздел лайков хештегов //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
                         <CardContent
-                            sx={{
-                                paddingTop: '0',
-                                // backgroundColor: 'pink',
-                            }}
-                        >
+                            sx={{paddingTop: '0',}}>
                             <div className={s.cardFooter__wrapper}>
                                 <div className={s.cardFooter__favorite}>
 
                                     {/* Лайки карточки */}
                                     <div className={s.boxSvg}>
-                                        {/* <Like /> */}
                                         <FavoriteBorderIcon fontSize={'large'}/>
                                         {post?.likes.length}
                                     </div>
@@ -182,16 +170,12 @@ export function CardInfo() {
                                            flexGrow='1'
                                            direction="row"
                                            flexWrap='wrap'
-                                        // backgroundColor='tomato'
                                            spacing={1}
                                     >
-
                                         {post?.tags.map((tag, index) =>
-
                                             <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={index}
                                                   size="small" color="success"/>
                                         )}
-
                                     </Stack>
                                 </div>
 
@@ -255,12 +239,16 @@ export function CardInfo() {
 
                 {/*/!* Комментарии *!/*/}
                 <Grid item xs={12}>
-                    <Item sx={{maxHeight: '450px', overflow: 'hidden', overflowY: 'auto', border: '1px solid #ccc',  borderRadius: '10px'}}>
+                    <Item sx={{
+                        maxHeight: '450px',
+                        overflow: 'hidden',
+                        overflowY: 'auto',
+                        border: '1px solid #ccc',
+                        borderRadius: '10px'
+                    }}>
 
                         {comments?.length !== 0 ?
-
                             (comments.map((comment, i) =>
-
                                 <div className={s.commentWrapper} key={i}>
                                     <div className={s.userInfoComment}>
                                         <CardHeader
@@ -281,7 +269,7 @@ export function CardInfo() {
                                                 backgroundColor: 'lightgray'
                                             }}
                                             title={comment.author.name}
-                                            subheader={new Date(comment.created_at).toLocaleString('ru', options).slice(0, -3)}
+                                            subheader={dateFormat(comment.created_at)}
                                         />
                                         <div className={s.commentText}>
                                             {comment.text}
