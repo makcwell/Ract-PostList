@@ -1,7 +1,3 @@
-/* .card:hover {
-    box-shadow: 0 2px 4px rgb(40 41 61 / 14%), 0 8px 16px rgb(96 97 112 / 16%);
-    
-} */
 .cardShadow:hover {
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2), 0 8px 16px rgb(96 97 112 / 16%);
 
@@ -13,49 +9,59 @@
     justify-content: space-between;
     align-items: flex-end;
     flex: 1;
-    /* background-color: tomato; */
 }
 
 .cardFooter__favorite {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* background-color: teal; */
 }
 
 .boxSvg {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: large;
-    color: #c62828;
-
+    color: #7B8E98;
 }
 
-.boxSvg:hover {
+.boxLike {
+    display: flex;
+    background-color: #d3d3d369;
+    border-radius: 20px;
+    padding: 4px 12px;
+    max-width: 50px;
+    min-width: auto;
+    gap: 3px;
+}
+
+.boxComment {
+    display: flex;
+    background-color: #d3d3d369;
+    border-radius: 20px;
+    padding: 4px 12px;
+    max-width: 50px;
+    min-width: auto;
+    gap: 3px;
+}
+
+.iconLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
     cursor: pointer;
-    /* stroke: rgb(231, 61, 31); */
+    color: #FF4444;
 }
 
 .boxComm {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    /* font-size: medium; */
-    color: inherit;
-
+    gap: 5px;
+    color: #7B8E98;
 }
 
-.boxComm:hover {
-    cursor: pointer;
-}
+
 
 .cardFooter__date {
     display: flex;
-    /* align-items: center; */
-    /* align-items: flex-end; */
-
-    /* background-color: rgb(112, 134, 212) */
 }
 
 

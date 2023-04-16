@@ -1,13 +1,12 @@
 import { useContext } from 'react';
 import s from './myCard.module.css';
-import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card } from '@mui/material';
+import { CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Box } from '@mui/material';
 import { Stack } from '@mui/system';
 import { LocalStorageContext } from "../../../../App";
 import { useNavigate } from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { FavoriteBorder, Favorite } from '@mui/icons-material';
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
 import { isLiked } from '../../../../utils/utils';
-
 function MyCard({ card }) {
     const { handleSetLike, userInfData } = useContext(LocalStorageContext)
     const like = isLiked(card, userInfData)
@@ -31,7 +30,6 @@ function MyCard({ card }) {
 
     return (
 
-        // <Grid item xs="12" sm="4" md="4">
         <Card className={s.cardShadow}
             sx={{
                 display: 'flex',
@@ -53,13 +51,11 @@ function MyCard({ card }) {
                 }
                 title={card.author.name}
                 subheader={card.author.about}
-
             />
             <div onClick={handleIntoCardClick}>
+
                 {/* Фото карточки */}
                 <CardMedia className={s.pointer}
-                    // component="img"
-                    // height="194"
                     sx={{
                         height: '300px',
                         width: '100%',
@@ -85,18 +81,15 @@ function MyCard({ card }) {
 
                     {/* Описание(текст) карточки */}
                     <Typography mt={2}
-                        variant="body1">
+                        variant="body1"
+                        noWrap={true}>
                         {card.text}
                     </Typography>
-                    {/* <Typography mt={2} variant="body2" component="div">
-                    <span> меч </span>
-                    <span> воин </span>
-                </Typography> */}
 
                 </CardContent>
             </div>
 
-            {/* Хештеги карточки */}
+            {/*/!* Хештеги карточки *!/ //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
             <CardContent>
                 <Stack mt={0}
                     flexGrow='1'
@@ -104,41 +97,39 @@ function MyCard({ card }) {
                     flexWrap='wrap'
                     spacing={1}
                 >
-                    {card.tags.map((item) =>
-                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={item} title={item} size="small" color="success" />
+                    {card.tags.length > 0 && card.tags.map((item, index) =>
+                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item}
+                            size="small" color="success" />
                     )}
                 </Stack>
             </CardContent>
 
             {/* Подвал карточки (лайки, комменты, дата добавления поста) */}
-            <CardContent
-                sx={{
-                    display: 'flex',
-                    flex: '1'
-                }}
-            >
+            <CardContent sx={{ display: 'flex', flex: '1' }}>
                 <div className={s.cardFooter__wrapper}>
                     <div className={s.cardFooter__favorite}>
-                        <div className={s.boxSvg}>
+                        <Box className={s.boxSvg}>
                             {/* <Like /> */}
-                            {like ? <Favorite onClick={handleLike} /> : <FavoriteBorder onClick={handleLike} />}
-                            {card.likes.length}
-                        </div>
-                        {card.comments.length !== 0 &&
-                            <div className={s.boxComm}>
-                                {/* <Comment /> */}
-                                <ChatBubbleOutlineIcon />
-                                {card.comments.length}
-                            </div>
-                        }
-                    </div>
+                            <Box className={s.boxLike}>
+                                {like ? <Favorite onClick={handleLike} /> : <FavoriteBorderOutlined className={s.iconLike} fontSize={'medium'} onClick={handleLike} />}
+                                {card.likes.length}
+                                {card.likes.length > 0 && <Typography>{card.likes.length}</Typography>}
+                            </Box>
+                        </Box>
+                        {/* <Comment /> */}
+                        <Box className={s.boxComm}>
+                            <Box className={s.boxComment}>
+                                <ChatBubbleOutlineIcon fontSize={'medium'} />
+                                {card.comments.length > 0 &&
+                                    <Typography>{card.comments.length}</Typography>}
+                            </Box>
+                        </Box>
+                    </div >
                     <div className={s.cardFooter__date}>{createdPost}</div>
-                </div>
+                </div >
 
-            </CardContent>
-        </Card>
-        // {/* </Grid> */ }
-
+            </CardContent >
+        </Card >
     );
 
 }

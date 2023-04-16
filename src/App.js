@@ -13,6 +13,8 @@ import { Routes, Route } from "react-router-dom";
 import { getPostPagination, setLikeOnCard } from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import { LIMIT } from "./constants/constants";
+import { MyPostList } from "./Components/MainList/MyPostList/MyPostList";
+import { EditPost } from "./Components/MainList/PostList/EditPost/EditPost";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({ token: '', setToken: () => void 0 })
@@ -28,6 +30,7 @@ function App() {
     const [searchQuery, setSearchQuery] = useState('')
     const debounceSearchQuery = useDebounce(searchQuery, 700)
 
+
     useEffect(() => {
         if (token) {
             const getPaginationData = async () => {
@@ -42,7 +45,6 @@ function App() {
 
         }
     }, [token, isUpdateCards, debounceSearchQuery, page])
-
 
     const handleFirstRender = () => {
         setUpdateCards(!isUpdateCards)
@@ -73,6 +75,7 @@ function App() {
             setSearchQuery,
             handleSetLike,
         }}>
+
             <ResponsiveAppBar />
             <MainList>
 
@@ -81,22 +84,32 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={
                             <>
+
                                 <MainHead />
                                 {(token &&
                                     <>
                                         <PostList cards={cards} />
                                         <ElementPagination />
                                     </>) || <CardNotAuth />}
+
                             </>
                         } />
-                        <Route path={'/post/:id'} element={<CardInfo cards={cards} />} />
+                        <Route path={'post/:id'} element={<CardInfo cards={cards} />} />
+                        <Route path={'mypostlist'} element={
+                            <>
+                                <MainHead />
+                                <MyPostList />
+                            </>
+                        } />
+                        <Route path={'post/:id/edit'} element={<EditPost />} />
+                        <Route path={'*'} element={<h1>404</h1>} />
                     </Routes>
 
                 </Container>
 
             </MainList>
             <Footer />
-        </LocalStorageContext.Provider >
+        </LocalStorageContext.Provider>
     );
 }
 
