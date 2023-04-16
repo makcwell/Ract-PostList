@@ -16,7 +16,7 @@ import ResultUpdateInfo from './updateUserInfo';
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
     const { setUserInfData } = useContext(LocalStorageContext)
-    const { register, handleSubmit, watch, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
+    const { register, handleSubmit, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
         defaultValues: async () => {
             const userDefaultValues = await getUserInfo()
             setUserInfData(userDefaultValues)
@@ -25,7 +25,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
     });
     const [openForm, setOpenForm] = useState(false)
     const [needUpdate, setNeedUpdate] = useState(false)
-    const watchAvatar = watch('avatar')
+    const getAvatar = getValues('avatar')
 
     const onSubmit = (data) => {
         const { about, name, avatar } = data
@@ -54,7 +54,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     id='avatar'
                                     component="img"
                                     height="300"
-                                    image={watchAvatar}
+                                    image={getAvatar}
                                     alt="user avatar"
                                 />
                                 <TextField
