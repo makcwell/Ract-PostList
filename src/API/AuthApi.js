@@ -10,8 +10,6 @@ export async function setAuthData(data) {
         body: JSON.stringify(data)
     });
     let commits = await response.json();
-    localStorage.setItem("email", `${data.email}`)
-    localStorage.setItem("password", `${data.password}`)
     localStorage.setItem("token", commits.token)
     return commits
 }

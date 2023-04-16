@@ -11,8 +11,8 @@ function ElementPagination() {
             justifyContent: 'center',
             alignItems: 'center',
             mt: '25px',
-            mb: '5px'
-        }}>
+            mb: '5px',
+        }} >
             <Pagination
                 count={pageQty}
                 page={page}
@@ -24,6 +24,8 @@ function ElementPagination() {
                 fontSize='20px'
                 showFirstButton
                 showLastButton
+                color={'secondary'}
+                sx={{backgroundColor: 'white'}}
             />
         </Stack>
     );
