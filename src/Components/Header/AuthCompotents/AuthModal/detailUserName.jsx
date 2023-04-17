@@ -15,7 +15,7 @@ import ResultUpdateInfo from './updateUserInfo';
 
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
-    const { setUserInfData } = useContext(LocalStorageContext)
+    const { setUserInfData, handleFirstRender } = useContext(LocalStorageContext)
     const { register, handleSubmit, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
         defaultValues: async () => {
             const userDefaultValues = await getUserInfo()
@@ -40,6 +40,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
         setOpenForm(!openForm)
         setUserInfData(data)
         setNeedUpdate(JSON.stringify(defaultValues) === JSON.stringify(getValues()))
+        handleFirstRender()
     }
 
     return (

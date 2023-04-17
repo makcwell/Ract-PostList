@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid } from '@mui/material';
 import s from '../CardInfo/card-info.module.css'
@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
-import { isLiked } from '../../../../utils/utils';
 import { LocalStorageContext } from "../../../../App";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { addComment, delComment, delPost, getAllComments, getPostById } from "../../../../API/PostsApi";
+import { addComment, delComment, delPost, getAllComments, getPostById, setLikeOnCard } from "../../../../API/PostsApi";
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -27,12 +26,13 @@ export function CardInfo() {
     const { handleSetLike, userInfData, handleFirstRender } = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
     const { register, handleSubmit, resetField, formState: { errors } } = useForm()
-    const [post, setPost] = useState(null)
+    const [post, setPost] = useState({})
     const [comments, setComment] = useState([])
     const params = useParams()
     const postId = params.id
     const navigate = useNavigate()
-    const like = isLiked(post, userInfData)
+    const term = useMemo(() => post?.likes?.includes(userInfData._id), [post?.likes, userInfData._id])
+    const [like, setLike] = useState(term)
 
     useEffect(() => {
         async function fetchData() {
@@ -41,10 +41,10 @@ export function CardInfo() {
             const comData = await getAllComments(postId)
             setComment(comData)
         }
-
         fetchData()
+    }, [like, postId])
 
-    }, [postId])
+
 
     // Добавить комментарий
     const sendCommentPost = async (data) => {
@@ -65,9 +65,13 @@ export function CardInfo() {
     const handleBtnBack = () => {
         navigate(-1)
     }
-    const handleLike = () => {
-        handleSetLike(post);
+
+    const handleLike = async () => {
+        await setLikeOnCard(postId, term)
+        await handleSetLike(post)
+        setLike((prev) => !prev)
     }
+
     // Удалить комментарий
     const handleDeleteComment = async (commentId) => {
         const res = await delComment(postId, commentId)
@@ -97,6 +101,7 @@ export function CardInfo() {
     const dateFormat = (data) => {
         return new Date(data).toLocaleString('ru', options).slice(0, -3)
     }
+
 
     return (
         <Box sx={{ flexGrow: 1, borderRadius: '10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)' }}
@@ -137,16 +142,16 @@ export function CardInfo() {
                         <div className={s.userInfoWrapper}>
                             <CardHeader
                                 avatar={
-                                    <Avatar src={post?.author.avatar}
+                                    <Avatar src={post?.author?.avatar}
                                         sx={{
                                             backgroundColor: 'teal',
                                             width: 56, height: 56
                                         }} />}
 
-                                title={post?.author.name}
+                                title={post?.author?.name}
                                 subheader={dateFormat(post?.created_at)}
                             />
-                            {userInfData._id === post?.author._id &&
+                            {userInfData?._id === post?.author?._id &&
                                 <Item>
                                     <Button variant={'text'} onClick={handleNavigate}>Редактировать</Button>
                                     <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
@@ -161,33 +166,33 @@ export function CardInfo() {
                                 <div className={s.cardFooter__favorite}>
 
                                     {/* Лайки карточки */}
-                                    <div className={s.boxSvg}>
-                                        {like ? <Favorite onClick={handleLike} /> : <FavoriteBorderOutlined fontSize={'large'} onClick={handleLike} />}
-                                        {post?.likes.length}
-                                    </div >
+                                    <div className={s.boxSvg} onClick={handleLike}>
+                                        {term ? <Favorite fontSize={'large'} /> : <FavoriteBorderOutlined fontSize={'large'} />}
+                                        {post?.likes?.length}
+                                    </div>
 
                                     {/* Хештеги карточки */}
-                                    < Stack mt={2}
+                                    <Stack mt={2}
                                         flexGrow='1'
                                         direction="row"
                                         flexWrap='wrap'
                                         spacing={1}
                                     >
                                         {
-                                            post?.tags.map((tag, index) =>
+                                            post?.tags?.map((tag, index) =>
                                                 <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={tag} key={index}
                                                     size="small" color="success" />
                                             )
                                         }
                                     </Stack>
-                                </div >
+                                </div>
 
-                            </div >
+                            </div>
 
-                        </CardContent >
-                    </Item >
+                        </CardContent>
+                    </Item>
 
-                </Grid >
+                </Grid>
 
                 {/* название  поста */}
                 < Grid item xs={12} >
@@ -195,27 +200,27 @@ export function CardInfo() {
                         <span><b>Название поста:</b></span>
                         <span className={s.postDescription}>{post?.title}</span>
                     </Item>
-                </Grid >
+                </Grid>
 
                 {/* Описание поста */}
-                < Grid item xs={12} >
+                <Grid item xs={12}>
                     <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Описание поста:</b> </span>
                         <span className={s.postDescription}>{post?.text}</span>
                     </Item>
-                </Grid >
+                </Grid>
 
                 {/* Кнопка открытия / закрытия формы добавления комментария */}
-                < Grid item >
+                <Grid item>
                     <Button variant="contained"
                         onClick={openFormComment}
                     >{showFormComment ? 'Скрыть комментарий' : 'Добавить комментарий'}
                     </Button>
 
-                </Grid >
+                </Grid>
 
                 {/* Форма добавления комментариев */}
-                < Grid item xs={12} >
+                <Grid item xs={12}>
                     {showFormComment &&
                         <Item>
                             <form className={s.formComment} onSubmit={handleSubmit(sendCommentPost)}>
@@ -238,10 +243,10 @@ export function CardInfo() {
                             </form>
                         </Item>
                     }
-                </Grid >
+                </Grid>
 
                 {/*/!* Комментарии *!/*/}
-                < Grid item xs={12} >
+                <Grid item xs={12}>
                     <Item sx={{
                         maxHeight: '450px',
                         overflow: 'hidden',
@@ -287,11 +292,9 @@ export function CardInfo() {
                                     }
                                 </div>
                             )) : <div>Комментариев еще нет, добавь их первым !</div>}
-
                     </Item>
-                </Grid >
-
-            </Grid >
-        </Box >
+                </Grid>
+            </Grid>
+        </Box>
     );
 }

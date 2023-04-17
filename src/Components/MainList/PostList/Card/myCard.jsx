@@ -110,9 +110,8 @@ function MyCard({ card }) {
                     <div className={s.cardFooter__favorite}>
                         <Box className={s.boxSvg}>
                             {/* <Like /> */}
-                            <Box className={s.boxLike}>
-                                {like ? <Favorite onClick={handleLike} /> : <FavoriteBorderOutlined className={s.iconLike} fontSize={'medium'} onClick={handleLike} />}
-                                {card.likes.length}
+                            <Box className={s.boxLike} onClick={handleLike}>
+                                {like ? <Favorite className={s.iconLike} /> : <FavoriteBorderOutlined className={s.iconLike} fontSize={'medium'} />}
                                 {card.likes.length > 0 && <Typography>{card.likes.length}</Typography>}
                             </Box>
                         </Box>
