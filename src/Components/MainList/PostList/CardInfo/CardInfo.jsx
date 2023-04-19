@@ -1,19 +1,17 @@
-import * as React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid} from '@mui/material';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid } from '@mui/material';
 import s from '../CardInfo/card-info.module.css'
-import {Stack} from '@mui/system';
-import {useContext, useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {useParams, useNavigate} from "react-router-dom";
+import { Stack } from '@mui/system';
+import { useForm } from 'react-hook-form';
+import { useParams, useNavigate } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
+import { LocalStorageContext } from "../../../../App";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import {addComment, delComment, delPost, getAllComments, getPostById} from "../../../../API/PostsApi";
-import {LocalStorageContext} from "../../../../App";
+import { addComment, delComment, delPost, getAllComments, getPostById, setLikeOnCard } from "../../../../API/PostsApi";
 
-
-const Item = styled(Paper)(({theme}) => ({
+const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
@@ -25,15 +23,16 @@ const Item = styled(Paper)(({theme}) => ({
 
 
 export function CardInfo() {
-    const {userInfData, handleFirstRender} = useContext(LocalStorageContext)
+    const { handleSetLike, userInfData, handleFirstRender } = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
-    const {register, handleSubmit, resetField, formState: {errors}} = useForm()
-    const [post, setPost] = useState(null)
+    const { register, handleSubmit, resetField, formState: { errors } } = useForm()
+    const [post, setPost] = useState({})
     const [comments, setComment] = useState([])
     const params = useParams()
     const postId = params.id
     const navigate = useNavigate()
-
+    const term = useMemo(() => post?.likes?.includes(userInfData._id), [post?.likes, userInfData._id])
+    const [like, setLike] = useState(term)
 
     useEffect(() => {
         async function fetchData() {
@@ -42,10 +41,10 @@ export function CardInfo() {
             const comData = await getAllComments(postId)
             setComment(comData)
         }
-
         fetchData()
+    }, [like, postId])
 
-    }, [postId])
+
 
     // Добавить комментарий
     const sendCommentPost = async (data) => {
@@ -65,6 +64,12 @@ export function CardInfo() {
     // Кнопка назад
     const handleBtnBack = () => {
         navigate(-1)
+    }
+
+    const handleLike = async () => {
+        await setLikeOnCard(postId, term)
+        await handleSetLike(post)
+        setLike((prev) => !prev)
     }
 
     // Удалить комментарий
@@ -97,15 +102,16 @@ export function CardInfo() {
         return new Date(data).toLocaleString('ru', options).slice(0, -3)
     }
 
+
     return (
-        <Box sx={{flexGrow: 1, borderRadius: '10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)'}}
-             backgroundColor='white'
-             padding={2}>
+        <Box sx={{ flexGrow: 1, borderRadius: '10px', boxShadow: '0px 5px 10px 2px rgba(17, 18, 19, 0.5)' }}
+            backgroundColor='white'
+            padding={2}>
 
             {/* Кнопка назад */}
             <div className={s.btnBackWrapper}>
                 <Button onClick={handleBtnBack} variant='outlined' size='small'
-                        sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Назад</Button>
+                    sx={{ boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)' }}>Назад</Button>
             </div>
 
 
@@ -136,16 +142,16 @@ export function CardInfo() {
                         <div className={s.userInfoWrapper}>
                             <CardHeader
                                 avatar={
-                                    <Avatar src={post?.author.avatar}
-                                            sx={{
-                                                backgroundColor: 'teal',
-                                                width: 56, height: 56
-                                            }}/>}
+                                    <Avatar src={post?.author?.avatar}
+                                        sx={{
+                                            backgroundColor: 'teal',
+                                            width: 56, height: 56
+                                        }} />}
 
-                                title={post?.author.name}
+                                title={post?.author?.name}
                                 subheader={dateFormat(post?.created_at)}
                             />
-                            {userInfData._id === post?.author._id &&
+                            {userInfData?._id === post?.author?._id &&
                                 <Item>
                                     <Button variant={'text'} onClick={handleNavigate}>Редактировать</Button>
                                     <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
@@ -155,27 +161,29 @@ export function CardInfo() {
 
                         {/* Раздел лайков хештегов //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
                         <CardContent
-                            sx={{paddingTop: '0',}}>
+                            sx={{ paddingTop: '0', }}>
                             <div className={s.cardFooter__wrapper}>
                                 <div className={s.cardFooter__favorite}>
 
                                     {/* Лайки карточки */}
-                                    <div className={s.boxSvg}>
-                                        <FavoriteBorderIcon fontSize={'large'}/>
-                                        {post?.likes.length}
+                                    <div className={s.boxSvg} onClick={handleLike}>
+                                        {term ? <Favorite fontSize={'large'} /> : <FavoriteBorderOutlined fontSize={'large'} />}
+                                        {post?.likes?.length}
                                     </div>
 
                                     {/* Хештеги карточки */}
                                     <Stack mt={2}
-                                           flexGrow='1'
-                                           direction="row"
-                                           flexWrap='wrap'
-                                           spacing={1}
+                                        flexGrow='1'
+                                        direction="row"
+                                        flexWrap='wrap'
+                                        spacing={1}
                                     >
-                                        {post?.tags.map((tag, index) =>
-                                            <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={index}
-                                                  size="small" color="success"/>
-                                        )}
+                                        {
+                                            post?.tags?.map((tag, index) =>
+                                                <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={tag} key={index}
+                                                    size="small" color="success" />
+                                            )
+                                        }
                                     </Stack>
                                 </div>
 
@@ -188,7 +196,7 @@ export function CardInfo() {
 
                 {/* название  поста */}
                 <Grid item xs={12}>
-                    <Item sx={{fontSize: '1rem'}}>
+                    <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Название поста:</b></span>
                         <span className={s.postDescription}>{post?.title}</span>
                     </Item>
@@ -196,7 +204,7 @@ export function CardInfo() {
 
                 {/* Описание поста */}
                 <Grid item xs={12}>
-                    <Item sx={{fontSize: '1rem'}}>
+                    <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Описание поста:</b> </span>
                         <span className={s.postDescription}>{post?.text}</span>
                     </Item>
@@ -205,7 +213,7 @@ export function CardInfo() {
                 {/* Кнопка открытия / закрытия формы добавления комментария */}
                 <Grid item>
                     <Button variant="contained"
-                            onClick={openFormComment}
+                        onClick={openFormComment}
                     >{showFormComment ? 'Скрыть комментарий' : 'Добавить комментарий'}
                     </Button>
 
@@ -228,8 +236,8 @@ export function CardInfo() {
                                 />
                                 {errors?.comment && <span className={s.errorComment}>{errors.comment?.message}</span>}
 
-                                <Button sx={{maxWidth: '200px', marginBottom: '2rem'}} size="large" type='submit'
-                                        variant="contained" color="success" endIcon={<SendIcon/>}>
+                                <Button sx={{ maxWidth: '200px', marginBottom: '2rem' }} size="large" type='submit'
+                                    variant="contained" color="success" endIcon={<SendIcon />}>
                                     Добавить
                                 </Button>
                             </form>
@@ -280,14 +288,12 @@ export function CardInfo() {
                                     {userInfData._id === comment.author._id &&
                                         <HighlightOffIcon cursor={'pointer'} color={'error'} onClick={() => {
                                             handleDeleteComment(comment._id)
-                                        }}/>
+                                        }} />
                                     }
                                 </div>
                             )) : <div>Комментариев еще нет, добавь их первым !</div>}
-
                     </Item>
                 </Grid>
-
             </Grid>
         </Box>
     );

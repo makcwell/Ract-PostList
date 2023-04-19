@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Logo from '../Img/logo.svg'
+import Logo from '../Img/data-science.png'
 import '@fontsource/babylonica';
 import RenderUserMenu from "./AuthCompotents/ConditionalRender/renderUserMenu";
 
@@ -19,7 +19,7 @@ function ResponsiveAppBar() {
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex' }}>
                         {/*Логотип*/}
-                        <img src={Logo} style={{ width: '32px' }} alt={'Ooops'} />
+                        <img src={Logo} style={{ width: '65px' }} alt={'Ooops'} />
 
                         {/*Название*/}
                         <Typography

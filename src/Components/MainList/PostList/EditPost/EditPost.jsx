@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, Button, TextField} from "@mui/material";
-import {useNavigate, useParams} from "react-router-dom";
-import {useForm} from "react-hook-form";
-import {getPostById, setPost} from "../../../../API/PostsApi";
+import { Box, Button, TextField } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { getPostById, setPost } from "../../../../API/PostsApi";
 import s from './EditPost.module.css'
+import { REQUIRED_PATTERN } from '../../../../constants/constants';
 
 
 export function EditPost() {
@@ -11,7 +12,7 @@ export function EditPost() {
     const params = useParams()
     const postId = params.id
     const navigate = useNavigate()
-    const {register, handleSubmit, formState: {isDirty}} = useForm({
+    const { register, handleSubmit, formState: { errors, isDirty } } = useForm({
         defaultValues: async () => await getPostById(postId)
     })
 
@@ -26,11 +27,13 @@ export function EditPost() {
         await setPost(postData, postId)
         navigate(-1)
     }
-
+    const handleNavigate = () => {
+        navigate(-1)
+    }
 
     return (
         <Box className={s.mainBox}>
-            <Button className={s.btnBack} variant={"outlined"} onClick={() => navigate(-1)} >Назад</Button>
+            <Button sx={{ m: '20px' }} className={s.btnBack} variant={"outlined"} onClick={handleNavigate} >Назад</Button>
             <Box className={s.formBox}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
@@ -40,7 +43,9 @@ export function EditPost() {
                         type="text"
                         fullWidth
                         variant="outlined"
-                        {...register('image')}
+                        error={!!errors.image}
+                        helperText={errors?.image?.message}
+                        {...register('image', REQUIRED_PATTERN)}
                     />
                     <TextField
                         focused
@@ -49,7 +54,9 @@ export function EditPost() {
                         type="text"
                         fullWidth
                         variant="outlined"
-                        {...register('tags')}
+                        error={!!errors.tags}
+                        helperText={errors?.tags?.message}
+                        {...register('tags', REQUIRED_PATTERN)}
                     />
                     <TextField
                         focused
@@ -58,7 +65,9 @@ export function EditPost() {
                         type="text"
                         fullWidth
                         variant="outlined"
-                        {...register('title')}
+                        error={!!errors.title}
+                        helperText={errors?.title?.message}
+                        {...register('title', REQUIRED_PATTERN)}
                     />
                     <TextField
                         focused
@@ -67,9 +76,11 @@ export function EditPost() {
                         type="text"
                         fullWidth
                         variant="outlined"
-                        {...register('text')}
+                        error={!!errors.text}
+                        helperText={errors?.text?.message}
+                        {...register('text', REQUIRED_PATTERN)}
                     />
-                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success" variant={'contained'} sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Подтвердить</Button>
+                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success" variant={'contained'} sx={{ boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)', }}>Подтвердить</Button>
                 </form>
             </Box>
         </Box>

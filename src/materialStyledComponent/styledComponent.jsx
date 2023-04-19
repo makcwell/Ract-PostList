@@ -44,3 +44,4 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+

@@ -1,4 +1,3 @@
-
 .cardShadow:hover {
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2), 0 8px 16px rgb(96 97 112 / 16%);
 
@@ -66,7 +65,7 @@
 
 }
 
-.userInfoWrapper > * span {
+.userInfoWrapper>* span {
     text-align: left;
     color: #333;
 }
@@ -82,7 +81,7 @@
 
 }
 
-.userInfoComment > * span {
+.userInfoComment>* span {
     font-size: 12px;
 
 }

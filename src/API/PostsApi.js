@@ -1,4 +1,4 @@
-import {BASE_URL, headersData} from "../constants/constants";
+import { BASE_URL } from "../constants/constants";
 
 
 export const addPost = async (data) => {
@@ -6,14 +6,16 @@ export const addPost = async (data) => {
         if (data) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts`, {
                 method: 'POST',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
                 body: JSON.stringify(data)
             })
             return response
         }
-        throw new Error('Ошибка данных в getPostPagination')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в addPost ${e.message}`)
     }
 }
 
@@ -22,14 +24,32 @@ export const getPostPagination = async (page, limit, query) => {
         if (page && limit) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/paginate?page=${page}&limit=${limit}&query=${query}`, {
                 method: 'GET',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
             const result = await response.json()
             return result
         }
-        throw new Error('Ошибка данных в getPostPagination')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в getPostPagination ${e.message}`)
+    }
+}
+
+export const setLikeOnCard = async (cardId, isLike) => {
+    try {
+        let response = await fetch(`${BASE_URL}/v2/group-10/posts/likes/${cardId}`, {
+            method: isLike ? "DELETE" : "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+        })
+        const result = await response.json()
+        return result
+    } catch (e) {
+        console.error(`Ошибка данных в setLikeOnCard ${e.message}`)
     }
 }
 
@@ -37,15 +57,17 @@ export const getAllPosts = async () => {
     try {
         let response = await fetch(`${BASE_URL}/v2/group-10/posts`, {
             method: 'GET',
-            headers: headersData,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
         })
         const result = await response.json()
         if (result) {
             return result
         }
-        throw new Error('Ошибка данных в getAllPosts')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в getAllPosts ${e.message}`)
     }
 }
 export const getPostById = async (id) => {
@@ -53,14 +75,16 @@ export const getPostById = async (id) => {
         if (id) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/${id}`, {
                 method: 'GET',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
             const result = await response.json()
             return result
         }
-        throw new Error('Ошибка данных в getPostById')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в getPostById ${e.message}`)
     }
 }
 
@@ -69,15 +93,17 @@ export const addComment = async (data, id) => {
         if (data && id) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/comments/${id}`, {
                 method: 'POST',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
                 body: JSON.stringify(data)
             })
             const result = await response.json()
             return result
         }
-        throw new Error('Ошибка данных в addComment')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в addComment ${e.message}`)
     }
 }
 
@@ -86,14 +112,16 @@ export const delComment = async (postId, commentId) => {
         if (postId && commentId) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/comments/${postId}/${commentId}`, {
                 method: 'DELETE',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
             const result = await response.json()
             return result
         }
-        throw new Error('Ошибка данных в delComment')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в delComment ${e.message}`)
     }
 }
 
@@ -102,14 +130,16 @@ export const getAllComments = async (postId) => {
         if (postId) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/comments/${postId}`, {
                 method: 'GET',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
             const result = await response.json()
             return result
         }
-        throw new Error('Ошибка данных в getAllComments')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в getAllComments ${e.message}`)
     }
 }
 
@@ -118,27 +148,29 @@ export const delPost = async (postId) => {
         if (postId) {
             await fetch(`${BASE_URL}/v2/group-10/posts/${postId}`, {
                 method: 'DELETE',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
         }
-        throw new Error('Ошибка данных в delPost')
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в delPost ${e.message}`)
     }
 }
 
 export const setPost = async (data, id) => {
     try {
-        if (data && id) {
-            await fetch(`${BASE_URL}/v2/group-10/posts/${id}`, {
-                method: 'PATCH',
-                headers: headersData,
-                body: JSON.stringify(data)
-            })
-        }
-        throw new Error('Ошибка данных в delPost')
+        await fetch(`${BASE_URL}/v2/group-10/posts/${id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(data)
+        })
     } catch (e) {
-        console.log(e)
+        console.error(`Ошибка данных в setPost ${e.message}`)
     }
 }
 
