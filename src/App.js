@@ -42,7 +42,6 @@ function App() {
                 }
             }
             getPaginationData()
-
         }
     }, [token, isUpdateCards, debounceSearchQuery, page])
 

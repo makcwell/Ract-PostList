@@ -19,6 +19,7 @@ const theme = createTheme({
 
 function ElementPagination() {
     const { page, setPage, pageQty } = useContext(LocalStorageContext)
+    const changePage = (event, num) => setPage(num)
     return (
         <ThemeProvider theme={theme}>
             <Stack spacing={2} sx={{
@@ -31,9 +32,7 @@ function ElementPagination() {
                 <Pagination
                     count={pageQty}
                     page={page}
-                    onChange={(event, num) => {
-                        setPage(num)
-                    }}
+                    onChange={changePage}
                     variant="outlined"
                     size='large'
                     fontSize='20px'

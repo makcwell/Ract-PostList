@@ -195,7 +195,7 @@ export function CardInfo() {
                 </Grid>
 
                 {/* название  поста */}
-                < Grid item xs={12} >
+                <Grid item xs={12}>
                     <Item sx={{ fontSize: '1rem' }}>
                         <span><b>Название поста:</b></span>
                         <span className={s.postDescription}>{post?.title}</span>

@@ -123,12 +123,12 @@ function MyCard({ card }) {
                                     <Typography>{card.comments.length}</Typography>}
                             </Box>
                         </Box>
-                    </div >
+                    </div>
                     <div className={s.cardFooter__date}>{createdPost}</div>
-                </div >
+                </div>
 
-            </CardContent >
-        </Card >
+            </CardContent>
+        </Card>
     );
 
 }

@@ -25,7 +25,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
     });
     const [openForm, setOpenForm] = useState(false)
     const [needUpdate, setNeedUpdate] = useState(false)
-    const getAvatar = getValues('avatar')
+    const avatar = getValues('avatar')
 
     const onSubmit = (data) => {
         const { about, name, avatar } = data
@@ -55,7 +55,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     id='avatar'
                                     component="img"
                                     height="300"
-                                    image={getAvatar}
+                                    image={avatar}
                                     alt="user avatar"
                                 />
                                 <TextField
@@ -111,7 +111,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                         </>) : (
                             <CircularProgress />)}
                 </DialogContent>
-            </Dialog >
+            </Dialog>
             <ResultUpdateInfo
                 openForm={openForm}
                 setOpenForm={setOpenForm}

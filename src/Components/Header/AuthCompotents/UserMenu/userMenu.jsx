@@ -10,6 +10,8 @@ import { LocalStorageContext } from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
 import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
 import SearchInput from './search';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -20,6 +22,7 @@ function UserMenu(props) {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isOpen, setOpen] = useState(false);
     const [isOpenAdd, setOpenAdd] = useState(false);
+    const navigate = useNavigate()
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -41,6 +44,7 @@ function UserMenu(props) {
         setToken('')
         setSearchQuery('')
         setPage(1)
+        navigate('/')
     }
 
 

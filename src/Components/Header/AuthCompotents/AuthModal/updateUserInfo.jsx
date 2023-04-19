@@ -24,7 +24,6 @@ const ResultUpdateInfo = ({ openForm, needUpdate, setOpenForm }) => {
                 </DialogActions>
                 {(!needUpdate && openForm) && <Confetti className={s.confettiWrapperStyled} width={400} height={200} numberOfPieces={150} />}
             </Dialog>
-
         </>
     );
 }
