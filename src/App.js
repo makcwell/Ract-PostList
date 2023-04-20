@@ -29,7 +29,7 @@ function App() {
     const [pageQty, setPageQty] = useState(0)
     const [searchQuery, setSearchQuery] = useState('')
     const debounceSearchQuery = useDebounce(searchQuery, 700)
-
+    const [myPosts, setMyPosts] = useState([])
 
     useEffect(() => {
         if (token) {
@@ -56,6 +56,12 @@ function App() {
         setCards(newCards)
     }, [cards, userInfData._id])
 
+    const handleSetLikePost = useCallback(async (card) => {
+        const isLike = card.likes.includes(userInfData._id)
+        const likedCard = await setLikeOnCard(card._id, isLike)
+        const newCards = myPosts.map(card => card._id === likedCard._id ? likedCard : card)
+        setMyPosts(newCards)
+    }, [myPosts, userInfData._id])
 
     return (
         <LocalStorageContext.Provider value={{
@@ -72,6 +78,9 @@ function App() {
             searchQuery,
             setSearchQuery,
             handleSetLike,
+            myPosts,
+            setMyPosts,
+            handleSetLikePost
         }}>
 
             <ResponsiveAppBar />

@@ -8,7 +8,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
 import { isLiked } from '../../../../utils/utils';
 function MyCard({ card }) {
-    const { handleSetLike, userInfData } = useContext(LocalStorageContext)
+    const { handleSetLike, userInfData, handleSetLikePost } = useContext(LocalStorageContext)
     const like = isLiked(card, userInfData)
     const handleIntoCardClick = () => {
         navigate(`/post/${card._id}`)
@@ -24,8 +24,8 @@ function MyCard({ card }) {
 
     const handleLike = () => {
         handleSetLike(card);
+        handleSetLikePost(card)
     }
-
     const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
 
     return (

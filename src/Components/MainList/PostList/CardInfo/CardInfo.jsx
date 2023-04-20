@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export function CardInfo() {
-    const { handleSetLike, userInfData, handleFirstRender } = useContext(LocalStorageContext)
+    const { handleSetLike, userInfData, handleFirstRender, handleSetLikePost } = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
     const { register, handleSubmit, resetField, formState: { errors } } = useForm()
     const [post, setPost] = useState({})
@@ -68,6 +68,7 @@ export function CardInfo() {
 
     const handleLike = async () => {
         await setLikeOnCard(postId, term)
+        await handleSetLikePost(post)
         await handleSetLike(post)
         setLike((prev) => !prev)
     }

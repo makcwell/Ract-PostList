@@ -1,14 +1,14 @@
-import {Grid} from '@mui/material';
+import { Grid } from '@mui/material';
 import MyCard from "../PostList/Card/myCard";
-import {useContext, useEffect, useState} from "react";
-import {getAllPosts} from '../../../API/PostsApi'
-import {LocalStorageContext} from "../../../App";
-
+import { useContext, useEffect } from "react";
+import { getAllPosts } from '../../../API/PostsApi'
+import { LocalStorageContext } from "../../../App";
 
 export function MyPostList() {
 
-    const [myPosts, setMyPosts] = useState([])
-    const {userInfData} = useContext(LocalStorageContext)
+    const { userInfData,
+        myPosts,
+        setMyPosts } = useContext(LocalStorageContext)
 
 
     useEffect(() => {
@@ -21,11 +21,12 @@ export function MyPostList() {
         Posts()
     }, [userInfData])
 
+
     return (
-        <Grid container spacing={{xs: 2, sm: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+        <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
             {myPosts?.map((card, index) => (
                 <Grid item key={index} xs={12} sm={4} md={4}>
-                    <MyCard card={card}/>
+                    <MyCard card={card} />
                 </Grid>
             ))}
         </Grid>
