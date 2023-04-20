@@ -26,11 +26,14 @@ export function EditPost() {
         await setPost(postData, postId)
         navigate(-1)
     }
+    const handleNavigate = () => {
+        navigate(-1)
+    }
 
 
     return (
         <Box className={s.mainBox}>
-            <Button className={s.btnBack} variant={"outlined"} onClick={() => navigate(-1)} >Назад</Button>
+            <Button className={s.btnBack} variant={"outlined"} onClick={handleNavigate}>Назад</Button>
             <Box className={s.formBox}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
@@ -69,10 +72,11 @@ export function EditPost() {
                         variant="outlined"
                         {...register('text')}
                     />
-                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success" variant={'contained'} sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Подтвердить</Button>
+                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success"
+                            variant={'contained'}
+                            sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Подтвердить</Button>
                 </form>
             </Box>
         </Box>
     );
 }
-

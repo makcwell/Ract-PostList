@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid} from '@mui/material';
-import s from '../CardInfo/card-info.module.css'
-import {Stack} from '@mui/system';
+import {Box, Paper, Avatar, Button, CardContent, CardHeader, CardMedia, Chip, Grid, Stack} from '@mui/material';
+import s from './CardInfo.module.css'
 import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useParams, useNavigate} from "react-router-dom";
@@ -28,7 +27,7 @@ export function CardInfo() {
     const {userInfData, handleFirstRender} = useContext(LocalStorageContext)
     const [showFormComment, setShowFormComment] = useState(false)
     const {register, handleSubmit, resetField, formState: {errors}} = useForm()
-    const [post, setPost] = useState(null)
+    const [post, setPost] = useState({})
     const [comments, setComment] = useState([])
     const params = useParams()
     const postId = params.id
@@ -42,9 +41,7 @@ export function CardInfo() {
             const comData = await getAllComments(postId)
             setComment(comData)
         }
-
-        fetchData()
-
+        void fetchData()
     }, [postId])
 
     // Добавить комментарий
@@ -59,7 +56,7 @@ export function CardInfo() {
 
     // Открываем и закрываем форму комментариев
     const openFormComment = () => {
-        setShowFormComment((state) => !showFormComment)
+        setShowFormComment(() => !showFormComment)
     }
 
     // Кнопка назад
@@ -103,10 +100,10 @@ export function CardInfo() {
              padding={2}>
 
             {/* Кнопка назад */}
-            <div className={s.btnBackWrapper}>
+            <Box className={s.btnBackWrapper}>
                 <Button onClick={handleBtnBack} variant='outlined' size='small'
                         sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Назад</Button>
-            </div>
+            </Box>
 
 
             <Grid container spacing={2}>
@@ -136,16 +133,16 @@ export function CardInfo() {
                         <div className={s.userInfoWrapper}>
                             <CardHeader
                                 avatar={
-                                    <Avatar src={post?.author.avatar}
+                                    <Avatar src={post?.author?.avatar}
                                             sx={{
                                                 backgroundColor: 'teal',
                                                 width: 56, height: 56
                                             }}/>}
 
-                                title={post?.author.name}
+                                title={post?.author?.name}
                                 subheader={dateFormat(post?.created_at)}
                             />
-                            {userInfData._id === post?.author._id &&
+                            {userInfData?._id === post?.author?._id &&
                                 <Item>
                                     <Button variant={'text'} onClick={handleNavigate}>Редактировать</Button>
                                     <Button variant={'text'} color={'error'} onClick={handleDeletePost}>Удалить</Button>
@@ -162,7 +159,7 @@ export function CardInfo() {
                                     {/* Лайки карточки */}
                                     <div className={s.boxSvg}>
                                         <FavoriteBorderIcon fontSize={'large'}/>
-                                        {post?.likes.length}
+                                        {post?.likes?.length}
                                     </div>
 
                                     {/* Хештеги карточки */}
@@ -172,7 +169,7 @@ export function CardInfo() {
                                            flexWrap='wrap'
                                            spacing={1}
                                     >
-                                        {post?.tags.map((tag, index) =>
+                                        {post?.tags?.map((tag, index) =>
                                             <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={tag} key={index}
                                                   size="small" color="success"/>
                                         )}
@@ -277,7 +274,7 @@ export function CardInfo() {
                                     </div>
 
 
-                                    {userInfData._id === comment.author._id &&
+                                    {userInfData?._id === comment?.author?._id &&
                                         <HighlightOffIcon cursor={'pointer'} color={'error'} onClick={() => {
                                             handleDeleteComment(comment._id)
                                         }}/>

@@ -1,5 +1,4 @@
-// import { Card, CardContent, CardHeader } from "@mui/material";
-import {Container} from "@mui/system";
+import Container from "@mui/material/Container";
 import {createContext, useEffect, useState} from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
@@ -41,8 +40,7 @@ function App() {
                     setPage(1)
                 }
             }
-            getPaginationData()
-
+            void getPaginationData()
         }
     }, [token, isUpdateCards, debounceSearchQuery, page])
 

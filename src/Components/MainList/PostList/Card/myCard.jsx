@@ -1,15 +1,14 @@
 import React from 'react';
 import s from './myCard.module.css';
-import {CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Box} from '@mui/material';
-import {Stack} from '@mui/system';
+import {CardMedia, Typography, CardContent, Chip, CardHeader, Avatar, Card, Box, Stack} from '@mui/material';
 import {useNavigate} from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorder';
 
-function MyCard({card}) {
+export default function MyCard({card}) {
 
     const handleIntoCardClick = () => {
-        navigate(`/post/${card._id}`)
+        navigate(`/post/${card["_id"]}`)
     }
 
     const navigate = useNavigate()
@@ -20,7 +19,7 @@ function MyCard({card}) {
         year: 'numeric',
     }
 
-    const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
+    const createdPost = new Date(card["created_at"]).toLocaleString('ru', options).slice(0, -3)
 
     return (
 
@@ -83,7 +82,7 @@ function MyCard({card}) {
                 </CardContent>
             </div>
 
-            {/*/!* Хештеги карточки *!/ //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
+            {/*/!* Хештеги карточки *!/*/}
             <CardContent>
                 <Stack mt={0}
                        flexGrow='1'
@@ -91,10 +90,10 @@ function MyCard({card}) {
                        flexWrap='wrap'
                        spacing={1}
                 >
-                    {card.tags.length > 0 && card.tags.map((item, index) =>
+                    {card.tags.length > 0 && card.tags[0] !== '' ? card.tags.map((item, index) =>
                         <Chip sx={{marginBottom: '5px', maxWidth: '100px'}} label={item} key={index} title={item}
                               size="small" color="success"/>
-                    )}
+                    ) : <span></span>}
                 </Stack>
             </CardContent>
 
@@ -102,11 +101,11 @@ function MyCard({card}) {
             <CardContent sx={{display: 'flex', flex: '1'}}>
                 <div className={s.cardFooter__wrapper}>
                     <div className={s.cardFooter__favorite}>
+                        {/* <Like /> */}
                         <Box className={s.boxSvg}>
-                            {/* <Like /> */}
                             <Box className={s.boxLike}>
                                 <FavoriteBorderOutlinedIcon className={s.iconLike} fontSize={'medium'}/>
-                                {card.likes.length > 0 && <Typography>{card.likes.length}</Typography>}
+                                {card["likes"].length > 0 && <Typography>{card["likes"].length}</Typography>}
                             </Box>
                         </Box>
                         {/* <Comment /> */}
@@ -120,11 +119,7 @@ function MyCard({card}) {
                     </div>
                     <div className={s.cardFooter__date}>{createdPost}</div>
                 </div>
-
             </CardContent>
         </Card>
     );
-
 }
-
-export default MyCard;

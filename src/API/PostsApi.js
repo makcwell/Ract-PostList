@@ -4,14 +4,13 @@ import {BASE_URL, headersData} from "../constants/constants";
 export const addPost = async (data) => {
     try {
         if (data) {
-            let response = await fetch(`${BASE_URL}/v2/group-10/posts`, {
+            await fetch(`${BASE_URL}/v2/group-10/posts`, {
                 method: 'POST',
                 headers: headersData,
                 body: JSON.stringify(data)
             })
-            return response
         }
-        throw new Error('Ошибка данных в getPostPagination')
+        throw new Error('Ошибка данных в addPost')
     } catch (e) {
         console.log(e)
     }
@@ -22,7 +21,10 @@ export const getPostPagination = async (page, limit, query) => {
         if (page && limit) {
             let response = await fetch(`${BASE_URL}/v2/group-10/posts/paginate?page=${page}&limit=${limit}&query=${query}`, {
                 method: 'GET',
-                headers: headersData,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
             })
             const result = await response.json()
             return result
@@ -43,9 +45,9 @@ export const getAllPosts = async () => {
         if (result) {
             return result
         }
-        throw new Error('Ошибка данных в getAllPosts')
+        throw new Error(`Ошибка данных в getAllPosts ${Error.message}`)
     } catch (e) {
-        console.log(e)
+        console.log(e.message)
     }
 }
 export const getPostById = async (id) => {
@@ -115,13 +117,13 @@ export const getAllComments = async (postId) => {
 
 export const delPost = async (postId) => {
     try {
-        if (postId) {
-            await fetch(`${BASE_URL}/v2/group-10/posts/${postId}`, {
-                method: 'DELETE',
-                headers: headersData,
-            })
-        }
-        throw new Error('Ошибка данных в delPost')
+
+        await fetch(`${BASE_URL}/v2/group-10/posts/${postId}`, {
+            method: 'DELETE',
+            headers: headersData,
+        })
+
+
     } catch (e) {
         console.log(e)
     }
@@ -135,8 +137,8 @@ export const setPost = async (data, id) => {
                 headers: headersData,
                 body: JSON.stringify(data)
             })
-        }
-        throw new Error('Ошибка данных в delPost')
+        } else
+            throw new Error('Ошибка данных в setPost')
     } catch (e) {
         console.log(e)
     }
