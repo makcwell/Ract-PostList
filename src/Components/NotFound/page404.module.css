@@ -1,0 +1,46 @@
+.cardShadow:hover {
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2), 0 8px 16px rgb(96 97 112 / 16%);
+
+}
+
+.btnBackWrapper {
+    margin-bottom: 20px;
+}
+
+.wrapperNotFound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 50px;
+
+}
+
+.notFound__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.notFound__Title {
+    font-size: 10rem;
+    font-weight: bold;
+    color: #581D7B;
+}
+
+.notFound__Subtitle {
+    font-size: 18px;
+    letter-spacing: 2.5px;
+    margin-top: -25px;
+}
+
+.notFound__Text {
+    text-align: center;
+    max-width: 300px;
+    color: #5e5d5d;
+    line-height: 22px;
+    margin-bottom: 25px;
+
+}
