@@ -159,7 +159,7 @@ export function CardInfo() {
                             }
                         </div>
 
-                        {/* Раздел лайков хештегов //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
+                        {/* Раздел лайков хештегов */}
                         <CardContent
                             sx={{ paddingTop: '0', }}>
                             <div className={s.cardFooter__wrapper}>
@@ -178,11 +178,11 @@ export function CardInfo() {
                                         flexWrap='wrap'
                                         spacing={1}
                                     >
-                                        {
-                                            post?.tags?.map((tag, index) =>
+                                        {!post.tags ?
+                                            (post?.tags?.map((tag, index) =>
                                                 <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={tag} key={index}
-                                                    size="small" color="success" />
-                                            )
+                                                    size="small" color="success" />)
+                                            ) : null
                                         }
                                     </Stack>
                                 </div>

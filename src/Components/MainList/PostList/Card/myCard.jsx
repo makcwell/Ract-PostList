@@ -89,7 +89,7 @@ function MyCard({ card }) {
                 </CardContent>
             </div>
 
-            {/*/!* Хештеги карточки *!/ //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
+            {/* Хештеги карточки */}
             <CardContent>
                 <Stack mt={0}
                     flexGrow='1'
@@ -97,10 +97,12 @@ function MyCard({ card }) {
                     flexWrap='wrap'
                     spacing={1}
                 >
-                    {card.tags.length > 0 && card.tags.map((item, index) =>
-                        <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item}
-                            size="small" color="success" />
-                    )}
+                    {!card.tags ?
+                        (card.tags.length > 0 && card.tags.map((item, index) =>
+                            <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item}
+                                size="small" color="success" />)
+                        ) : null
+                    }
                 </Stack>
             </CardContent>
 
