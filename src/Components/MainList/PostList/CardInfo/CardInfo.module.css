@@ -1,4 +1,3 @@
-
 .cardShadow:hover {
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2), 0 8px 16px rgb(96 97 112 / 16%);
 
@@ -28,11 +27,28 @@
     margin-right: 20px;
 
 }
-
-.boxSvg:hover {
+.iconNotLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
     cursor: pointer;
     color: #FF4444;
 }
+
+.iconLike {
+    color: #FF4444;
+}
+
+.iconLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
+    cursor: pointer;
+    color: #FF4444;
+}
+
+/*.boxSvg:hover {*/
+/*    cursor: pointer;*/
+/*    color: #FF4444;*/
+/*}*/
 
 .boxComm {
     display: inline-flex;
@@ -65,7 +81,7 @@
 
 }
 
-.userInfoWrapper > * span {
+.userInfoWrapper>* span {
     text-align: left;
     color: #333;
 }
@@ -81,7 +97,7 @@
 
 }
 
-.userInfoComment > * span {
+.userInfoComment>* span {
     font-size: 12px;
 
 }

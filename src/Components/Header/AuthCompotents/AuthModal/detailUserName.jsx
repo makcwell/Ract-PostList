@@ -1,24 +1,22 @@
 import { useContext, useState } from 'react';
 import Button from '@mui/material/Button';
+import { useForm } from "react-hook-form";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getUserInfo, changeUserInfo, changeUserAvatar } from '../../../../API/AuthApi';
 import CardMedia from '@mui/material/CardMedia';
 import { LocalStorageContext } from "../../../../App";
-import { useForm } from "react-hook-form";
-import ResultUpdateInfo from './updateUserInfo';
 import { USER_PATTERN } from '../../../../constants/constants';
-
-
+import { getUserInfo, changeUserInfo, changeUserAvatar } from '../../../../API/AuthApi';
+import ResultUpdateInfo from './updateUserInfo';
 
 
 const DetailUserInfo = ({ open, onClose, onClick }) => {
-    const { setUserInfData } = useContext(LocalStorageContext)
-    const { register, handleSubmit, watch, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
+    const { setUserInfData, handleFirstRender } = useContext(LocalStorageContext)
+    const { register, handleSubmit, reset, formState: { isLoading, errors, defaultValues }, getValues } = useForm({
         defaultValues: async () => {
             const userDefaultValues = await getUserInfo()
             setUserInfData(userDefaultValues)
@@ -27,7 +25,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
     });
     const [openForm, setOpenForm] = useState(false)
     const [needUpdate, setNeedUpdate] = useState(false)
-    const watchAvatar = watch('avatar')
+    const avatar = getValues('avatar')
 
     const onSubmit = (data) => {
         const { about, name, avatar } = data
@@ -40,10 +38,10 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
             reset(data)
         }
         setOpenForm(!openForm)
+        setUserInfData(data)
         setNeedUpdate(JSON.stringify(defaultValues) === JSON.stringify(getValues()))
+        handleFirstRender()
     }
-
-
 
     return (
         <>
@@ -57,7 +55,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                                     id='avatar'
                                     component="img"
                                     height="300"
-                                    image={watchAvatar}
+                                    image={avatar}
                                     alt="user avatar"
                                 />
                                 <TextField
@@ -113,7 +111,7 @@ const DetailUserInfo = ({ open, onClose, onClick }) => {
                         </>) : (
                             <CircularProgress />)}
                 </DialogContent>
-            </Dialog >
+            </Dialog>
             <ResultUpdateInfo
                 openForm={openForm}
                 setOpenForm={setOpenForm}

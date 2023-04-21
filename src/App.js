@@ -1,34 +1,35 @@
 import Container from "@mui/material/Container";
-import {createContext, useEffect, useState} from "react";
+import {createContext, useEffect, useState, useCallback} from "react";
 import MainList from "./Components/MainList/mainList";
 import ResponsiveAppBar from "./Components/Header/appHeader";
 import MainHead from "./Components/MainList/MainHead/mainHead";
 import Footer from "./Components/Footer/footer";
 import ElementPagination from "./Components/MainList/Pagination/pagination";
-import { CardNotAuth } from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
-import { PostList } from "./Components/MainList/PostList/postList";
-import { CardInfo } from "./Components/MainList/PostList/CardInfo/CardInfo";
-import { Routes, Route } from "react-router-dom";
-import { getPostPagination } from "./API/PostsApi";
+import {CardNotAuth} from "./Components/MainList/PostList/CardNotAuth/CardNotAuth";
+import {PostList} from "./Components/MainList/PostList/postList";
+import {CardInfo} from "./Components/MainList/PostList/CardInfo/CardInfo";
+import {Routes, Route} from "react-router-dom";
+import {getPostPagination, setLikeOnCard} from "./API/PostsApi";
 import useDebounce from "./hooks/useDebounce";
 import {LIMIT} from "./constants/constants";
 import {MyPostList} from "./Components/MainList/MyPostList/MyPostList";
 import {EditPost} from "./Components/MainList/PostList/EditPost/EditPost";
+import NotFound from "./Components/MainList/PostList/404/NotFound";
 // Инизиализация приложения 
 
 export const LocalStorageContext = createContext({token: '', setToken: () => void 0})
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem('token'))
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState([])
     const [message, setMessage] = useState('')
     const [isUpdateCards, setUpdateCards] = useState(false)
     const [userInfData, setUserInfData] = useState('')
     const [page, setPage] = useState(1)
     const [pageQty, setPageQty] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('')
     const debounceSearchQuery = useDebounce(searchQuery, 700)
-
+    const [myPosts, setMyPosts] = useState([])
 
     useEffect(() => {
         if (token) {
@@ -47,6 +48,21 @@ function App() {
     const handleFirstRender = () => {
         setUpdateCards(!isUpdateCards)
     }
+
+    const handleSetLike = useCallback(async (card) => {
+        const isLike = card?.likes?.some((id) => id === userInfData?._id)
+        const likedCard = await setLikeOnCard(card._id, isLike)
+        const newCards = cards.map(card => card._id === likedCard._id ? likedCard : card)
+        setCards(newCards)
+    }, [cards, userInfData._id])
+
+    const handleSetLikePost = useCallback(async (card) => {
+        const isLike = card.likes.includes(userInfData._id)
+        const likedCard = await setLikeOnCard(card._id, isLike)
+        const newCards = myPosts.map(card => card._id === likedCard._id ? likedCard : card)
+        setMyPosts(newCards)
+    }, [myPosts, userInfData._id])
+
     return (
         <LocalStorageContext.Provider value={{
             token,
@@ -61,23 +77,25 @@ function App() {
             pageQty,
             searchQuery,
             setSearchQuery,
+            handleSetLike,
+            myPosts,
+            setMyPosts,
+            handleSetLikePost
         }}>
 
             <ResponsiveAppBar/>
             <MainList>
-
                 <Container sx={{mt: '1rem', mb: '1rem'}}>
-
                     <Routes>
                         <Route path={'/'} element={
                             <>
 
-                                <MainHead />
+                                <MainHead/>
                                 {(token &&
                                     <>
-                                        <PostList cards={cards} />
-                                        <ElementPagination />
-                                    </>) || <CardNotAuth />}
+                                        <PostList cards={cards}/>
+                                        <ElementPagination/>
+                                    </>) || <CardNotAuth/>}
 
                             </>
                         }/>
@@ -89,11 +107,9 @@ function App() {
                             </>
                         }/>
                         <Route path={'post/:id/edit'} element={<EditPost/>}/>
-                        <Route path={'*'} element={<h1>404</h1>}/>
+                        <Route path={'*'} element={<NotFound/>}/>
                     </Routes>
-
                 </Container>
-
             </MainList>
             <Footer/>
         </LocalStorageContext.Provider>

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -6,20 +6,20 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { LocalStorageContext } from "../../../../App";
+import {LocalStorageContext} from "../../../../App";
 import DetailUserInfo from '../AuthModal/detailUserName';
-import { PostAddForm } from '../../../MainList/MainHead/PostAddForm/postAddForm';
+import {PostAddForm} from '../../../MainList/MainHead/PostAddForm/postAddForm';
 import SearchInput from './search';
-
-
+import {useNavigate} from 'react-router-dom';
 
 
 function UserMenu(props) {
 
-    const { setToken, userInfData, setPage, setSearchQuery } = useContext(LocalStorageContext)
+    const {setToken, userInfData, setPage, setSearchQuery} = useContext(LocalStorageContext)
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isOpen, setOpen] = useState(false);
     const [isOpenAdd, setOpenAdd] = useState(false);
+    const navigate = useNavigate()
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -41,6 +41,7 @@ function UserMenu(props) {
         setToken('')
         setSearchQuery('')
         setPage(1)
+        navigate('/')
     }
 
 
@@ -49,18 +50,21 @@ function UserMenu(props) {
             <Box>
                 <Box sx={{
                     display: 'flex',
-                    gap: '15px'
+                    gap: '20px',
+                    alignItems: 'center'
                 }}>
-                    <SearchInput />
+                    <SearchInput/>
                     <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp"
-                                src={userInfData?.avatar} />
+                        <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                            <Avatar alt="avatar"
+                                    src={userInfData?.avatar}
+                                    sx={{width: 60, height: 60}}/>
+
                         </IconButton>
                     </Tooltip>
                 </Box>
                 <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{mt: '45px'}}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
@@ -76,7 +80,7 @@ function UserMenu(props) {
                     onClose={handleCloseUserMenu}
                 >
 
-                    <MenuItem key={'Профиль'} onClick={handleCloseDialog} >
+                    <MenuItem key={'Профиль'} onClick={handleCloseDialog}>
                         <Typography textAlign="center">{'Профиль'}</Typography>
                     </MenuItem>
                     <MenuItem key={'Добавить пост'} onClick={handleClickAdd}>
@@ -86,8 +90,8 @@ function UserMenu(props) {
                         <Typography textAlign="center">{'Выйти'}</Typography>
                     </MenuItem>
                 </Menu>
-                <DetailUserInfo open={isOpen} onClose={handleCloseDialog} onClick={handleCloseDialog} />
-                <PostAddForm openDialog={isOpenAdd} onClose={handleClickAdd} onClick={handleClickAdd} />
+                <DetailUserInfo open={isOpen} onClose={handleCloseDialog} onClick={handleCloseDialog}/>
+                <PostAddForm openDialog={isOpenAdd} onClose={handleClickAdd} onClick={handleClickAdd}/>
             </Box>
         </>
     );

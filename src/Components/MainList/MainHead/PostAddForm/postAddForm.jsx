@@ -1,6 +1,12 @@
 import {useState, useCallback, useContext} from 'react';
-import {Button, CardMedia, DialogTitle, DialogContentText} from '@mui/material';
-import {TextField, Dialog, DialogActions, DialogContent} from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CardMedia from '@mui/material/CardMedia';
 import image from '../../../Img/add-image.png'
 import {addPost} from '../../../../API/PostsApi';
 import {LocalStorageContext} from "../../../../App";
@@ -22,7 +28,7 @@ export const PostAddForm = ({openDialog, onClose, onClick}) => {
 
     const handleSubmit = useCallback((event) => {
         event.preventDefault()
-        addPost({...form, tags: form.tags.replace(/,. /mig, ',').split(',')})
+        void addPost({...form, tags: form.tags.replace(/,. /mig, ',').split(',')})
         setForm({
             title: '',
             image: '',

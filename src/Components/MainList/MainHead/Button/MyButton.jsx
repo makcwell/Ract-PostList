@@ -30,7 +30,7 @@ function MyButton() {
                         </>}
                 </Grid>
             </Grid>
-        </div >
+        </div>
     );
 }
 
