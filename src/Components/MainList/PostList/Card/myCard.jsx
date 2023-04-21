@@ -9,7 +9,7 @@ import {FavoriteBorderOutlined, Favorite} from '@mui/icons-material';
 import {isLiked} from '../../../../utils/utils';
 
 export default function MyCard({card}) {
-    const {handleSetLike, userInfData} = useContext(LocalStorageContext)
+    const {handleSetLike, userInfData, handleSetLikePost} = useContext(LocalStorageContext)
     const like = isLiked(card, userInfData)
     const handleIntoCardClick = () => {
         navigate(`/post/${card["_id"]}`)
@@ -25,6 +25,7 @@ export default function MyCard({card}) {
 
     const handleLike = () => {
         handleSetLike(card);
+        handleSetLikePost(card)
     }
 
     const createdPost = new Date(card?.created_at).toLocaleString('ru', options).slice(0, -3)
