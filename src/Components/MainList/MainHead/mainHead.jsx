@@ -4,9 +4,7 @@ import s from './mainHead.module.css';
 import MyButton from './Button/MyButton';
 import BasicBreadcrumbs from "./Breadcrumb/breadcrumb";
 
-
-function MainHead({ handleRepeatReq }) {
-
+export default function MainHead() {
     return (
         <div className={s.mainHeadWrapper} >
             <BasicBreadcrumbs/>
@@ -15,5 +13,3 @@ function MainHead({ handleRepeatReq }) {
         </div>
     );
 }
-
-export default MainHead;

@@ -3,7 +3,6 @@
 
 }
 
-
 .cardFooter__wrapper {
     display: flex;
     justify-content: space-between;
@@ -44,6 +43,17 @@
     gap: 3px;
 }
 
+.iconNotLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
+    cursor: pointer;
+    color: #FF4444;
+}
+
+.iconLike {
+    color: #FF4444;
+}
+
 .iconLike:hover {
     transform: scale(1.1);
     transition: transform .3s cubic-bezier(.5, 0, .5, 3);
@@ -58,12 +68,9 @@
     color: #7B8E98;
 }
 
-
-
 .cardFooter__date {
     display: flex;
 }
-
 
 .pointer {
     cursor: pointer;

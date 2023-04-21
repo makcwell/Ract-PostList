@@ -80,10 +80,11 @@ export function EditPost() {
                         helperText={errors?.text?.message}
                         {...register('text', REQUIRED_PATTERN)}
                     />
-                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success" variant={'contained'} sx={{ boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)', }}>Подтвердить</Button>
+                    <Button disabled={!isDirty} type="submit" fullWidth size="large" color="success"
+                            variant={'contained'}
+                            sx={{boxShadow: '0px 2px 3px 1px rgba(17, 18, 19, 0.5)'}}>Подтвердить</Button>
                 </form>
             </Box>
         </Box>
     );
 }
-

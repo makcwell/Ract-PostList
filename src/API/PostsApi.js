@@ -4,7 +4,7 @@ import { BASE_URL } from "../constants/constants";
 export const addPost = async (data) => {
     try {
         if (data) {
-            let response = await fetch(`${BASE_URL}/v2/group-10/posts`, {
+            await fetch(`${BASE_URL}/v2/group-10/posts`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -12,7 +12,6 @@ export const addPost = async (data) => {
                 },
                 body: JSON.stringify(data)
             })
-            return response
         }
     } catch (e) {
         console.error(`Ошибка данных в addPost ${e.message}`)

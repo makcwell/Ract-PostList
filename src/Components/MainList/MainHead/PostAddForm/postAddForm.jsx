@@ -1,4 +1,4 @@
-import { useState, useCallback, useContext } from 'react';
+import {useState, useCallback, useContext} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -7,13 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CardMedia from '@mui/material/CardMedia';
-import image from './add-image.png'
-import { addPost } from '../../../../API/PostsApi';
-import { LocalStorageContext } from "../../../../App";
+import image from '../../../Img/add-image.png'
+import {addPost} from '../../../../API/PostsApi';
+import {LocalStorageContext} from "../../../../App";
 
 
-export const PostAddForm = ({ openDialog, onClose, onClick }) => {
-    const { handleFirstRender } = useContext(LocalStorageContext)
+export const PostAddForm = ({openDialog, onClose, onClick}) => {
+    const {handleFirstRender} = useContext(LocalStorageContext)
 
     const [form, setForm] = useState({
         title: '',
@@ -23,12 +23,12 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
     })
 
     const handleForm = useCallback((event) => {
-        setForm((prev) => ({ ...prev, [event.target.id]: event.target.value }))
+        setForm((prev) => ({...prev, [event.target.id]: event.target.value}))
     }, [])
 
     const handleSubmit = useCallback((event) => {
         event.preventDefault()
-        addPost({ ...form, tags: form.tags.replace(/,. /mig, ',').split(',') })
+        void addPost({...form, tags: form.tags.replace(/,. /mig, ',').split(',')})
         setForm({
             title: '',
             image: '',
@@ -50,9 +50,9 @@ export const PostAddForm = ({ openDialog, onClose, onClick }) => {
                         objectFit: 'contain',
                         height: '256px'
                     }}
-                        component="img"
-                        image={image}
-                        alt="user avatar"
+                               component="img"
+                               image={image}
+                               alt="user avatar"
                     />
                     <TextField
                         margin="dense"

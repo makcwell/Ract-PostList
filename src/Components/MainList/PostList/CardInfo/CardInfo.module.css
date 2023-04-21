@@ -3,7 +3,6 @@
 
 }
 
-
 .cardFooter__wrapper {
     display: flex;
     justify-content: space-between;
@@ -28,11 +27,28 @@
     margin-right: 20px;
 
 }
-
-.boxSvg:hover {
+.iconNotLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
     cursor: pointer;
     color: #FF4444;
 }
+
+.iconLike {
+    color: #FF4444;
+}
+
+.iconLike:hover {
+    transform: scale(1.1);
+    transition: transform .3s cubic-bezier(.5, 0, .5, 3);
+    cursor: pointer;
+    color: #FF4444;
+}
+
+/*.boxSvg:hover {*/
+/*    cursor: pointer;*/
+/*    color: #FF4444;*/
+/*}*/
 
 .boxComm {
     display: inline-flex;
