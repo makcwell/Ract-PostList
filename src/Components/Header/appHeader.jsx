@@ -34,7 +34,7 @@ function ResponsiveAppBar() {
                                 fontFamily: 'babylonica',
                                 fontWeight: 700,
                                 letterSpacing: '.4rem',
-                                color: '#7fe1ff',
+                                color: '#9e6ded',
                                 textDecoration: 'none',
                             }}
                         >

@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
 import { isLiked } from '../../../../utils/utils';
-function MyCard({ card }) {
+
+export default function MyCard({ card }) {
     const { handleSetLike, userInfData, handleSetLikePost } = useContext(LocalStorageContext)
     const like = isLiked(card, userInfData)
     const handleIntoCardClick = () => {
-        navigate(`/post/${card._id}`)
+        navigate(`/post/${card["_id"]}`)
     }
 
     const navigate = useNavigate()
@@ -26,7 +27,8 @@ function MyCard({ card }) {
         handleSetLike(card);
         handleSetLikePost(card)
     }
-    const createdPost = new Date(card.created_at).toLocaleString('ru', options).slice(0, -3)
+
+    const createdPost = new Date(card?.created_at).toLocaleString('ru', options).slice(0, -3)
 
     return (
 
@@ -89,7 +91,7 @@ function MyCard({ card }) {
                 </CardContent>
             </div>
 
-            {/*/!* Хештеги карточки *!/ //TODO: Решить вопрос с рендером пустого массива с тэгами*/}
+            {/*/!* Хештеги карточки *!/*/}
             <CardContent>
                 <Stack mt={0}
                     flexGrow='1'
@@ -97,40 +99,39 @@ function MyCard({ card }) {
                     flexWrap='wrap'
                     spacing={1}
                 >
-                    {card.tags.length > 0 && card.tags.map((item, index) =>
+
+                    {card.tags.length > 0 && card.tags[0] !== '' ? card.tags.map((item, index) =>
                         <Chip sx={{ marginBottom: '5px', maxWidth: '100px' }} label={item} key={index} title={item}
                             size="small" color="success" />
-                    )}
+                    ) : <span></span>}
+
                 </Stack>
             </CardContent>
 
             {/* Подвал карточки (лайки, комменты, дата добавления поста) */}
             <CardContent sx={{ display: 'flex', flex: '1' }}>
-                <div className={s.cardFooter__wrapper}>
-                    <div className={s.cardFooter__favorite}>
+                <Box className={s.cardFooter__wrapper}>
+                    <Box className={s.cardFooter__favorite}>
+                        {/* <Like /> */}
                         <Box className={s.boxSvg}>
-                            {/* <Like /> */}
                             <Box className={s.boxLike} onClick={handleLike}>
-                                {like ? <Favorite className={s.iconLike} /> : <FavoriteBorderOutlined className={s.iconLike} fontSize={'medium'} />}
-                                {card.likes.length > 0 && <Typography>{card.likes.length}</Typography>}
+                                {like ? <Favorite className={s.iconLike} /> :
+                                    <FavoriteBorderOutlined className={s.iconNotLike} fontSize={'medium'} />}
+                                {card?.likes?.length > 0 && <Typography>{card?.likes?.length}</Typography>}
                             </Box>
                         </Box>
                         {/* <Comment /> */}
                         <Box className={s.boxComm}>
                             <Box className={s.boxComment}>
                                 <ChatBubbleOutlineIcon fontSize={'medium'} />
-                                {card.comments.length > 0 &&
-                                    <Typography>{card.comments.length}</Typography>}
+                                {card?.comments?.length > 0 &&
+                                    <Typography>{card?.comments?.length}</Typography>}
                             </Box>
                         </Box>
-                    </div>
+                    </Box>
                     <div className={s.cardFooter__date}>{createdPost}</div>
-                </div>
-
+                </Box>
             </CardContent>
         </Card>
     );
-
 }
-
-export default MyCard;

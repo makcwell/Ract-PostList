@@ -1,4 +1,3 @@
-
 import SearchIcon from "@mui/icons-material/Search";
 import { Search, SearchIconWrapper, StyledInputBase } from "../../../../materialStyledComponent/styledComponent";
 import { LocalStorageContext } from "../../../../App";
