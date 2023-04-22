@@ -255,7 +255,7 @@ export function CardInfo() {
                     }}>
 
                         {comments?.length !== 0 ?
-                            (comments.map((comment, i) =>
+                            (comments?.map((comment, i) =>
                                 <div className={s.commentWrapper} key={i}>
                                     <div className={s.userInfoComment}>
                                         <CardHeader
